@@ -113,6 +113,30 @@ void setDriveArcade(int left, int right) {
 	setDrive(l, r);
 }
 
+void setLift(int b1, int b2) {
+	int power = 128 * (b1 - b2);
+	leftLift.moveVoltage(power);
+	rightLift.moveVoltage(power);
+}
+
+void setGoalLift(int b1, int b2) {
+	int power = 128 * (b1 - b2);
+	mobileGoalLift.moveVoltage(power);
+}
+
+/*
+void setLift(int power) {
+    leftLift = power;
+    rightLift = power;
+}
+
+void setLiftMotors() {
+    int power = 127 * (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)
+                           - controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2));
+    setLift(power);
+}
+*/
+
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -131,6 +155,7 @@ void opcontrol() {
 	while (true) {
 		//setDrive(1, 1);
 		setDriveArcade(controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightX));
-		pros::delay(20);
+		setLift(controller.getDigital(ControllerDigital::R1), controller.getDigital(ControllerDigital::R2));
+		setLift(controller.getDigital(ControllerDigital::L1), controller.getDigital(ControllerDigital::L2));
 	}
 }
