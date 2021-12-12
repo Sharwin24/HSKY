@@ -114,13 +114,13 @@ void setDriveArcade(int left, int right) {
 }
 
 void setLift(int b1, int b2) {
-	int power = 128 * (b1 - b2);
+	int power = 127 * (b1 - b2);
 	leftLift.moveVoltage(power);
 	rightLift.moveVoltage(power);
 }
 
 void setGoalLift(int b1, int b2) {
-	int power = 128 * (b1 - b2);
+	int power = 127 * (b1 - b2);
 	mobileGoalLift.moveVoltage(power);
 }
 
