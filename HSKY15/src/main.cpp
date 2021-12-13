@@ -156,6 +156,6 @@ void opcontrol() {
 		//setDrive(1, 1);
 		setDriveArcade(controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightX));
 		setLift(controller.getDigital(ControllerDigital::R1), controller.getDigital(ControllerDigital::R2));
-		setLift(controller.getDigital(ControllerDigital::L1), controller.getDigital(ControllerDigital::L2));
+		setGoalLift(controller.getDigital(ControllerDigital::L1), controller.getDigital(ControllerDigital::L2));
 	}
 }
