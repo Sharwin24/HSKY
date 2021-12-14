@@ -16,11 +16,15 @@ okapi::Motor driveLeftFront(2);
 okapi::Motor mobileGoalLift(10);
 
 okapi::Motor leftLift(9);
-okapi::Motor rightLift(8);
+okapi::Motor rightLift(-8);
 
 // Controller
 okapi::Controller controller;
 ChassisControllerBuilder chassisBuilder = ChassisControllerBuilder();
+ControllerButton gDown(ControllerDigital::R1);
+ControllerButton gUp(ControllerDigital::R2);
+ControllerButton lDown(ControllerDigital::L1);
+ControllerButton lUp(ControllerDigital::L2);
 // okapi::ChassisModel model = SkidSteerModel();
 // auto chassis = okapi::ChassisControllerBuilder().withMotors(1,2);
 
@@ -60,7 +64,6 @@ void initialize() {
 	pros::lcd::register_btn1_cb(on_center_button);
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	chassisBuilder.withMotors({2,5,7},{3,5,6});
-
 }
 
 /**
@@ -95,7 +98,7 @@ void competition_initialize() {}
 void autonomous() {}
 
 
-void setDrive(int left, int right) {
+void setDrive(float left, float right) {
 	driveLeftBackBack.moveVoltage(12000 * left);
 	driveLeftBackFront.moveVoltage(12000 * left);
 	driveLeftFront.moveVoltage(12000 * left);
@@ -105,23 +108,38 @@ void setDrive(int left, int right) {
 	driveRightFront.moveVoltage(12000 * right);
 }
 
-void setDriveArcade(int left, int right) {
-	int power = left;
-	int turn = right;
-	int l = power + turn;
-	int r = power - turn;
+void setLift() {
+	if (lUp.isPressed()) {
+      leftLift.moveVoltage(6000);
+			rightLift.moveVoltage(6000);
+    } else if (lDown.isPressed()) {
+			leftLift.moveVoltage(-6000);
+			rightLift.moveVoltage(-6000);
+    } else {
+			leftLift.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+      leftLift.moveVoltage(0);
+			rightLift.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+			rightLift.moveVoltage(0);
+    }
+}
+
+void setGoalLift() {
+	if (gUp.isPressed()) {
+      mobileGoalLift.moveVoltage(12000);
+    } else if (gDown.isPressed()) {
+			mobileGoalLift.moveVoltage(-12000);
+    } else {
+			mobileGoalLift.setBrakeMode(okapi::AbstractMotor::brakeMode::hold);
+      mobileGoalLift.moveVoltage(0);
+    }
+}
+
+void setDriveArcade(float left, float right) {
+	float power = left;
+	float turn = right;
+	float l = power + turn;
+	float r = power - turn;
 	setDrive(l, r);
-}
-
-void setLift(int b1, int b2) {
-	int power = 127 * (b1 - b2);
-	leftLift.moveVoltage(power);
-	rightLift.moveVoltage(power);
-}
-
-void setGoalLift(int b1, int b2) {
-	int power = 127 * (b1 - b2);
-	mobileGoalLift.moveVoltage(power);
 }
 
 /*
@@ -151,11 +169,12 @@ void setLiftMotors() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-
 	while (true) {
 		//setDrive(1, 1);
 		setDriveArcade(controller.getAnalog(ControllerAnalog::leftY),controller.getAnalog(ControllerAnalog::rightX));
-		setLift(controller.getDigital(ControllerDigital::R1), controller.getDigital(ControllerDigital::R2));
-		setGoalLift(controller.getDigital(ControllerDigital::L1), controller.getDigital(ControllerDigital::L2));
+		setLift();
+		setGoalLift();
+		pros::delay(10);
+
 	}
 }
