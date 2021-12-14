@@ -20,11 +20,18 @@ okapi::Motor rightLift(-8);
 
 // Controller
 okapi::Controller controller;
-ChassisControllerBuilder chassisBuilder = ChassisControllerBuilder();
+//ChassisControllerBuilder chassisBuilder = ChassisControllerBuilder();
 ControllerButton gDown(ControllerDigital::R1);
 ControllerButton gUp(ControllerDigital::R2);
 ControllerButton lDown(ControllerDigital::L1);
 ControllerButton lUp(ControllerDigital::L2);
+
+std::shared_ptr<ChassisController> chassis;
+
+std::shared_ptr<AsyncPositionController<double, double>> liftController;
+
+std::shared_ptr<AsyncPositionController<double, double>> mobileGoalLiftController;
+
 // okapi::ChassisModel model = SkidSteerModel();
 // auto chassis = okapi::ChassisControllerBuilder().withMotors(1,2);
 
@@ -63,7 +70,30 @@ void initialize() {
 	pros::lcd::set_text(1, "Hello PROS User!");
 	pros::lcd::register_btn1_cb(on_center_button);
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	chassisBuilder.withMotors({2,5,7},{3,5,6});
+
+	chassis = ChassisControllerBuilder()
+	.withMotors({2,5,7},{3,5,6})
+	.withDimensions(AbstractMotor::gearset::red, {{4_in, 11_in}, imev5RedTPR})
+	.build();
+
+	const double liftkP = 0.001;
+	const double liftkI = 0.0001;
+	const double liftkD = 0.0001;
+
+	liftController =
+	  AsyncPosControllerBuilder()
+	    .withMotor({8,9})
+	    .withGains({liftkP, liftkI, liftkD})
+	    .build();
+
+	const double gLiftkP = 0.001;
+	const double gLiftkI = 0.0001;
+	const double gLiftkD = 0.0001;
+
+	mobileGoalLiftController = AsyncPosControllerBuilder()
+		.withMotor(10)
+		.withGains({gLiftkP, gLiftkI, gLiftkD})
+		.build();
 }
 
 /**
@@ -92,11 +122,18 @@ void competition_initialize() {}
  * for non-competition testing purposes.
  *
  * If the robot is disabled or communications is lost, the autonomous task
- * will be stopped. Re-enabling the robot will restart the task, not re-start it
+ * will be stopped. Re-enabling the  robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+	chassis->moveDistanceAsync(-1_ft);
+	//liftController->setTarget(200);
+	mobileGoalLiftController->setTarget(3000);
+	//chassis->turnAngle(90_deg);
+	//chassis->moveDistance(0.33_m);
+}
 
+// https://okapilib.github.io/OkapiLib/md_docs_tutorials_walkthrough_asyncAutonomousMovement.html
 
 void setDrive(float left, float right) {
 	driveLeftBackBack.moveVoltage(12000 * left);
@@ -107,6 +144,40 @@ void setDrive(float left, float right) {
 	driveRightBackFront.moveVoltage(12000 * right);
 	driveRightFront.moveVoltage(12000 * right);
 }
+
+/*
+const int LIFT_MOTOR_PORT = 1; // Controlling a lift with a single motor on port 1
+
+const int NUM_HEIGHTS = 4;
+const int height1 = 20;
+const int height2 = 60;
+const int height3 = 100;
+const int height4 = 140;
+
+const int heights[NUM_HEIGHTS] = {height1, height2, height3, height4};
+
+ControllerButton btnUp(ControllerDigital::R1);
+ControllerButton btnDown(ControllerDigital::R2);
+std::shared_ptr<AsyncPositionController<double, double>> liftControl =
+  AsyncPosControllerBuilder().withMotor(LIFT_MOTOR_PORT).build();
+
+void opcontrol() {
+  int goalHeight = 0;
+
+  while (true) {
+    if (btnUp.changedToPressed() && goalHeight < NUM_HEIGHTS - 1) {
+      // If the goal height is not at maximum and the up button is pressed, increase the setpoint
+      goalHeight++;
+      liftControl->setTarget(heights[goalHeight]);
+    } else if (btnDown.changedToPressed() && goalHeight > 0) {
+      goalHeight--;
+      liftControl->setTarget(heights[goalHeight]);
+    }
+
+    pros::delay(10);
+  }
+}
+*/
 
 void setLift() {
 	if (lUp.isPressed()) {
