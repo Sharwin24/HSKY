@@ -82,7 +82,7 @@ void initialize() {
 
 	liftController =
 	  AsyncPosControllerBuilder()
-	    .withMotor({8,9})
+	    .withMotor({8,-9})
 	    .withGains({liftkP, liftkI, liftkD})
 	    .build();
 
@@ -126,11 +126,10 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	chassis->moveDistanceAsync(-1_ft);
-	//liftController->setTarget(200);
 	mobileGoalLiftController->setTarget(3000);
-	//chassis->turnAngle(90_deg);
-	//chassis->moveDistance(0.33_m);
+	chassis->moveDistanceAsync(1_ft);
+	chassis->turnAngleAsync(90_deg);
+	liftController->setTarget(1000);
 }
 
 // https://okapilib.github.io/OkapiLib/md_docs_tutorials_walkthrough_asyncAutonomousMovement.html
