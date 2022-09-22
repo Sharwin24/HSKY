@@ -1,9 +1,12 @@
 #include "chassis.hpp"
 
 #include "main.h"
+#include "okapi/impl/control/iterative/iterativeControllerFactory.hpp"
 #include "okapi/impl/device/controllerUtil.hpp"
 #include "pros/misc.h"
 #include "robot_constants.hpp"
+
+using namespace okapi;
 
 namespace src::Chassis {
 
@@ -33,12 +36,9 @@ void act() {
 void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
     float degreesL = ((leftTarget * 360) / (pi * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
     float degreesR = ((rightTarget * 360) / (pi * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
-    // Create PID controllers for each side of the chassis
-    auto drivePIDL = okapi::IterativeControllerFactory::posPID(P_GAIN, I_GAIN, D_GAIN);
-    auto drivePIDR = okapi::IterativeControllerFactory::posPID(P_GAIN, I_GAIN, D_GAIN);
-    // Reset Chassis sensors
+    auto drivePIDL = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
+    auto drivePIDR = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
     chassis->getModel()->resetSensors();
-    // Initialize loop variables
     int timer = 0;
     float errorL;
     float errorR;

@@ -27,7 +27,8 @@ static MotorGroup rightChassisMotorGroup = {
 extern std::shared_ptr<ChassisController> chassis;
 extern pros::Controller controller;
 
-extern void intialize();
+extern void
+intialize();
 extern void update();
 extern void act();
 
