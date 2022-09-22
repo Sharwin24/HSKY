@@ -17,12 +17,13 @@ std::shared_ptr<ChassisController> chassis =
         .build();
 
 pros::Imu imuSensor = pros::Imu(IMU_PORT);
+pros::ADIUltrasonic ultrasonic(ULTRASONIC_PING_PORT, ULTRASONIC_ECHO_PORT);
 
 void intialize() {
     leftChassisMotorGroup.setBrakeMode(AbstractMotor::brakeMode::coast);
     rightChassisMotorGroup.setBrakeMode(AbstractMotor::brakeMode::coast);
     imuSensor.reset();
-    pros::delay(1000);
+    pros::delay(1000); // give IMU 1 second to reset
 }
 
 void update() {}
@@ -74,6 +75,24 @@ void gyroPID(int degree, bool CW, int ms) {
             chassis->getModel()->tank(-1 * power, power);
         }
         timer++;
+        pros::delay(20);
+    }
+    chassis->getModel()->tank(0, 0);
+}
+
+void ultrasonicPID(float distance, int ms) {
+    float prevError;
+    float integral;
+    int timer = 0;
+    while (timer < ms) {
+        float sensorVal = ultrasonic.get_value();
+        float error = distance - sensorVal;
+        float derivative = error - prevError;
+        prevError = error;
+        integral += error;
+        float power = (P_GAIN_DRIVE_ULTRASONIC * error) + (I_GAIN_DRIVE_ULTRASONIC * integral) + (D_GAIN_DRIVE_ULTRASONIC * derivative);
+        chassis->getModel()->tank(power, power);
+        timer += 20;
         pros::delay(20);
     }
     chassis->getModel()->tank(0, 0);

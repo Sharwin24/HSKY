@@ -27,12 +27,12 @@ static MotorGroup rightChassisMotorGroup = {
 extern std::shared_ptr<ChassisController> chassis;
 extern pros::Controller controller;
 
-extern void
-intialize();
+extern void intialize();
 extern void update();
 extern void act();
 
 extern void movePID(float leftTarget, float rightTarget, int ms, float maxV = 1);
 extern void gyroPID(int degree, bool CW, int ms = 1000);
+extern void ultrasonicPID(int distance, int ms = 2000);
 
 } // namespace src::Chassis

@@ -19,6 +19,8 @@ static constexpr uint8_t INTAKE_PORT = 10;
 static constexpr uint8_t IMU_PORT = 11;
 static constexpr uint8_t OPTICAL_SENSOR_PORT = 12;
 static constexpr uint8_t CATAPULT_BUTTON_PORT = 'A';
+static constexpr uint8_t ULTRASONIC_PING_PORT = 'B';
+static constexpr uint8_t ULTRASONIC_ECHO_PORT = 'C';
 
 // Physical robot constants
 static constexpr float_t WHEEL_DIAMETER = 3.25; // [in]
@@ -30,6 +32,9 @@ static constexpr float TURN_FACTOR = 0.90f; // Turn at 90% of max speed for driv
 static constexpr float P_GAIN_DRIVE = 0.00185f;
 static constexpr float I_GAIN_DRIVE = 0.0f;
 static constexpr float D_GAIN_DRIVE = 0.0001f;
+static constexpr float P_GAIN_DRIVE_ULTRASONIC = 0.1f;
+static constexpr float I_GAIN_DRIVE_ULTRASONIC = 0.00008f;
+static constexpr float D_GAIN_DRIVE_ULTRASONIC = 0.05;
 static constexpr float P_GAIN_TURN = 0.1875f;
 static constexpr float I_GAIN_TURN = 0.000008f;
 static constexpr float D_GAIN_TURN = 0.15f;
