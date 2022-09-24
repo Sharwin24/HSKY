@@ -28,7 +28,8 @@ static constexpr float_t WHEEL_TRACK = 13.5f;   // [in]
 static constexpr float_t DRIVE_GEAR_RATIO = 60.0f / 36.0f;
 
 // Programming constants
-static constexpr float TURN_FACTOR = 0.90f; // Turn at 90% of max speed for driver control
+static constexpr float TURN_FACTOR = 0.90f;                 // Turn at 90% of max speed for driver control
+static constexpr float DEGREES_TO_ENGAGE_SLIP_GEAR = 15.0f; // [degrees]
 static constexpr float P_GAIN_DRIVE = 0.00185f;
 static constexpr float I_GAIN_DRIVE = 0.0f;
 static constexpr float D_GAIN_DRIVE = 0.0001f;

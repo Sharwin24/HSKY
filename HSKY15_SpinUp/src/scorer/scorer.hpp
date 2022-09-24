@@ -16,8 +16,8 @@ enum class IntakeState {
 };
 
 enum class CatapultState {
-    DOWN = 0,
-    UP = 1
+    READY = 0,
+    FIRING = 2,
 };
 
 // Control loop functions
@@ -26,9 +26,10 @@ extern void update();
 extern void act();
 
 // Mechanism functions
-extern void setIntakeState(IntakeState state);
-extern void setCatapultState(CatapultState state);
+extern void setIntakeMotion(IntakeState state);
 extern void pullDownCatapult();
+extern void fireCatapult();
+extern void pullDownAndFireCatapult(int msDelay = 100);
 extern void rollIntakeUntilColor(pros::c::optical_rgb_s desiredColorRGB, IntakeState intakeDirection = IntakeState::INTAKING);
 
 // Motors

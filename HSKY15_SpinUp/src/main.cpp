@@ -69,7 +69,11 @@ using namespace src;
  * from where it left off.
  */
 void autonomous() {
-    // Chassis::movePID(24, 24, 1000); // move forward 24 inches in 1000 ms
+    Scorer::setIntakeMotion(Scorer::IntakeState::INTAKING); // Start intaking
+    Chassis::movePID(24, 24, 1000);                         // move forward 24 inches
+    Chassis::gyroPID(90, true);                             // turn 90 degrees clockwise
+    Scorer::pullDownAndFireCatapult();                      // pull down and fire catapult
+    Scorer::setIntakeMotion(Scorer::IntakeState::STOPPED);  // stop intaking
 }
 
 /**

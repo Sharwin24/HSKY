@@ -16,10 +16,20 @@ ControllerButton catapultFire(ControllerDigital::R1);
 
 IntakeState currentIntakeState = IntakeState::STOPPED;
 IntakeState previousIntakeState = IntakeState::STOPPED;
-CatapultState currentCatapultState = CatapultState::UP;
+CatapultState currentCatapultState = CatapultState::READY;
 
-void setIntakeState(IntakeState state) {
-    currentIntakeState = state;
+void setIntakeMotion(IntakeState intakeState) {
+    switch (intakeState) {
+        case IntakeState::STOPPED:
+            intakeMotor.moveVelocity(0);
+            break;
+        case IntakeState::INTAKING:
+            intakeMotor.moveVelocity(200);
+            break;
+        case IntakeState::OUTTAKING:
+            intakeMotor.moveVelocity(-200);
+            break;
+    }
 }
 
 void setCatapultState(CatapultState state) {
@@ -32,6 +42,17 @@ void pullDownCatapult() {
         catpultMotor.moveVelocity(90);
         pros::delay(10);
     }
+}
+
+void fireCatapult() {
+    // Fire Catapult should move motor slightly to engage slipgear
+    catpultMotor.moveAbsolute(DEGREES_TO_ENGAGE_SLIP_GEAR, 100);
+}
+
+void pullDownAndFireCatapult(int msDelay) {
+    pullDownCatapult();
+    pros::delay(msDelay);
+    fireCatapult();
 }
 
 void initialize() {
@@ -59,10 +80,8 @@ void update() {
 
     // Lower Catapult from UP position
     if (catapultFire.changedToPressed()) {
-        if (currentCatapultState == CatapultState::UP) {
-            currentCatapultState = CatapultState::DOWN; // Lower Catapult
-        } else {
-            currentCatapultState = CatapultState::UP; // Raise Catapult (Fire)
+        if (currentCatapultState == CatapultState::READY) {
+            currentCatapultState = CatapultState::FIRING;
         }
     }
 }
@@ -81,12 +100,13 @@ void act() {
     }
 
     switch (currentCatapultState) {
-        case CatapultState::UP:
-            // Fire Catapult should move motor slightly to engage slipgear
-            catpultMotor.moveAbsolute(15, 100);
+        case CatapultState::READY:
+            // Do nothing
             break;
-        case CatapultState::DOWN:
+        case CatapultState::FIRING:
+            pullDownAndFireCatapult();
             pullDownCatapult();
+            currentCatapultState = CatapultState::READY;
             break;
     }
 }
