@@ -22,9 +22,13 @@ std::shared_ptr<ChassisController> chassis =
 pros::Imu imuSensor = pros::Imu(IMU_PORT);
 pros::ADIUltrasonic ultrasonic(ULTRASONIC_PING_PORT, ULTRASONIC_ECHO_PORT);
 
+void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
+    leftChassisMotorGroup.setBrakeMode(mode);
+    rightChassisMotorGroup.setBrakeMode(mode);
+}
+
 void intialize() {
-    leftChassisMotorGroup.setBrakeMode(AbstractMotor::brakeMode::brake);
-    rightChassisMotorGroup.setBrakeMode(AbstractMotor::brakeMode::brake);
+    setChassisBrakeMode(AbstractMotor::brakeMode::hold);
     imuSensor.reset();
     pros::delay(1000); // give IMU 1 second to reset
 }

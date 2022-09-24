@@ -128,8 +128,8 @@ void rollIntakeUntilBlue(IntakeState intakeDirection) {
 }
 
 void initialize() {
-    catpultMotor.setBrakeMode(AbstractMotor::brakeMode::brake);
-    intakeMotor.setBrakeMode(AbstractMotor::brakeMode::brake);
+    catpultMotor.setBrakeMode(AbstractMotor::brakeMode::hold);
+    intakeMotor.setBrakeMode(AbstractMotor::brakeMode::coast);
 }
 
 void update() {

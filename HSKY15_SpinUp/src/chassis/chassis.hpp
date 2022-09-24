@@ -40,4 +40,7 @@ extern void movePID(float leftTarget, float rightTarget, int ms, float maxV = 1)
 extern void gyroPID(int degree, bool CW, int ms = 1000);
 extern void ultrasonicPID(int distance, int ms = 2000);
 
+// Chassis set functions
+extern void setChassisBrakeMode(AbstractMotor::brakeMode mode);
+
 } // namespace src::Chassis
