@@ -14,6 +14,7 @@ namespace src::Chassis {
 std::shared_ptr<ChassisController> chassis =
     ChassisControllerBuilder()
         .withMotors(leftChassisMotorGroup, rightChassisMotorGroup)
+        .withSensors(leftChassisMotorGroup.getEncoder(), rightChassisMotorGroup.getEncoder())
         .withDimensions(AbstractMotor::gearset::blue, {{WHEEL_DIAMETER, WHEEL_TRACK}, imev5BlueTPR})
         .build();
 
