@@ -9,12 +9,20 @@ using namespace okapi;
 
 namespace src::Scorer {
 
+/**
+ * @brief Enum to represent a state of the Intake mechanism
+ *
+ */
 enum class IntakeState {
     STOPPED = 0,
     INTAKING = 1,
     OUTTAKING = 2,
 };
 
+/**
+ * @brief Enum to represent a state of the Catapult mechanism
+ *
+ */
 enum class CatapultState {
     READY = 0,
     FIRING = 2,

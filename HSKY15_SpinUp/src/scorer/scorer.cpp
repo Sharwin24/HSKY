@@ -18,6 +18,11 @@ IntakeState currentIntakeState = IntakeState::STOPPED;
 IntakeState previousIntakeState = IntakeState::STOPPED;
 CatapultState currentCatapultState = CatapultState::READY;
 
+/**
+ * @brief Applies the given IntakeState to the intake motor
+ *
+ * @param intakeState the desired state of the Intake mechanism
+ */
 void setIntakeMotion(IntakeState intakeState) {
     switch (intakeState) {
         case IntakeState::STOPPED:
@@ -32,23 +37,40 @@ void setIntakeMotion(IntakeState intakeState) {
     }
 }
 
+/**
+ * @brief Sets the currentCatapult state. Will override the current state
+ *
+ * @param state the desired state to set the catapult to
+ */
 void setCatapultState(CatapultState state) {
     currentCatapultState = state;
 }
 
+/**
+ * @brief Pulls down the catapult until the button is pressed
+ *
+ */
 void pullDownCatapult() {
     // Move the motor down until the limit switch is pressed
     while (!catapultButton.get_value()) {
-        catpultMotor.moveVelocity(90);
+        catpultMotor.moveVelocity(100);
         pros::delay(10);
     }
 }
 
+/**
+ * @brief Fires the catapult by moving the motor until the slipgear is engaged
+ *
+ */
 void fireCatapult() {
-    // Fire Catapult should move motor slightly to engage slipgear
     catpultMotor.moveAbsolute(DEGREES_TO_ENGAGE_SLIP_GEAR, 100);
 }
 
+/**
+ * @brief Pulls down the catapult and fires it with a delay in between
+ *
+ * @param msDelay the delay in milliseconds between pulling down and firing. Defaults to 100 ms
+ */
 void pullDownAndFireCatapult(int msDelay) {
     pullDownCatapult();
     pros::delay(msDelay);
@@ -78,7 +100,8 @@ void update() {
         }
     }
 
-    // Lower Catapult from UP position
+    // If the catapult is ready, fire it when the fire button is pressed
+    // Catapult mechanism will handle FIRING -> READY transition
     if (catapultFire.changedToPressed()) {
         if (currentCatapultState == CatapultState::READY) {
             currentCatapultState = CatapultState::FIRING;
@@ -104,6 +127,7 @@ void act() {
             // Do nothing
             break;
         case CatapultState::FIRING:
+            // Fire catapult, then reset, and set state to READY
             pullDownAndFireCatapult();
             pullDownCatapult();
             currentCatapultState = CatapultState::READY;

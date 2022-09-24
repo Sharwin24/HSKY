@@ -91,13 +91,16 @@ void autonomous() {
  */
 
 void opcontrol() {
+    // Initalize all robot subsystems
     Chassis::intialize();
     Scorer::initialize();
 
     while (true) {
+        // Subsystem update will manipulate internal state from controller input
         Chassis::update();
         Scorer::update();
 
+        // Subsystem act will apply internal state to the robot
         Chassis::act();
         Scorer::act();
 
