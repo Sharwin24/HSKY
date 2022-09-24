@@ -38,7 +38,8 @@ extern void setIntakeMotion(IntakeState state);
 extern void pullDownCatapult();
 extern void fireCatapult();
 extern void pullDownAndFireCatapult(int msDelay = 100);
-extern void rollIntakeUntilColor(pros::c::optical_rgb_s desiredColorRGB, IntakeState intakeDirection = IntakeState::INTAKING);
+extern void rollIntakeUntilRed(IntakeState intakeDirection = IntakeState::INTAKING);
+extern void rollIntakeUntilBlue(IntakeState intakeDirection = IntakeState::INTAKING);
 
 // Motors
 static Motor catpultMotor = Motor(CATAPULT_PORT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);

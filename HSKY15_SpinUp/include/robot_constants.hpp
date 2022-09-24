@@ -39,3 +39,5 @@ static constexpr float D_GAIN_DRIVE_ULTRASONIC = 0.05;
 static constexpr float P_GAIN_TURN = 0.1875f;
 static constexpr float I_GAIN_TURN = 0.000008f;
 static constexpr float D_GAIN_TURN = 0.15f;
+static constexpr pros::c::optical_rgb_s_t RED_COLOR = {255, 0, 0};  // TODO: Find actual value for red on roller using Optical sensor
+static constexpr pros::c::optical_rgb_s_t BLUE_COLOR = {0, 0, 255}; // TODO: Find actual value for blue on roller using Optical sensor

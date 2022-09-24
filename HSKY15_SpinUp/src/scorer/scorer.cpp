@@ -77,6 +77,56 @@ void pullDownAndFireCatapult(int msDelay) {
     fireCatapult();
 }
 
+/**
+ * @brief Determines if the 2 given RGB structs are equal. Uses a tolerance to determine equality.
+ *
+ * @param color1 the first color to compare
+ * @param color2 the second color to compare
+ * @param tolerance the tolerance to use when comparing the colors
+ */
+bool rgbEquals(pros::c::optical_rgb_s_t color1, pros::c::optical_rgb_s_t color2, float tolerance = 0.5) {
+    return abs(color1.red - color2.red) < tolerance &&
+           abs(color1.green - color2.green) < tolerance &&
+           abs(color1.blue - color2.blue) < tolerance;
+}
+
+/**
+ * @brief Rolls the intake until the optical sensor detects the desired color
+ *
+ * @param desiredColorRGB the desired color to detect
+ * @param intakeDirection the direction to roll the intake. Defaults to IntakeState::INTAKING
+ */
+void rollIntakeUntilColor(pros::c::optical_rgb_s_t desiredColorRGB, IntakeState intakeDirection) {
+    // Set the intake to the desired direction
+    setIntakeMotion(intakeDirection);
+
+    // Roll the intake until the desired color is detected
+    while (!rgbEquals(opticalSensor.get_rgb(), desiredColorRGB)) {
+        pros::delay(20);
+    }
+
+    // Stop the intake
+    setIntakeMotion(IntakeState::STOPPED);
+}
+
+/**
+ * @brief Rolls the intake until the optical sensor detects red
+ *
+ * @param intakeDirection the direction to roll the intake. Defaults to IntakeState::INTAKING
+ */
+void rollIntakeUntilRed(IntakeState intakeDirection) {
+    rollIntakeUntilColor(RED_COLOR, intakeDirection);
+}
+
+/**
+ * @brief Rolls the intake until the optical sensor detects blue
+ *
+ * @param intakeDirection the direction to roll the intake. Defaults to IntakeState::INTAKING
+ */
+void rollIntakeUntilBlue(IntakeState intakeDirection) {
+    rollIntakeUntilColor(BLUE_COLOR, intakeDirection);
+}
+
 void initialize() {
     catpultMotor.setBrakeMode(AbstractMotor::brakeMode::brake);
     intakeMotor.setBrakeMode(AbstractMotor::brakeMode::brake);
