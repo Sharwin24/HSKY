@@ -17,11 +17,10 @@
 
 namespace src::Informants {
 
-Pose_t robotPose = {0, 0, 0};
+// Obtainable pose that updates every 10ms
+static Pose_t robotPose = {0, 0, 0};
 
-Pose_t getRobotPose() {
-    return robotPose;
-}
+Pose_t getRobotPose() { return robotPose; }
 
 void odometryTask(void *) {
     OdometrySuite odometrySuite = OdometrySuite();

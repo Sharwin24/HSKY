@@ -43,4 +43,8 @@ extern void ultrasonicPID(int distance, int ms = 2000);
 // Chassis set functions
 extern void setChassisBrakeMode(AbstractMotor::brakeMode mode);
 
+// Define chassis related sensors
+static pros::Imu imuSensor = pros::Imu(IMU_PORT);
+static pros::ADIUltrasonic ultrasonic(ULTRASONIC_PING_PORT, ULTRASONIC_ECHO_PORT);
+
 } // namespace src::Chassis
