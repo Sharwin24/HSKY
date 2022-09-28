@@ -1,12 +1,13 @@
 #include "main.h"
 #include "api.h"
 #include "chassis/chassis.hpp"
+#include "informants/odometrySuite.hpp"
 #include "okapi/api.hpp"
 #include "pros/misc.h"
 #include "pros/misc.hpp"
 #include "scorer/scorer.hpp"
 
-using namespace okapi;
+using namespace src;
 
 /**
  * A callback function for LLEMU's center button.
@@ -35,6 +36,9 @@ void initialize() {
     pros::lcd::set_text(1, "Hello PROS User!");
 
     pros::lcd::register_btn1_cb(on_center_button);
+
+    // Initialize async tasks
+    pros::Task odometryHandle(Informants::odometryTask);
 }
 
 /**
@@ -55,8 +59,6 @@ void disabled() {}
  */
 void competition_initialize() {}
 
-using namespace src;
-
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -69,11 +71,13 @@ using namespace src;
  * from where it left off.
  */
 void autonomous() {
+    Informants::Pose_t currentPose = Informants::getRobotPose();
     Scorer::setIntakeMotion(Scorer::IntakeState::INTAKING); // Start intaking
     Chassis::movePID(24, 24, 1000);                         // move forward 24 inches
     Chassis::gyroPID(90, true);                             // turn 90 degrees clockwise
     Scorer::pullDownAndFireCatapult();                      // pull down and fire catapult
     Scorer::setIntakeMotion(Scorer::IntakeState::STOPPED);  // stop intaking
+    Informants::Pose_t newPose = Informants::getRobotPose();
 }
 
 /**
@@ -92,7 +96,7 @@ void autonomous() {
 
 void opcontrol() {
     // Initalize all robot subsystems
-    Chassis::intialize();
+    Chassis::initialize();
     Scorer::initialize();
 
     while (true) {

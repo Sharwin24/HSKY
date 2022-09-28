@@ -20,6 +20,9 @@ static constexpr uint8_t INTAKE_PORT = 10;
 // Sensor Ports
 static constexpr uint8_t IMU_PORT = 11;
 static constexpr uint8_t OPTICAL_SENSOR_PORT = 12;
+static constexpr uint8_t LEFT_ENCODER_PORT = 13;
+static constexpr uint8_t RIGHT_ENCODER_PORT = 14; // Encoders are V5 Rotation Sensors
+static constexpr uint8_t HORIZONTAL_ENCODER_PORT = 15;
 static constexpr uint8_t CATAPULT_BUTTON_PORT = 'A';
 static constexpr uint8_t ULTRASONIC_PING_PORT = 'B';
 static constexpr uint8_t ULTRASONIC_ECHO_PORT = 'C';
@@ -28,6 +31,10 @@ static constexpr uint8_t ULTRASONIC_ECHO_PORT = 'C';
 static constexpr float_t WHEEL_DIAMETER = 3.25f; // [in]
 static constexpr float_t WHEEL_TRACK = 11.8f;    // [in]
 static constexpr float_t DRIVE_GEAR_RATIO = 60.0f / 36.0f;
+static constexpr float_t ENCODER_WHEEL_DIAMETER = 2.75f;              // [in]
+static constexpr float_t CENTER_TO_LEFT_ENCODER = 11.8f / 2.0f;       // [in]
+static constexpr float_t CENTER_TO_RIGHT_ENCODER = 11.8f / 2.0f;      // [in]
+static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 11.8f / 2.0f; // [in]
 
 // Programming constants
 static constexpr float TURN_FACTOR = 0.90f;                 // Scalar factor for turning in driver control

@@ -31,7 +31,7 @@ extern std::shared_ptr<ChassisController> chassis;
 extern pros::Controller controller;
 
 // Control loop functions
-extern void intialize();
+extern void initialize();
 extern void update();
 extern void act();
 
