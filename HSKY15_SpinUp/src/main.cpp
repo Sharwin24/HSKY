@@ -37,7 +37,7 @@ void initialize() {
 
     pros::lcd::register_btn1_cb(on_center_button);
 
-    // Initialize async tasks
+    // Updates RobotPose every 10 ms
     pros::Task odometryHandle(Informants::odometryTask);
 }
 
@@ -71,13 +71,13 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-    Informants::Pose_t currentPose = Informants::getRobotPose();
-    Scorer::setIntakeMotion(Scorer::IntakeState::INTAKING); // Start intaking
-    Chassis::movePID(24, 24, 1000);                         // move forward 24 inches
-    Chassis::gyroPID(90, true);                             // turn 90 degrees clockwise
-    Scorer::pullDownAndFireCatapult();                      // pull down and fire catapult
-    Scorer::setIntakeMotion(Scorer::IntakeState::STOPPED);  // stop intaking
-    Informants::Pose_t newPose = Informants::getRobotPose();
+    Informants::Pose_t currentPose = Informants::getRobotPose(); // Initial Pose is [0, 0, 0]
+    Scorer::setIntakeMotion(Scorer::IntakeState::INTAKING);      // Start intaking
+    Chassis::movePID(24, 24, 1000);                              // move forward 24 inches
+    Chassis::gyroPID(90, true);                                  // turn 90 degrees clockwise
+    Scorer::pullDownAndFireCatapult();                           // pull down and fire catapult
+    Scorer::setIntakeMotion(Scorer::IntakeState::STOPPED);       // stop intaking
+    Informants::Pose_t newPose = Informants::getRobotPose();     // New Pose is [24, 24, 90]
 }
 
 /**
