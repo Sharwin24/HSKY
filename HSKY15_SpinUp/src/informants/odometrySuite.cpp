@@ -44,9 +44,9 @@ void OdometrySuite::reset() {
 }
 
 void OdometrySuite::update() {
-    float leftTravel = (this->leftEncoder.get_position() * 36000.0f) / (pi * ENCODER_WHEEL_DIAMETER);             // [in]
-    float rightTravel = (this->rightEncoder.get_position() * 36000.0f) / (pi * ENCODER_WHEEL_DIAMETER);           // [in]
-    float horizontalTravel = (this->horizontalEncoder.get_position() * 36000.0f) / (pi * ENCODER_WHEEL_DIAMETER); // [in]
+    float leftTravel = (this->leftEncoder.get_position() * (pi * ENCODER_WHEEL_DIAMETER)) / 36000.0f;             // [in]
+    float rightTravel = (this->rightEncoder.get_position() * (pi * ENCODER_WHEEL_DIAMETER)) / 36000.0f;           // [in]
+    float horizontalTravel = (this->horizontalEncoder.get_position() * (pi * ENCODER_WHEEL_DIAMETER)) / 36000.0f; // [in]
     this->orientation = (leftTravel - rightTravel) / (CTLE + CTRE);
     this->xPosition = 2.0f * ((horizontalTravel / this->orientation) + CTHE) * sin(this->orientation / 2.0f);
     this->yPosition = 2.0f * ((rightTravel / this->orientation) + CTRE) * sin(this->orientation / 2.0f);

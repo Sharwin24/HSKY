@@ -160,18 +160,10 @@ void update() {
 }
 
 void act() {
-    switch (currentIntakeState) {
-        case IntakeState::STOPPED:
-            intakeMotor.moveVelocity(0);
-            break;
-        case IntakeState::INTAKING:
-            intakeMotor.moveVelocity(200);
-            break;
-        case IntakeState::OUTTAKING:
-            intakeMotor.moveVelocity(-200);
-            break;
-    }
+    // Act on the current intake state
+    setIntakeMotion(currentIntakeState);
 
+    // Act on the current catapult state
     switch (currentCatapultState) {
         case CatapultState::READY:
             // Do nothing
