@@ -1,7 +1,6 @@
 #include "main.h"
 #include "api.h"
 #include "chassis/chassis.hpp"
-#include "informants/odometrySuite.hpp"
 #include "okapi/api.hpp"
 #include "pros/misc.h"
 #include "pros/misc.hpp"
@@ -10,8 +9,7 @@
 // Define included namespaces and types
 #define Chassis src::Chassis
 #define Scorer src::Scorer
-#define Informants src::Informants
-#define Pose Informants::Pose_t
+#define Pose Chassis::Pose_t
 
 /**
  * A callback function for LLEMU's center button.
@@ -42,7 +40,7 @@ void initialize() {
     pros::lcd::register_btn1_cb(on_center_button);
 
     // Updates RobotPose every 10 ms
-    pros::Task odometryHandle(Informants::odometryTask);
+    pros::Task odometryHandle(Chassis::odometryTask);
 }
 
 /**
@@ -75,13 +73,13 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-    Pose currentPose = Informants::getRobotPose();          // Initial Pose is [0, 0, 0]
+    Pose currentPose = Chassis::getRobotPose();             // Initial Pose is [0, 0, 0]
     Scorer::setIntakeMotion(Scorer::IntakeState::INTAKING); // Start intaking
     Chassis::movePID(24, 24, 1000);                         // move forward 24 inches
     Chassis::gyroPID(90, true);                             // turn 90 degrees clockwise
     Scorer::pullDownAndFireCatapult();                      // pull down and fire catapult
     Scorer::setIntakeMotion(Scorer::IntakeState::STOPPED);  // stop intaking
-    Pose newPose = Informants::getRobotPose();              // New Pose is [24, 24, 90]
+    Pose newPose = Chassis::getRobotPose();                 // New Pose is [24, 24, 90]
 }
 
 /**
