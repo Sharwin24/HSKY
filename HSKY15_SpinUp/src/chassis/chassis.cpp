@@ -43,12 +43,28 @@ void OdometrySuite::reset() {
     this->xPosition = 0;
     this->yPosition = 0;
     this->orientation = 0;
+    imuSensor.reset();
     leftEncoder.reset();
     rightEncoder.reset();
     horizontalEncoder.reset();
 }
 
 void OdometrySuite::update() {
+    // Get encoder values and store locally
+    // Calculate the change in encoder values since last cycle and convert to wheel travel
+    // Assign travel distance to leftTravel, rightTravel, and horizontalTravel
+    // Update the encoder values for next cycle
+    // Calculate the total change in left and right encoders since last reset and convert to wheel travel
+    // Assign to totalLeftTravel and totalRightTravel
+    // Calculate new absolute orientation -> oriAtLastReset + (totalRightTravel - totalLeftTravel) / (CTLE + CTRE)
+    // Calculate the change in orientation (deltaTheta) since last cycle -> absoluteOrientation - oriAtLastReset
+    // If (deltaTheta == 0) i.e. leftTravel = rightTravel, then calculate local offset -> [x, y] = [horizontalTravel, rightTravel]
+    // Else calculate local offset -> [x, y] = 2sin(theta/2) * [(horizontalTravel/deltaTheta) + CTHE, (rightTravel/deltaTheta) + CTRE]
+    // Calculate the average orientation -> (previousOrientation + (deltaTheta / 2))
+    // Calculate global offset (deltaD) as local offset rotated by -averageOrientation
+    // This can be done by converting existing cartesian coordinates to polar coordinates, changing the angle, then converting back
+    // Calculate new absolute position -> previousGlobalPosition + deltaD
+
     float leftTravel = (leftEncoder.get_position() * (pi * ENCODER_WHEEL_DIAMETER)) / 36000.0f;             // [in]
     float rightTravel = (rightEncoder.get_position() * (pi * ENCODER_WHEEL_DIAMETER)) / 36000.0f;           // [in]
     float horizontalTravel = (horizontalEncoder.get_position() * (pi * ENCODER_WHEEL_DIAMETER)) / 36000.0f; // [in]
