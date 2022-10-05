@@ -92,6 +92,7 @@ extern void setChassisBrakeMode(AbstractMotor::brakeMode mode);
 // Chassis Odometry functions
 extern void odometryTask(void *);
 extern Pose_t getRobotPose();
+extern void printRobotPoseTask(void *);
 
 // Define chassis related sensors
 static pros::Imu imuSensor = pros::Imu(IMU_PORT);

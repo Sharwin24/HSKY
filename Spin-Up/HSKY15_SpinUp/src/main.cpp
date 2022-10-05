@@ -35,12 +35,12 @@ void on_center_button() {
  */
 void initialize() {
     pros::lcd::initialize();
-    pros::lcd::set_text(1, "Hello PROS User!");
 
     pros::lcd::register_btn1_cb(on_center_button);
 
-    // Updates RobotPose every 10 ms
+    // Updates RobotPose in Chassis
     pros::Task odometryHandle(Chassis::odometryTask);
+    pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
 }
 
 /**

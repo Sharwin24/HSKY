@@ -22,10 +22,18 @@ std::shared_ptr<ChassisController> chassis =
         .withDimensions(AbstractMotor::gearset::blue, {{WHEEL_DIAMETER, WHEEL_TRACK}, imev5BlueTPR})
         .build();
 
-// Robot's Pose that is updated by the odometry task every 10 ms
+// Robot's Pose that is updated by the odometry task
 static Pose_t robotPose = {0, 0, 0};
 
 Pose_t getRobotPose() { return robotPose; }
+
+void printRobotPoseTask(void *) {
+    while (true) {
+        pros::lcd::clear_line(1);
+        pros::lcd::print(1, "[X: %f, Y: $f, Theta: %f]", robotPose.x, robotPose.y, robotPose.theta);
+        pros::delay(50);
+    }
+}
 
 void odometryTask(void *) {
     OdometrySuite odometrySuite = OdometrySuite();
@@ -35,7 +43,7 @@ void odometryTask(void *) {
         robotPose.x = odometrySuite.getXPosition();
         robotPose.y = odometrySuite.getYPosition();
         robotPose.theta = odometrySuite.getOrientation();
-        pros::delay(10);
+        pros::delay(20);
     }
 }
 
@@ -65,20 +73,16 @@ void OdometrySuite::update() {
     float leftEncoderDelta = leftEncoderValue - this->previousLeftEncoderValue;
     float rightEncoderDelta = rightEncoderValue - this->previousRightEncoderValue;
     float horizontalEncoderDelta = horizontalEncoderValue - this->previousHorizontalEncoderValue;
-    float leftDeltaTravel = (leftEncoderDelta * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
-    float rightDeltaTravel = (rightEncoderDelta * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
-    float horizontalDeltaTravel = (horizontalEncoderDelta * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
-    // Update the encoder values for next cycle
-    this->previousLeftEncoderValue = leftEncoderValue;
-    this->previousRightEncoderValue = rightEncoderValue;
-    this->previousHorizontalEncoderValue = horizontalEncoderValue;
+    float leftDeltaTravel = (leftEncoderDelta * (WHEEL_DIAMETER * M_PI)) / 36000.0f;             // [in]
+    float rightDeltaTravel = (rightEncoderDelta * (WHEEL_DIAMETER * M_PI)) / 36000.0f;           // [in]
+    float horizontalDeltaTravel = (horizontalEncoderDelta * (WHEEL_DIAMETER * M_PI)) / 36000.0f; // [in]
     // Calculate the total change in left and right encoders since last reset and convert to wheel travel
     float leftEncoderTotal = leftEncoderValue - this->leftEncoderAtLastReset;
     float rightEncoderTotal = rightEncoderValue - this->rightEncoderAtLastReset;
     float horizontalEncoderTotal = horizontalEncoderValue - this->horizontalEncoderAtLastReset;
-    float totalLeftTravel = (leftEncoderTotal * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
-    float totalRightTravel = (rightEncoderTotal * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
-    float totalHorizontalTravel = (horizontalEncoderTotal * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
+    float totalLeftTravel = (leftEncoderTotal * (WHEEL_DIAMETER * M_PI)) / 36000.0f;             // [in]
+    float totalRightTravel = (rightEncoderTotal * (WHEEL_DIAMETER * M_PI)) / 36000.0f;           // [in]
+    float totalHorizontalTravel = (horizontalEncoderTotal * (WHEEL_DIAMETER * M_PI)) / 36000.0f; // [in]
     // Calculate new absolute orientation -> oriAtLastReset + (totalRightTravel - totalLeftTravel) / (CTLE + CTRE)
     float absOrientation = this->orientationAtLastReset + (totalRightTravel - totalLeftTravel) / (CTLE + CTRE);
     // Calculate the change in orientation (deltaTheta) since last cycle -> absoluteOrientation - oriAtLastReset
@@ -110,6 +114,9 @@ void OdometrySuite::update() {
     this->yPosition = absY;
     this->orientation = absOrientation;
     // Update previous values for next cycle
+    this->previousLeftEncoderValue = leftEncoderValue;
+    this->previousRightEncoderValue = rightEncoderValue;
+    this->previousHorizontalEncoderValue = horizontalEncoderValue;
     this->previousGlobalX = absX;
     this->previousGlobalY = absY;
     this->previousOrientation = absOrientation;
