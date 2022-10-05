@@ -36,9 +36,26 @@ class OdometrySuite {
     float getOrientation();
 
   private:
+    // Pose Variables
     float xPosition;
     float yPosition;
     float orientation;
+    // Last Reset Variables
+    float leftEncoderAtLastReset = 0;
+    float rightEncoderAtLastReset = 0;
+    float horizontalEncoderAtLastReset = 0;
+    float orientationAtLastReset = 0;
+    // Previous Cycle Variables
+    float previousLeftEncoderValue;
+    float previousRightEncoderValue;
+    float previousHorizontalEncoderValue;
+    float previousOrientation;
+    float previousGlobalX;
+    float previousGlobalY;
+
+    // Helper Functions
+    void cartesian2Polar(float x, float y, float &r, float &theta);
+    void polar2Cartesian(float r, float theta, float &x, float &y);
 };
 
 // MotorGroup for the left side of the chassis

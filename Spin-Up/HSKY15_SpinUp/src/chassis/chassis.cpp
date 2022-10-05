@@ -47,35 +47,87 @@ void OdometrySuite::reset() {
     leftEncoder.reset();
     rightEncoder.reset();
     horizontalEncoder.reset();
+    this->leftEncoderAtLastReset = 0;
+    this->rightEncoderAtLastReset = 0;
+    this->horizontalEncoderAtLastReset = 0;
+    this->orientationAtLastReset = 0;
+    this->previousLeftEncoderValue = 0;
+    this->previousRightEncoderValue = 0;
+    this->previousHorizontalEncoderValue = 0;
 }
 
 void OdometrySuite::update() {
-    // Get encoder values and store locally
+    // Get encoder values and store locally as centidegrees
+    float leftEncoderValue = leftEncoder.get_position();
+    float rightEncoderValue = rightEncoder.get_position();
+    float horizontalEncoderValue = horizontalEncoder.get_position();
     // Calculate the change in encoder values since last cycle and convert to wheel travel
-    // Assign travel distance to leftTravel, rightTravel, and horizontalTravel
+    float leftEncoderDelta = leftEncoderValue - this->previousLeftEncoderValue;
+    float rightEncoderDelta = rightEncoderValue - this->previousRightEncoderValue;
+    float horizontalEncoderDelta = horizontalEncoderValue - this->previousHorizontalEncoderValue;
+    float leftDeltaTravel = (leftEncoderDelta * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
+    float rightDeltaTravel = (rightEncoderDelta * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
+    float horizontalDeltaTravel = (horizontalEncoderDelta * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
     // Update the encoder values for next cycle
+    this->previousLeftEncoderValue = leftEncoderValue;
+    this->previousRightEncoderValue = rightEncoderValue;
+    this->previousHorizontalEncoderValue = horizontalEncoderValue;
     // Calculate the total change in left and right encoders since last reset and convert to wheel travel
-    // Assign to totalLeftTravel and totalRightTravel
+    float leftEncoderTotal = leftEncoderValue - this->leftEncoderAtLastReset;
+    float rightEncoderTotal = rightEncoderValue - this->rightEncoderAtLastReset;
+    float horizontalEncoderTotal = horizontalEncoderValue - this->horizontalEncoderAtLastReset;
+    float totalLeftTravel = (leftEncoderTotal * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
+    float totalRightTravel = (rightEncoderTotal * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
+    float totalHorizontalTravel = (horizontalEncoderTotal * (WHEEL_DIAMETER * M_PI)) / 36000.0f;
     // Calculate new absolute orientation -> oriAtLastReset + (totalRightTravel - totalLeftTravel) / (CTLE + CTRE)
+    float absOrientation = this->orientationAtLastReset + (totalRightTravel - totalLeftTravel) / (CTLE + CTRE);
     // Calculate the change in orientation (deltaTheta) since last cycle -> absoluteOrientation - oriAtLastReset
-    // If (deltaTheta == 0) i.e. leftTravel = rightTravel, then calculate local offset -> [x, y] = [horizontalTravel, rightTravel]
-    // Else calculate local offset -> [x, y] = 2sin(theta/2) * [(horizontalTravel/deltaTheta) + CTHE, (rightTravel/deltaTheta) + CTRE]
+    float deltaTheta = absOrientation - this->previousOrientation;
+    float x = 0;
+    float y = 0;
+    if (deltaTheta == 0) { // leftTravel == rightTravel -> [x, y] = [horizontalDeltaTravel, rightDeltaTravel]
+        x = horizontalDeltaTravel;
+        y = rightDeltaTravel;
+    } else { // [x, y] = 2sin(theta/2) * [(horizontalDeltaTravel/deltaTheta) + CTHE, (rightDeltaTravel/deltaTheta) + CTRE]
+        x = 2.0f * sin(absOrientation / 2.0f) * ((horizontalDeltaTravel / deltaTheta) + CTHE);
+        y = 2.0f * sin(absOrientation / 2.0f) * ((rightDeltaTravel / deltaTheta) + CTRE);
+    }
     // Calculate the average orientation -> (previousOrientation + (deltaTheta / 2))
-    // Calculate global offset (deltaD) as local offset rotated by -averageOrientation
-    // This can be done by converting existing cartesian coordinates to polar coordinates, changing the angle, then converting back
+    float averageOrientation = this->previousOrientation + (deltaTheta / 2.0f);
+    // Calculate global offset (deltaD) as local offset [x,y] rotated by -averageOrientation
+    // Convert existing cartesian coordinates to polar coordinates, changing the angle, then converting back
     // Calculate new absolute position -> previousGlobalPosition + deltaD
-
-    float leftTravel = (leftEncoder.get_position() * (pi * ENCODER_WHEEL_DIAMETER)) / 36000.0f;             // [in]
-    float rightTravel = (rightEncoder.get_position() * (pi * ENCODER_WHEEL_DIAMETER)) / 36000.0f;           // [in]
-    float horizontalTravel = (horizontalEncoder.get_position() * (pi * ENCODER_WHEEL_DIAMETER)) / 36000.0f; // [in]
-    this->orientation = (leftTravel - rightTravel) / (CTLE + CTRE);                                         // [rad]
-    this->xPosition = 2.0f * ((horizontalTravel / this->orientation) + CTHE) * sin(this->orientation / 2.0f);
-    this->yPosition = 2.0f * ((rightTravel / this->orientation) + CTRE) * sin(this->orientation / 2.0f);
+    float localOffsetRadius;
+    float localOffsetAngle;
+    cartesian2Polar(x, y, localOffsetRadius, localOffsetAngle);
+    float globalOffsetX;
+    float globalOffsetY;
+    polar2Cartesian(localOffsetRadius, localOffsetAngle - averageOrientation, globalOffsetX, globalOffsetY);
+    float absX = this->previousGlobalX + globalOffsetX;
+    float absY = this->previousGlobalY + globalOffsetY;
+    // Assign Final Robot Pose
+    this->xPosition = absX;
+    this->yPosition = absY;
+    this->orientation = absOrientation;
+    // Update previous values for next cycle
+    this->previousGlobalX = absX;
+    this->previousGlobalY = absY;
+    this->previousOrientation = absOrientation;
 }
 
 float OdometrySuite::getXPosition() { return this->xPosition; }
 float OdometrySuite::getYPosition() { return this->yPosition; }
 float OdometrySuite::getOrientation() { return this->orientation; }
+
+void OdometrySuite::cartesian2Polar(float x, float y, float &r, float &theta) {
+    r = sqrt(pow(x, 2) + pow(y, 2)); // [in]]
+    theta = atan2(y, x);             // [rad]
+}
+
+void OdometrySuite::polar2Cartesian(float r, float theta, float &x, float &y) {
+    x = r * cos(theta); // [in]
+    y = r * sin(theta); // [in]
+}
 
 void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
     leftChassisMotorGroup.setBrakeMode(mode);
