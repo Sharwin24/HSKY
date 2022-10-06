@@ -25,7 +25,7 @@ enum class IntakeState {
  */
 enum class CatapultState {
     READY = 0,
-    FIRING = 2,
+    FIRING = 1,
 };
 
 // Control loop functions

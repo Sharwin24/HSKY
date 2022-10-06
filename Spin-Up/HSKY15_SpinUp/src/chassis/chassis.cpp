@@ -127,7 +127,7 @@ float OdometrySuite::getYPosition() { return this->yPosition; }
 float OdometrySuite::getOrientation() { return this->orientation; }
 
 void OdometrySuite::cartesian2Polar(float x, float y, float &r, float &theta) {
-    r = sqrt(pow(x, 2) + pow(y, 2)); // [in]]
+    r = sqrt(pow(x, 2) + pow(y, 2)); // [in]
     theta = atan2(y, x);             // [rad]
 }
 
