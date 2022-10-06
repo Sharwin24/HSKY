@@ -28,12 +28,12 @@ enum class CatapultState {
     FIRING = 1,
 };
 
-// Control loop functions
+// Scorer control loop functions
 extern void initialize();
 extern void update();
 extern void act();
 
-// Mechanism functions
+// Scorer mechanism functions
 extern void setIntakeMotion(IntakeState state);
 extern void pullDownCatapult();
 extern void fireCatapult();
@@ -41,11 +41,11 @@ extern void pullDownAndFireCatapult(int msDelay = 100);
 extern void rollIntakeUntilRed(IntakeState intakeDirection = IntakeState::INTAKING);
 extern void rollIntakeUntilBlue(IntakeState intakeDirection = IntakeState::INTAKING);
 
-// Motors
+// Scorer motors
 static Motor catpultMotor = Motor(CATAPULT_PORT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
 static Motor intakeMotor = Motor(INTAKE_PORT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 
-// Sensors
+// Scorer sensors
 static pros::Optical opticalSensor = pros::Optical(OPTICAL_SENSOR_PORT);
 static pros::ADIDigitalIn catapultButton = pros::ADIDigitalIn(CATAPULT_BUTTON_PORT);
 

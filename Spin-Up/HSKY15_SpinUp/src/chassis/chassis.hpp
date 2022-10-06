@@ -53,7 +53,7 @@ class OdometrySuite {
     float previousGlobalX;
     float previousGlobalY;
 
-    // Helper Functions
+    // Math Functions
     void cartesian2Polar(float x, float y, float &r, float &theta);
     void polar2Cartesian(float r, float theta, float &x, float &y);
 };
@@ -72,7 +72,7 @@ static MotorGroup rightChassisMotorGroup = {
     Motor(CHASSIS_PORT_R3, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
     Motor(CHASSIS_PORT_R4, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees)};
 
-// Chassis pointer for motion functions
+// Chassis pointer for access to chassis model: chassis->getModel()
 extern std::shared_ptr<ChassisController> chassis;
 extern pros::Controller controller;
 
@@ -94,7 +94,7 @@ extern void odometryTask(void *);
 extern Pose_t getRobotPose();
 extern void printRobotPoseTask(void *);
 
-// Define chassis related sensors
+// Chassis sensors
 static pros::Imu imuSensor = pros::Imu(IMU_PORT);
 static pros::ADIUltrasonic ultrasonic(ULTRASONIC_PING_PORT, ULTRASONIC_ECHO_PORT);
 static pros::Rotation leftEncoder = pros::Rotation(LEFT_ENCODER_PORT);
