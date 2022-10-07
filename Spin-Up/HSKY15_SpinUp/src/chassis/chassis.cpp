@@ -37,7 +37,6 @@ void printRobotPoseTask(void *) {
 
 void odometryTask(void *) {
     OdometrySuite odometrySuite = OdometrySuite();
-    odometrySuite.reset();
     while (true) {
         odometrySuite.update();
         robotPose.x = odometrySuite.getXPosition();
@@ -46,6 +45,10 @@ void odometryTask(void *) {
         pros::delay(20);
     }
 }
+
+// BEGIN OdometrySuite Class
+OdometrySuite::OdometrySuite() { this->reset(); }
+OdometrySuite::~OdometrySuite() {}
 
 void OdometrySuite::reset() {
     this->xPosition = 0;
@@ -136,6 +139,8 @@ void OdometrySuite::polar2Cartesian(float r, float theta, float &x, float &y) {
     y = r * sin(theta); // [in]
 }
 
+// END OdometrySuite Class
+
 void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
     leftChassisMotorGroup.setBrakeMode(mode);
     rightChassisMotorGroup.setBrakeMode(mode);
@@ -164,7 +169,7 @@ void update() {
 }
 
 void act() { // OpControl for chassis
-    Chassis::chassis->getModel()->arcade(
+    chassis->getModel()->arcade(
         controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),
         TURN_FACTOR * controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
 }
