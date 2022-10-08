@@ -5,6 +5,16 @@ from graphics import Image
 from dataclasses import dataclass, field
 import numpy as np
 
+"""
+ControlVector(Pose ipose, double ivel = std::nan(""), double iaccel = 0.0, double ijerk = 0.0)
+
+ProfilePoint(ControlVector ivector, vector<double> iwheel_velocities, double icurvature, double itime)
+	@param ivector -> The pose and associated dynamics at this state in the path.
+  @param iwheel_velocities ->  The component of the robot's velocity provided by each wheel in meters per second.
+  @param icurvature  -> The degree to which the curve deviates from a straight line at this point in 1 / meters.
+  @param itime  -> The timestamp for this state relative to the start of the path in seconds.
+"""
+
 
 @dataclass
 class Pose():
@@ -94,27 +104,54 @@ class Robot():
 
     def moveRobot(self, newPose: Pose) -> None:
         """Moves the robot to a new Pose"""
+        # Keep theta in range [0, 360)
+        newPose.theta = newPose.theta % 360
+        if newPose.theta < 0:
+            newPose.theta += 360
         self.previousPose = self.pose
-        self.pose = newPose
+        self.pose = Pose(newPose.x, newPose.y, newPose.theta)
 
     def driveRobot(self, distance: float) -> None:
         """Moves the robot forward by the given distance"""
         # We need to convert the distance to a change in x and y
         # based on the robot's current orientation
-        newX = self.pose.x + distance * np.cos(np.radians(self.pose.theta))
-        newY = self.pose.y + distance * np.sin(np.radians(self.pose.theta))
+        if self.pose.theta == 0:
+            newX = self.pose.x
+            newY = self.pose.y - distance
+        elif self.pose.theta == 180:
+            newX = self.pose.x
+            newY = self.pose.y + distance
+        else:
+            newX = self.pose.x + distance * \
+                np.cos(np.radians((90 + self.pose.theta) % 360))
+            newY = self.pose.y + distance * \
+                np.sin(np.radians((90 + self.pose.theta) % 360))
         self.moveRobot(Pose(newX, newY, self.pose.theta))
 
     def turnRobot(self, newTheta: float) -> None:
         """Turns the robot to the given angle [deg]"""
-        self.moveRobot(Pose(self.pose.x, self.pose.y, newTheta))
+        self.moveRobot(Pose(self.pose.x, self.pose.y,
+                       self.pose.theta + newTheta))
 
     def draw(self, screen) -> None:
         """Draws the robot on the screen"""
+        # offset from pivot to center
+        imageW, imageH = self.image.get_size()
+        image_rect = self.image.get_rect(
+            topleft=(self.pose.x - imageW/2, self.pose.y - imageH/2))
+        offset_center_to_pivot = pygame.math.Vector2(
+            (self.pose.x, self.pose.y)) - image_rect.center
+        # rotated offset from pivot to center
         if not self.previousPose.__eq__(self.pose) and self.previousPose is not None:
-            print("Redrawing Robot angle")
-            self.image = pygame.transform.rotate(self.image, self.pose.theta)
-        screen.blit(self.image, (self.pose.x, self.pose.y))
+            rotated_offset = offset_center_to_pivot.rotate(-self.pose.theta)
+        else:  # No rotation
+            rotated_offset = offset_center_to_pivot.rotate(0)
+        rotated_image_center = (
+            self.pose.x - rotated_offset.x, self.pose.y - rotated_offset.y)
+        rotated_image = pygame.transform.rotate(self.image, self.pose.theta)
+        rotated_image_rect = rotated_image.get_rect(
+            center=rotated_image_center)
+        screen.blit(rotated_image, rotated_image_rect)
 
     def reset(self) -> None:
         """Resets the robot to its starting position"""

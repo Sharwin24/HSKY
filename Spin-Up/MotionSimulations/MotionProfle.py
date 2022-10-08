@@ -1,20 +1,5 @@
 # A visual tool for motion profiling
 
-# 1. Generate a path. A path is constructed from a series of waypoints.
-# Each waypoint holds the robot's pose {x, y, theta} at that point
-# The path that is returned is a list of ProfilePoints, which is comprised
-# of a ControlVector, wheel velocities, curvature, and time
-
-"""
-ControlVector(Pose ipose, double ivel = std::nan(""), double iaccel = 0.0, double ijerk = 0.0)
-
-ProfilePoint(ControlVector ivector, vector<double> iwheel_velocities, double icurvature, double itime)
-	@param ivector -> The pose and associated dynamics at this state in the path.
-  @param iwheel_velocities ->  The component of the robot's velocity provided by each wheel in meters per second.
-  @param icurvature  -> The degree to which the curve deviates from a straight line at this point in 1 / meters.
-  @param itime  -> The timestamp for this state relative to the start of the path in seconds.
-"""
-
 import pygame
 from pygame.locals import *
 from dataclasses import dataclass
@@ -26,6 +11,14 @@ from MotionClasses import *
 WINDOW_WIDTH = 1080
 WINDOW_HEIGHT = 1080
 SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
+
+# colors
+white = (255, 255, 255)
+black = (0, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 128)
+red = (255, 0, 0)
+
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
@@ -40,10 +33,10 @@ screen.blit(backgroundImage, (0, 0))
 # screen.blit(robotImage, (1080/2, 1080/2))
 
 # Object Creation
-startPosition = Pose(70, 210, -90)
+startPosition = Pose(125, 275, 270)
 robot = Robot(1, startPosition, robotImage)
 ROBOT_STEP = (1080 / 6) / 16
-ROBOT_TURN_STEP = 1  # [deg]
+ROBOT_TURN_STEP = 10  # [deg]
 
 
 def HandleKeystrokes(keys) -> bool:
@@ -59,9 +52,9 @@ def HandleKeystrokes(keys) -> bool:
     elif keys[pygame.K_DOWN]:
         robot.driveRobot(-ROBOT_STEP)
     elif keys[pygame.K_LEFT]:
-        robot.turnRobot(-ROBOT_TURN_STEP)
-    elif keys[pygame.K_RIGHT]:
         robot.turnRobot(ROBOT_TURN_STEP)
+    elif keys[pygame.K_RIGHT]:
+        robot.turnRobot(-ROBOT_TURN_STEP)
 
     return True
 
@@ -72,6 +65,11 @@ def updateFrame():
     # Draw robot at current position
     screen.blit(backgroundImage, (0, 0))
     robot.draw(screen)
+    text = pygame.font.Font(None, 36).render(
+        "Robot -> " + str(robot.pose), True, red, black)
+    textRect = text.get_rect()
+    textRect.center = (154, 950)
+    screen.blit(text, textRect)
     print("Robot -> " + str(robot.pose))
 
 
