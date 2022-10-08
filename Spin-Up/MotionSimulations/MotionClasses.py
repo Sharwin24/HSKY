@@ -122,10 +122,12 @@ class Robot():
             newX = self.pose.x
             newY = self.pose.y + distance
         else:
-            newX = self.pose.x + distance * \
-                np.cos(np.radians((90 + self.pose.theta) % 360))
-            newY = self.pose.y + distance * \
-                np.sin(np.radians((90 + self.pose.theta) % 360))
+            transformedAngle = self.pose.theta - 90
+            if transformedAngle < 0:
+                transformedAngle += 360
+            transformedAngle = np.deg2rad(transformedAngle % 360)
+            newX = self.pose.x + distance * np.cos(transformedAngle)
+            newY = self.pose.y + distance * np.sin(transformedAngle)
         self.moveRobot(Pose(newX, newY, self.pose.theta))
 
     def turnRobot(self, newTheta: float) -> None:
