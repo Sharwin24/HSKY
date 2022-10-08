@@ -16,103 +16,20 @@ ProfilePoint(ControlVector ivector, vector<double> iwheel_velocities, double icu
 """
 
 import pygame
+from pygame.locals import *
 from dataclasses import dataclass
 from graphics import Image
 import os
+from MotionClasses import *
 
-
-@dataclass
-class Pose():
-    x: float
-    y: float
-    theta: float
-
-
-@dataclass
-class ControlVector():
-    pose: Pose
-    velocity: float = 0
-    accel: float = 0
-    jerk: float = 0
-
-
-@dataclass
-class WheelVelocities():
-    leftVelocity: float
-    rightVelocity: float
-
-
-@dataclass
-class ProfilePoint():
-    vector: ControlVector
-    wheel_velocities: WheelVelocities
-    curvature: float
-    time: float
-
-
-@dataclass
-class Path():
-    id: int
-    motionPoints: list[ProfilePoint]
-
-
-@dataclass
-class PathGenerator():
-    maxVelocity: float
-    timeStep: float
-
-    def generatePath(self, waypoints: list[Pose]) -> Path:
-        """Generates a smooth path that intersects the given waypoints
-           Also calculates the curvature and wheel velocities for each point"""
-        pass
-
-
-@dataclass
-class MotionProfiler():
-    pathGenerator: PathGenerator
-    pathsToRun: list[Path]
-
-    def generatePath(self, waypoints: list[Pose]) -> Path:
-        """Generates a path from the given waypoints and adds it to the list of paths
-           Delegates to the path generator"""
-        self.pathsToRun.append(self.pathGenerator.generatePath(waypoints))
-
-    def removePath(self, pathId: int) -> None:
-        """Removes the path with the given id from the list of paths"""
-        [self.pathsToRun.remove(path)
-         for path in self.pathsToRun if path.id == pathId]
-
-
-@dataclass
-class Robot():
-    id: int
-    pose: Pose
-    image: Image
-
-    def moveRobot(self, newPose: Pose) -> None:
-        """Moves the robot to a new Pose"""
-        pass
-
-
-@dataclass
-class Simulator():
-    motionProfiler: MotionProfiler
-    robot: Robot
-
-    def run(self) -> None:
-        """Runs the simulation"""
-        pass
-
-
-# Graphical Constants
+# Pygame setup
 WINDOW_WIDTH = 1080
 WINDOW_HEIGHT = 1080
 SIZE = (WINDOW_WIDTH, WINDOW_HEIGHT)
-# Pygame Setup
 
 pygame.init()
 screen = pygame.display.set_mode(SIZE)
-
+clock = pygame.time.Clock()
 backgroundImage = pygame.image.load(
     os.path.join(
         'MotionSimulations', 'background.png')).convert()
@@ -120,12 +37,56 @@ robotImage = pygame.image.load(os.path.join(
     'MotionSimulations', 'robot.png')).convert()
 
 screen.blit(backgroundImage, (0, 0))
-screen.blit(robotImage, (56, 22))
+# screen.blit(robotImage, (1080/2, 1080/2))
+
+# Object Creation
+startPosition = Pose(70, 210, -90)
+robot = Robot(1, startPosition, robotImage)
+ROBOT_STEP = (1080 / 6) / 16
+ROBOT_TURN_STEP = 1  # [deg]
 
 
-while True:
+def HandleKeystrokes(keys) -> bool:
+    if keys[pygame.K_q]:
+        print("Quitting Simulation")
+        return False
+
+    if keys[pygame.K_r]:
+        print("Resetting Simulation")
+        robot.reset()
+    elif keys[pygame.K_UP]:
+        robot.driveRobot(ROBOT_STEP)
+    elif keys[pygame.K_DOWN]:
+        robot.driveRobot(-ROBOT_STEP)
+    elif keys[pygame.K_LEFT]:
+        robot.turnRobot(-ROBOT_TURN_STEP)
+    elif keys[pygame.K_RIGHT]:
+        robot.turnRobot(ROBOT_TURN_STEP)
+
+    return True
+
+
+def updateFrame():
+    # Draw background
+    # Draw all Paths from MotionProfiler
+    # Draw robot at current position
+    screen.blit(backgroundImage, (0, 0))
+    robot.draw(screen)
+    print("Robot -> " + str(robot.pose))
+
+
+continueSim = True
+while continueSim:
+    clock.tick(24)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
+            continueSim = False
 
+    if continueSim:
+        keys = pygame.key.get_pressed()
+        continueSim = HandleKeystrokes(keys)
+        updateFrame()
     pygame.display.update()
+
+
+pygame.quit()

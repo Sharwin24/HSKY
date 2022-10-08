@@ -1,5 +1,4 @@
 #include "scorer.hpp"
-#include "okapi/api/control/async/asyncVelIntegratedController.hpp"
 #include "okapi/impl/device/button/controllerButton.hpp"
 #include "okapi/impl/device/controllerUtil.hpp"
 #include "okapi/impl/device/motor/motor.hpp"
