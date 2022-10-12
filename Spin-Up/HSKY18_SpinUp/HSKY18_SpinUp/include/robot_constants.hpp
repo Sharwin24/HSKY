@@ -31,11 +31,11 @@ static constexpr uint8_t ULTRASONIC_ECHO_PORT = 'C';
 // Physical robot constants
 static constexpr float_t DRIVE_GEAR_RATIO = 36.0f / 84.0f;
 static constexpr float_t WHEEL_DIAMETER = 4.125f;                 // [in]
-static constexpr float_t WHEEL_TRACK = 11.8f;                     // [in]
+static constexpr float_t WHEEL_TRACK = 12.526f;                   // [in]
 static constexpr float_t ENCODER_WHEEL_DIAMETER = 2.75f;          // [in]
-static constexpr float_t CENTER_TO_LEFT_ENCODER = 6.298f / 2.0f;  // [in]
-static constexpr float_t CENTER_TO_RIGHT_ENCODER = 6.298f / 2.0f; // [in]
-static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 4.676f;   // [in]
+static constexpr float_t CENTER_TO_LEFT_ENCODER = 7.261f / 2.0f;  // [in]
+static constexpr float_t CENTER_TO_RIGHT_ENCODER = 7.261f / 2.0f; // [in]
+static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 2.376f;   // [in]
 
 // Programming constants
 static constexpr float TURN_FACTOR = 0.90f; // Scalar factor for turning in driver control
