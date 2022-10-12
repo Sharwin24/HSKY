@@ -11,6 +11,8 @@ namespace src::Scorer {
 
 ControllerButton intakeToggle(ControllerDigital::L1);
 ControllerButton outtakeButton(ControllerDigital::L2);
+ControllerButton indexerButton(ControllerDigital::R1);
+ControllerButton flywheelToggle(ControllerDigital::R2);
 
 IntakeState currentIntakeState = IntakeState::STOPPED;
 IntakeState previousIntakeState = IntakeState::STOPPED;
