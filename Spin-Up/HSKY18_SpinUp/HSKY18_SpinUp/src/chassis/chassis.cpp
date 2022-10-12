@@ -39,6 +39,7 @@ void odometryTask(void *) {
     OdometrySuite odometrySuite = OdometrySuite();
     while (true) {
         odometrySuite.update();
+        // TODO: Lock struct to prevent race conditions when accessing
         robotPose.x = odometrySuite.getXPosition();
         robotPose.y = odometrySuite.getYPosition();
         robotPose.theta = odometrySuite.getOrientation();
@@ -146,8 +147,7 @@ void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
     rightChassisMotorGroup.setBrakeMode(mode);
 }
 
-void initialize() {
-    setChassisBrakeMode(AbstractMotor::brakeMode::hold);
+void resetImu() {
     imuSensor.reset();
     int time = pros::millis();
     int iter = 0;
@@ -157,6 +157,11 @@ void initialize() {
         pros::delay(100);
     }
     printf("IMU Calibrated in %d [ms]\n", iter - time);
+}
+
+void initialize() {
+    setChassisBrakeMode(AbstractMotor::brakeMode::hold);
+    resetImu();
 }
 
 void update() {
