@@ -1,6 +1,8 @@
 #pragma once
 #include "main.h"
 
+// All constants relevent for the 18" robot
+
 // Motor Ports
 static constexpr uint8_t CHASSIS_PORT_L1 = 1;
 static constexpr uint8_t CHASSIS_PORT_L2 = 2;
@@ -13,21 +15,21 @@ static constexpr uint8_t CHASSIS_PORT_R3 = 7;
 static constexpr uint8_t CHASSIS_PORT_R4 = 8;
 
 static constexpr uint8_t FLYWHEEL_TOP_PORT = 9;
-static constexpr uint8_t FLYWHEEL_BOTTOM_PORT = 11;
-static constexpr uint8_t INDEXER_PORT = 12;
-static constexpr uint8_t INTAKE_PORT = 13;
+static constexpr uint8_t FLYWHEEL_BOTTOM_PORT = 10;
+static constexpr uint8_t INDEXER_PORT = 11;
+static constexpr uint8_t INTAKE_PORT = 12;
 
 // Sensor Ports
-static constexpr uint8_t IMU_PORT = 11;
-static constexpr uint8_t OPTICAL_SENSOR_PORT = 12;
-static constexpr uint8_t LEFT_ENCODER_PORT = 13;
-static constexpr uint8_t RIGHT_ENCODER_PORT = 14; // Encoders are V5 Rotation Sensors
-static constexpr uint8_t HORIZONTAL_ENCODER_PORT = 15;
+static constexpr uint8_t IMU_PORT = 13;
+static constexpr uint8_t OPTICAL_SENSOR_PORT = 14;
+static constexpr uint8_t LEFT_ENCODER_PORT = 15;
+static constexpr uint8_t RIGHT_ENCODER_PORT = 16; // Encoders are V5 Rotation Sensors
+static constexpr uint8_t HORIZONTAL_ENCODER_PORT = 17;
 static constexpr uint8_t ULTRASONIC_PING_PORT = 'B';
 static constexpr uint8_t ULTRASONIC_ECHO_PORT = 'C';
 
 // Physical robot constants
-static constexpr float_t DRIVE_GEAR_RATIO = 0;                    // TODO: Pick a value
+static constexpr float_t DRIVE_GEAR_RATIO = 36.0f / 84.0f;
 static constexpr float_t WHEEL_DIAMETER = 4.125f;                 // [in]
 static constexpr float_t WHEEL_TRACK = 11.8f;                     // [in]
 static constexpr float_t ENCODER_WHEEL_DIAMETER = 2.75f;          // [in]
