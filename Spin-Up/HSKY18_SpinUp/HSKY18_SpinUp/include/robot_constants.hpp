@@ -2,6 +2,7 @@
 #include "main.h"
 
 // All constants relevent for the 18" robot
+// Dead Ports:
 
 // Motor Ports
 static constexpr uint8_t CHASSIS_PORT_L1 = 1;

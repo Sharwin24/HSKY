@@ -14,6 +14,9 @@ using namespace okapi;
 
 namespace src::Chassis {
 
+// Mutex for assigning and accessing RobotPose
+pros::Mutex odometryMutex = pros::Mutex();
+
 // Initalize chassis pointer using motor group and dimensions
 std::shared_ptr<ChassisController> chassis =
     ChassisControllerBuilder()
@@ -25,13 +28,23 @@ std::shared_ptr<ChassisController> chassis =
 // Robot's Pose that is updated by the odometry task
 static Pose_t robotPose = {0, 0, 0};
 
-Pose_t getRobotPose() { return robotPose; }
+Pose_t getRobotPose() {
+    Pose_t pose = {0, 0, 0};
+    odometryMutex.take();
+    pose.x = robotPose.x;
+    pose.y = robotPose.y;
+    pose.theta = robotPose.theta;
+    odometryMutex.give();
+    return pose;
+}
 
 void printRobotPoseTask(void *) {
     while (true) {
         pros::lcd::clear_line(1);
+        odometryMutex.take();
         pros::lcd::print(1, "Odometry -> [X: %f, Y: $f, Theta: %f]", robotPose.x, robotPose.y, robotPose.theta);
-        pros::delay(50);
+        odometryMutex.give();
+        pros::delay(20);
     }
 }
 
@@ -39,10 +52,11 @@ void odometryTask(void *) {
     OdometrySuite odometrySuite = OdometrySuite();
     while (true) {
         odometrySuite.update();
-        // TODO: Lock struct to prevent race conditions when accessing
+        odometryMutex.take();
         robotPose.x = odometrySuite.getXPosition();
         robotPose.y = odometrySuite.getYPosition();
         robotPose.theta = odometrySuite.getOrientation();
+        odometryMutex.give();
         pros::delay(20);
     }
 }
@@ -147,16 +161,18 @@ void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
     rightChassisMotorGroup.setBrakeMode(mode);
 }
 
-void resetImu() {
+void resetImu(bool print = true) {
     imuSensor.reset();
-    int time = pros::millis();
-    int iter = 0;
-    while (imuSensor.is_calibrating()) {
-        printf("IMU Calibrating... %d [ms]\n", iter);
-        iter += 100;
-        pros::delay(100);
+    if (print) {
+        int time = pros::millis();
+        int iter = 0;
+        while (imuSensor.is_calibrating()) {
+            printf("IMU Calibrating... %d [ms]\n", iter);
+            iter += 100;
+            pros::delay(100);
+        }
+        printf("IMU Calibrated in %d [ms]\n", iter - time);
     }
-    printf("IMU Calibrated in %d [ms]\n", iter - time);
 }
 
 void initialize() {
