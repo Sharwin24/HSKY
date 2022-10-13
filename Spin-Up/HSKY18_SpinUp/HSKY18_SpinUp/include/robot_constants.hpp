@@ -31,6 +31,7 @@ static constexpr uint8_t ULTRASONIC_ECHO_PORT = 'C';
 
 // Physical robot constants
 static constexpr float_t DRIVE_GEAR_RATIO = 36.0f / 84.0f;
+static constexpr float_t FLYWHEEL_GEAR_RATIO = 60.0f / 12.0f;
 static constexpr float_t WHEEL_DIAMETER = 4.125f;                 // [in]
 static constexpr float_t WHEEL_TRACK = 12.526f;                   // [in]
 static constexpr float_t ENCODER_WHEEL_DIAMETER = 2.75f;          // [in]

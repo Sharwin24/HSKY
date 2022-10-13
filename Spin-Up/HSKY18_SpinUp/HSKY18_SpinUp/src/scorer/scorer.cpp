@@ -14,8 +14,11 @@ ControllerButton outtakeButton(ControllerDigital::L2);
 ControllerButton indexerButton(ControllerDigital::R1);
 ControllerButton flywheelToggle(ControllerDigital::R2);
 
-IntakeState currentIntakeState = IntakeState::STOPPED;
 IntakeState previousIntakeState = IntakeState::STOPPED;
+IntakeState currentIntakeState = IntakeState::STOPPED;
+FlywheelState currentFlywheelState = FlywheelState::OFF;
+FlywheelControlAlgorithm flywheelControlAlgorithm = FlywheelControlAlgorithm::BANG_BANG;
+static float_t flywheelTargetRPM = 0;
 
 /**
  * @brief Applies the given IntakeState to the intake motor
@@ -33,6 +36,74 @@ void setIntakeMotion(IntakeState intakeState) {
         case IntakeState::OUTTAKING:
             intakeMotor.moveVelocity(-200);
             break;
+    }
+}
+
+/**
+ * @brief Applies the given FlywheelState to the flywheel motorgroup
+ *
+ * @param flywheelState the desired state of the Flywheel mechanism
+ */
+void setFlywheelMotion(FlywheelState state) {
+    currentFlywheelState = state;
+    switch (state) {
+        case FlywheelState::OFF:
+            flywheelTargetRPM = 0;
+            break;
+        case FlywheelState::HALF_SPEED:
+            flywheelTargetRPM = 2000;
+            break;
+        case FlywheelState::FULL_SPEED:
+            flywheelTargetRPM = 2500;
+            break;
+    }
+}
+
+/**
+ * @brief Using the assigned control algorithm, applies the target RPM to the flywheel
+ *
+ */
+void flywheelControlTask(void *) {
+    while (true) {
+        switch (flywheelControlAlgorithm) {
+            case FlywheelControlAlgorithm::PID:
+                // Flywheel P Controller
+                break;
+            case FlywheelControlAlgorithm::BANG_BANG:
+                // Bang bang control is a simple on/off control algorithm
+                // if the current velocity is less than the target velocity, turn the flywheel on
+                // otherwise turn the flywheel off
+                if ((flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO) < flywheelTargetRPM) {
+                    flywheelMotorGroup.moveVoltage(12000);
+                } else {
+                    flywheelMotorGroup.moveVoltage(0);
+                }
+                break;
+        }
+        pros::delay(20);
+    }
+}
+
+/**
+ * @brief Advances the state of the flywheel
+ *
+ */
+void flywheelStateTask(void *) {
+    while (true) {
+        if (flywheelToggle.changedToPressed()) {
+            switch (currentFlywheelState) {
+                case FlywheelState::OFF:
+                    setFlywheelMotion(FlywheelState::HALF_SPEED);
+                    break;
+                case FlywheelState::HALF_SPEED:
+                    setFlywheelMotion(FlywheelState::FULL_SPEED);
+                    break;
+                case FlywheelState::FULL_SPEED:
+                    setFlywheelMotion(FlywheelState::OFF);
+                    break;
+            }
+        }
+        pros::delay(20);
     }
 }
 
@@ -87,6 +158,7 @@ void rollIntakeUntilBlue(IntakeState intakeDirection) {
 }
 
 void initialize() {
+    flywheelMotorGroup.setBrakeMode(AbstractMotor::brakeMode::coast);
     intakeMotor.setBrakeMode(AbstractMotor::brakeMode::coast);
 }
 

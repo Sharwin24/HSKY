@@ -30,6 +30,15 @@ enum class FlywheelState {
     FULL_SPEED = 2,
 };
 
+/**
+ * @brief Enum to represent the control algorithm for the Flywheel
+ *
+ */
+enum class FlywheelControlAlgorithm {
+    PID = 0,
+    BANG_BANG = 1,
+};
+
 // Scorer control loop functions
 extern void initialize();
 extern void update();
@@ -40,6 +49,8 @@ extern void setIntakeMotion(IntakeState state);
 extern void setFlywheelMotion(FlywheelState state);
 extern void rollIntakeUntilRed(IntakeState intakeDirection = IntakeState::INTAKING);
 extern void rollIntakeUntilBlue(IntakeState intakeDirection = IntakeState::INTAKING);
+extern void flywheelStateTask(void *param);
+extern void flywheelControlTask(void *param);
 
 // Scorer motors
 static Motor intakeMotor = Motor(INTAKE_PORT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
