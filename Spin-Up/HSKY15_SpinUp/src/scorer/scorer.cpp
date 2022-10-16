@@ -134,10 +134,10 @@ void initialize() {
 void update() {
     // Override outtake but return to previous intake state
     if (outtakeButton.changedToPressed()) {
-        previousIntakeState = currentIntakeState;    // Save intake state from before outtake button was pressed
-        currentIntakeState = IntakeState::OUTTAKING; // Outtake while outtake btn is pressed
+        previousIntakeState = currentIntakeState;
+        currentIntakeState = IntakeState::OUTTAKING;
     } else if (outtakeButton.changedToReleased()) {
-        currentIntakeState = previousIntakeState; // Save intake state from before outtake button was pressed
+        currentIntakeState = previousIntakeState;
     }
 
     // Intake Toggle turns Intake on and off
