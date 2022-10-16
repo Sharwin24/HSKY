@@ -38,16 +38,16 @@ static constexpr float_t CENTER_TO_RIGHT_ENCODER = 6.298f / 2.0f; // [in]
 static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 4.676f;   // [in]
 
 // Programming constants
-static constexpr float TURN_FACTOR = 0.90f;                 // Scalar factor for turning in driver control
-static constexpr float DEGREES_TO_ENGAGE_SLIP_GEAR = 15.0f; // [degrees]
-static constexpr float P_GAIN_DRIVE = 0.00185f;
-static constexpr float I_GAIN_DRIVE = 0.0f;
-static constexpr float D_GAIN_DRIVE = 0.0001f;
-static constexpr float P_GAIN_DRIVE_ULTRASONIC = 0.1f;
-static constexpr float I_GAIN_DRIVE_ULTRASONIC = 0.00008f; // None of these are tuned
-static constexpr float D_GAIN_DRIVE_ULTRASONIC = 0.05;
-static constexpr float P_GAIN_TURN = 0.1875f;
-static constexpr float I_GAIN_TURN = 0.000008f;
-static constexpr float D_GAIN_TURN = 0.15f;
+static constexpr float_t TURN_FACTOR = 0.90f;                 // Scalar factor for turning in driver control
+static constexpr float_t DEGREES_TO_ENGAGE_SLIP_GEAR = 15.0f; // [degrees]
+static constexpr float_t P_GAIN_DRIVE = 0.00185f;
+static constexpr float_t I_GAIN_DRIVE = 0.0f;
+static constexpr float_t D_GAIN_DRIVE = 0.0001f;
+static constexpr float_t P_GAIN_DRIVE_ULTRASONIC = 0.1f;
+static constexpr float_t I_GAIN_DRIVE_ULTRASONIC = 0.00008f; // None of these are tuned
+static constexpr float_t D_GAIN_DRIVE_ULTRASONIC = 0.05;
+static constexpr float_t P_GAIN_TURN = 0.1875f;
+static constexpr float_t I_GAIN_TURN = 0.000008f;
+static constexpr float_t D_GAIN_TURN = 0.15f;
 static constexpr pros::c::optical_rgb_s_t RED_COLOR = {255, 0, 0};  // TODO: Find actual value for red on roller using Optical sensor
 static constexpr pros::c::optical_rgb_s_t BLUE_COLOR = {0, 0, 255}; // TODO: Find actual value for blue on roller using Optical sensor
