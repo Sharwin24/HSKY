@@ -9,13 +9,17 @@ using namespace okapi;
 
 namespace src::Scorer {
 
+// Buttons for controlling the Scorer
 ControllerButton intakeToggle(ControllerDigital::L1);
 ControllerButton outtakeButton(ControllerDigital::L2);
 ControllerButton indexerButton(ControllerDigital::R1);
 ControllerButton flywheelToggle(ControllerDigital::R2);
 
+// Scorer internal state
 IntakeState previousIntakeState = IntakeState::STOPPED;
 IntakeState currentIntakeState = IntakeState::STOPPED;
+IndexerState previousIndexerState = IndexerState::STOPPED;
+IndexerState currentIndexerState = IndexerState::STOPPED;
 FlywheelState currentFlywheelState = FlywheelState::OFF;
 FlywheelControlAlgorithm flywheelControlAlgorithm = FlywheelControlAlgorithm::BANG_BANG;
 static float_t flywheelTargetRPM = 0;
@@ -23,10 +27,10 @@ static float_t flywheelTargetRPM = 0;
 /**
  * @brief Applies the given IntakeState to the intake motor
  *
- * @param intakeState the desired state of the Intake mechanism
+ * @param state the desired state of the Intake mechanism
  */
-void setIntakeMotion(IntakeState intakeState) {
-    switch (intakeState) {
+void setIntakeMotion(IntakeState state) {
+    switch (state) {
         case IntakeState::STOPPED:
             intakeMotor.moveVelocity(0);
             break;
@@ -40,9 +44,28 @@ void setIntakeMotion(IntakeState intakeState) {
 }
 
 /**
+ * @brief  Applies the given IndexerState to the intake motor
+ *
+ * @param state the desired state of the Indexer mechanism
+ */
+void setIndexerMotion(IndexerState state) {
+    switch (state) {
+        case IndexerState::STOPPED:
+            indexerMotor.moveVelocity(0);
+            break;
+        case IndexerState::INDEXING:
+            indexerMotor.moveVelocity(200);
+            break;
+        case IndexerState::OUTDEXING:
+            indexerMotor.moveVelocity(-200);
+            break;
+    }
+}
+
+/**
  * @brief Applies the given FlywheelState to the flywheel motorgroup
  *
- * @param flywheelState the desired state of the Flywheel mechanism
+ * @param state the desired state of the Flywheel mechanism
  */
 void setFlywheelMotion(FlywheelState state) {
     currentFlywheelState = state;
@@ -51,28 +74,34 @@ void setFlywheelMotion(FlywheelState state) {
             flywheelTargetRPM = 0;
             break;
         case FlywheelState::HALF_SPEED:
-            flywheelTargetRPM = 2000;
+            flywheelTargetRPM = 1900;
             break;
         case FlywheelState::FULL_SPEED:
-            flywheelTargetRPM = 2500;
+            flywheelTargetRPM = 2300;
             break;
     }
 }
 
 /**
- * @brief Using the assigned control algorithm, applies the target RPM to the flywheel
+ * @brief Using the current control algorithm, applies the target RPM to the flywheel
  *
  */
 void flywheelControlTask(void *) {
     while (true) {
+        if (currentFlywheelState == FlywheelState::OFF) {
+            continue;
+        }
         switch (flywheelControlAlgorithm) {
+            case FlywheelControlAlgorithm::NONE:
+                flywheelMotorGroup.moveVelocity(0);
+                break;
             case FlywheelControlAlgorithm::PID:
-                // Flywheel P Controller
+                // Flywheel PID Controller
+                break;
+            case FlywheelControlAlgorithm::TAKE_BACK_HALF:
+                // Flywheel Take Back Half Controller
                 break;
             case FlywheelControlAlgorithm::BANG_BANG:
-                // Bang bang control is a simple on/off control algorithm
-                // if the current velocity is less than the target velocity, turn the flywheel on
-                // otherwise turn the flywheel off
                 if ((flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO) < flywheelTargetRPM) {
                     flywheelMotorGroup.moveVoltage(12000);
                 } else {
@@ -85,7 +114,7 @@ void flywheelControlTask(void *) {
 }
 
 /**
- * @brief Advances the state of the flywheel
+ * @brief Advances the state of the flywheel to the next state in the sequence
  *
  */
 void flywheelStateTask(void *) {
@@ -93,13 +122,13 @@ void flywheelStateTask(void *) {
         if (flywheelToggle.changedToPressed()) {
             switch (currentFlywheelState) {
                 case FlywheelState::OFF:
-                    setFlywheelMotion(FlywheelState::HALF_SPEED);
+                    currentFlywheelState = FlywheelState::HALF_SPEED;
                     break;
                 case FlywheelState::HALF_SPEED:
-                    setFlywheelMotion(FlywheelState::FULL_SPEED);
+                    currentFlywheelState = FlywheelState::FULL_SPEED;
                     break;
                 case FlywheelState::FULL_SPEED:
-                    setFlywheelMotion(FlywheelState::OFF);
+                    currentFlywheelState = FlywheelState::OFF;
                     break;
             }
         }
@@ -160,15 +189,18 @@ void rollIntakeUntilBlue(IntakeState intakeDirection) {
 void initialize() {
     flywheelMotorGroup.setBrakeMode(AbstractMotor::brakeMode::coast);
     intakeMotor.setBrakeMode(AbstractMotor::brakeMode::coast);
+    indexerMotor.setBrakeMode(AbstractMotor::brakeMode::brake);
+    flywheelControlAlgorithm = FlywheelControlAlgorithm::BANG_BANG;
+    flywheelTargetRPM = 0;
 }
 
 void update() {
     // Override outtake but return to previous intake state
     if (outtakeButton.changedToPressed()) {
-        previousIntakeState = currentIntakeState;    // Save intake state from before outtake button was pressed
-        currentIntakeState = IntakeState::OUTTAKING; // Outtake while outtake btn is pressed
+        previousIntakeState = currentIntakeState;
+        currentIntakeState = IntakeState::OUTTAKING;
     } else if (outtakeButton.changedToReleased()) {
-        currentIntakeState = previousIntakeState; // Save intake state from before outtake button was pressed
+        currentIntakeState = previousIntakeState;
     }
 
     // Intake Toggle turns Intake on and off
@@ -179,11 +211,22 @@ void update() {
             currentIntakeState = IntakeState::STOPPED;
         }
     }
+
+    // Indexer Toggle turns Indexer on and off
+    if (indexerButton.changedToPressed()) {
+        if (currentIndexerState != IndexerState::INDEXING) {
+            currentIndexerState = IndexerState::INDEXING;
+        } else {
+            currentIndexerState = IndexerState::STOPPED;
+        }
+    }
 }
 
 void act() {
-    // Act on the current intake state
+    // Act on the current scorer state
     setIntakeMotion(currentIntakeState);
+    setFlywheelMotion(currentFlywheelState);
+    setIndexerMotion(currentIndexerState);
 }
 
 } // namespace src::Scorer

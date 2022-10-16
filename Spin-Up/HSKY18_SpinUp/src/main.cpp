@@ -1,4 +1,15 @@
 #include "main.h"
+#include "api.h"
+#include "chassis/chassis.hpp"
+#include "okapi/api.hpp"
+#include "pros/misc.h"
+#include "pros/misc.hpp"
+#include "scorer/scorer.hpp"
+
+// Define included namespaces and types
+#define Chassis src::Chassis
+#define Scorer src::Scorer
+#define Pose Chassis::Pose_t
 
 /**
  * A callback function for LLEMU's center button.
@@ -7,13 +18,13 @@
  * "I was pressed!" and nothing.
  */
 void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
+    static bool pressed = false;
+    pressed = !pressed;
+    if (pressed) {
+        pros::lcd::set_text(2, "I was pressed!");
+    } else {
+        pros::lcd::clear_line(2);
+    }
 }
 
 /**
@@ -23,10 +34,18 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+    pros::lcd::initialize();
+    pros::lcd::set_text(1, "Hello PROS User!");
 
-	pros::lcd::register_btn1_cb(on_center_button);
+    pros::lcd::register_btn1_cb(on_center_button);
+
+    // Updates RobotPose in Chassis
+    pros::Task odometryHandle(Chassis::odometryTask);
+    pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
+
+    // Handles Flywheel Control
+    pros::Task flywheelStateHandle(Scorer::flywheelStateTask);
+    pros::Task flywheelControlHandle(Scorer::flywheelControlTask);
 }
 
 /**
@@ -74,19 +93,19 @@ void autonomous() {}
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor left_mtr(1);
-	pros::Motor right_mtr(2);
+    // Initalize all robot subsystems
+    Chassis::initialize();
+    Scorer::initialize();
 
-	while (true) {
-		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
-		int left = master.get_analog(ANALOG_LEFT_Y);
-		int right = master.get_analog(ANALOG_RIGHT_Y);
+    while (true) {
+        // Subsystem update will manipulate internal state from controller input
+        Chassis::update();
+        Scorer::update();
 
-		left_mtr = left;
-		right_mtr = right;
-		pros::delay(20);
-	}
+        // Subsystem act will apply internal state to the robot
+        Chassis::act();
+        Scorer::act();
+
+        pros::delay(10);
+    }
 }

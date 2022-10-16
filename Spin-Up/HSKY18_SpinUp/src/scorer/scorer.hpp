@@ -21,6 +21,16 @@ enum class IntakeState {
 };
 
 /**
+ * @brief Enum to represent a state of the Indexer mechanism
+ *
+ */
+enum class IndexerState {
+    STOPPED = 0,
+    INDEXING = 1,
+    OUTDEXING = 2, // Outdexing is a word now
+};
+
+/**
  * @brief Enum to represent a state of the Flywheel mechanism
  *
  */
@@ -35,8 +45,10 @@ enum class FlywheelState {
  *
  */
 enum class FlywheelControlAlgorithm {
-    PID = 0,
-    BANG_BANG = 1,
+    NONE = 0,
+    PID = 1,
+    BANG_BANG = 2,
+    TAKE_BACK_HALF = 3,
 };
 
 // Scorer control loop functions
