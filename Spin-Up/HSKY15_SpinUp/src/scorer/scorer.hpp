@@ -42,7 +42,7 @@ extern void rollIntakeUntilRed(IntakeState intakeDirection = IntakeState::INTAKI
 extern void rollIntakeUntilBlue(IntakeState intakeDirection = IntakeState::INTAKING);
 
 // Scorer motors
-static Motor catpultMotor = Motor(CATAPULT_PORT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
+static Motor catapultMotor = Motor(CATAPULT_PORT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
 static Motor intakeMotor = Motor(INTAKE_PORT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 
 // Scorer sensors

@@ -22,10 +22,10 @@ CatapultState currentCatapultState = CatapultState::READY;
 /**
  * @brief Applies the given IntakeState to the intake motor
  *
- * @param intakeState the desired state of the Intake mechanism
+ * @param state the desired state of the Intake mechanism
  */
-void setIntakeMotion(IntakeState intakeState) {
-    switch (intakeState) {
+void setIntakeMotion(IntakeState state) {
+    switch (state) {
         case IntakeState::STOPPED:
             intakeMotor.moveVelocity(0);
             break;
@@ -65,9 +65,10 @@ void setCatapultMotion(CatapultState state) {
 void pullDownCatapult() {
     // Move the motor down until the limit switch is pressed
     while (!catapultButton.get_value()) {
-        catpultMotor.moveVelocity(100);
+        catapultMotor.moveVelocity(100);
         pros::delay(10);
     }
+    catapultMotor.moveVelocity(0);
 }
 
 /**
@@ -75,7 +76,7 @@ void pullDownCatapult() {
  *
  */
 void fireCatapult() {
-    catpultMotor.moveAbsolute(DEGREES_TO_ENGAGE_SLIP_GEAR, 100);
+    catapultMotor.moveRelative(DEGREES_TO_ENGAGE_SLIP_GEAR, 100);
 }
 
 /**
@@ -144,7 +145,7 @@ void rollIntakeUntilBlue(IntakeState intakeDirection) {
  *
  */
 void initialize() {
-    catpultMotor.setBrakeMode(AbstractMotor::brakeMode::hold);
+    catapultMotor.setBrakeMode(AbstractMotor::brakeMode::hold);
     intakeMotor.setBrakeMode(AbstractMotor::brakeMode::coast);
     currentIntakeState = IntakeState::STOPPED;
     currentCatapultState = CatapultState::READY;

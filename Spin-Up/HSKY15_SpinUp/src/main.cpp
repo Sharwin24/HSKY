@@ -11,8 +11,6 @@
 #define Scorer src::Scorer
 #define Pose Chassis::Pose_t
 
-pros::Controller controller = pros::Controller(pros::E_CONTROLLER_MASTER);
-
 /**
  * A callback function for LLEMU's center button.
  *
