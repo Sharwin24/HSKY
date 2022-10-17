@@ -9,10 +9,12 @@ using namespace okapi;
 
 namespace src::Scorer {
 
-ControllerButton intakeToggle(ControllerDigital::L1);
-ControllerButton outtakeButton(ControllerDigital::L2);
-ControllerButton catapultFire(ControllerDigital::R1);
+// Buttons for controlling the Scorer
+ControllerButton intakeToggle(ControllerDigital::R1);
+ControllerButton outtakeButton(ControllerDigital::R2);
+ControllerButton catapultFire(ControllerDigital::L1);
 
+// Scorer internal state
 IntakeState currentIntakeState = IntakeState::STOPPED;
 IntakeState previousIntakeState = IntakeState::STOPPED;
 CatapultState currentCatapultState = CatapultState::READY;
@@ -37,12 +39,23 @@ void setIntakeMotion(IntakeState intakeState) {
 }
 
 /**
- * @brief Sets the currentCatapult state. Will override the current state
+ * @brief Applies the given CatapultState to the catapult motor
  *
- * @param state the desired state to set the catapult to
+ * @param state the desired state of the Catapult mechanism
  */
-void setCatapultState(CatapultState state) {
+void setCatapultMotion(CatapultState state) {
     currentCatapultState = state;
+    switch (state) {
+        case CatapultState::READY:
+            // Do nothing
+            break;
+        case CatapultState::FIRING:
+            // Fire catapult, then reset, and set state to READY
+            pullDownAndFireCatapult();
+            pullDownCatapult();
+            currentCatapultState = CatapultState::READY;
+            break;
+    }
 }
 
 /**
@@ -126,11 +139,21 @@ void rollIntakeUntilBlue(IntakeState intakeDirection) {
     rollIntakeUntilColor(BLUE_COLOR, intakeDirection);
 }
 
+/**
+ * @brief Initializes the Scorer mechanism motors and states
+ *
+ */
 void initialize() {
     catpultMotor.setBrakeMode(AbstractMotor::brakeMode::hold);
     intakeMotor.setBrakeMode(AbstractMotor::brakeMode::coast);
+    currentIntakeState = IntakeState::STOPPED;
+    currentCatapultState = CatapultState::READY;
 }
 
+/**
+ * @brief Using Controller input, updates the internal Scorer states
+ *
+ */
 void update() {
     // Override outtake but return to previous intake state
     if (outtakeButton.changedToPressed()) {
@@ -158,22 +181,13 @@ void update() {
     }
 }
 
+/**
+ * @brief Acts on the current internal states of the Scorer Mechanisms
+ *
+ */
 void act() {
-    // Act on the current intake state
     setIntakeMotion(currentIntakeState);
-
-    // Act on the current catapult state
-    switch (currentCatapultState) {
-        case CatapultState::READY:
-            // Do nothing
-            break;
-        case CatapultState::FIRING:
-            // Fire catapult, then reset, and set state to READY
-            pullDownAndFireCatapult();
-            pullDownCatapult();
-            currentCatapultState = CatapultState::READY;
-            break;
-    }
+    setCatapultMotion(currentCatapultState);
 }
 
 } // namespace src::Scorer

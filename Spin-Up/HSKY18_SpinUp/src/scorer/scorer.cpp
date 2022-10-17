@@ -10,10 +10,10 @@ using namespace okapi;
 namespace src::Scorer {
 
 // Buttons for controlling the Scorer
-ControllerButton intakeToggle(ControllerDigital::L1);
-ControllerButton outtakeButton(ControllerDigital::L2);
-ControllerButton indexerButton(ControllerDigital::R1);
-ControllerButton flywheelToggle(ControllerDigital::R2);
+ControllerButton intakeToggle(ControllerDigital::R1);
+ControllerButton outtakeButton(ControllerDigital::R2);
+ControllerButton indexerButton(ControllerDigital::L1);
+ControllerButton flywheelToggle(ControllerDigital::L2);
 
 // Scorer internal state
 IntakeState previousIntakeState = IntakeState::STOPPED;
@@ -186,14 +186,25 @@ void rollIntakeUntilBlue(IntakeState intakeDirection) {
     rollIntakeUntilColor(BLUE_COLOR, intakeDirection);
 }
 
+/**
+ * @brief Initializes the Scorer mechanism motors and states
+ *
+ */
 void initialize() {
     flywheelMotorGroup.setBrakeMode(AbstractMotor::brakeMode::coast);
     intakeMotor.setBrakeMode(AbstractMotor::brakeMode::coast);
     indexerMotor.setBrakeMode(AbstractMotor::brakeMode::brake);
+    currentIndexerState = IndexerState::STOPPED;
+    currentIntakeState = IntakeState::STOPPED;
+    currentFlywheelState = FlywheelState::OFF;
     flywheelControlAlgorithm = FlywheelControlAlgorithm::BANG_BANG;
     flywheelTargetRPM = 0;
 }
 
+/**
+ * @brief Using Controller input, updates the internal Scorer states
+ *
+ */
 void update() {
     // Override outtake but return to previous intake state
     if (outtakeButton.changedToPressed()) {
@@ -222,6 +233,10 @@ void update() {
     }
 }
 
+/**
+ * @brief Acts on the current internal states of the Scorer Mechanisms
+ *
+ */
 void act() {
     // Act on the current scorer state
     setIntakeMotion(currentIntakeState);
