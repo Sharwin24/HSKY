@@ -74,6 +74,6 @@ static MotorGroup flywheelMotorGroup = {
 
 // Scorer sensors
 static pros::Optical opticalSensor = pros::Optical(OPTICAL_SENSOR_PORT);
-// static pros::Rotation flywheelEncoder = pros::Rotation(FLYWHEEL_ENCODER_PORT);
+static pros::Rotation flywheelEncoder = pros::Rotation(FLYWHEEL_ENCODER_PORT);
 
 } // namespace src::Scorer

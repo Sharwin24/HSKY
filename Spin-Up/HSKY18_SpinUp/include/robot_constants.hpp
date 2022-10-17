@@ -26,6 +26,7 @@ static constexpr uint8_t OPTICAL_SENSOR_PORT = 14;
 static constexpr uint8_t LEFT_ENCODER_PORT = 15;
 static constexpr uint8_t RIGHT_ENCODER_PORT = 16;
 static constexpr uint8_t HORIZONTAL_ENCODER_PORT = 17;
+static constexpr uint8_t FLYWHEEL_ENCODER_PORT = 18;
 static constexpr uint8_t ULTRASONIC_PING_PORT = 'B';
 static constexpr uint8_t ULTRASONIC_ECHO_PORT = 'C';
 

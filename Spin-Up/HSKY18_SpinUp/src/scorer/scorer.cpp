@@ -102,6 +102,10 @@ void flywheelControlTask(void *) {
                 // Flywheel Take Back Half Controller
                 break;
             case FlywheelControlAlgorithm::BANG_BANG:
+                // Using Rotation Sensor
+                float currentFWRPM = flywheelEncoder.get_velocity() * (60.0f / 1.0f) * (1.0f / 36000.0f) * FLYWHEEL_GEAR_RATIO; // centidegrees / sec -> RPM
+                currentFWRPM < flywheelTargetRPM ? flywheelMotorGroup.moveVoltage(12000) : flywheelMotorGroup.moveVoltage(0);
+                // Using Motor Encoder
                 if ((flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO) < flywheelTargetRPM) {
                     flywheelMotorGroup.moveVoltage(12000);
                 } else {
