@@ -7,3 +7,5 @@
 !.vscode/*.code-snippets
 !.vscode/cquery_cached_index/
 .cache/
+__pycache__/
+__pycache__/*
