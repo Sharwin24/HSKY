@@ -38,7 +38,7 @@ static constexpr float_t WHEEL_TRACK = 12.526f;                   // [in]
 static constexpr float_t ENCODER_WHEEL_DIAMETER = 2.75f;          // [in]
 static constexpr float_t CENTER_TO_LEFT_ENCODER = 7.261f / 2.0f;  // [in]
 static constexpr float_t CENTER_TO_RIGHT_ENCODER = 7.261f / 2.0f; // [in]
-static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 2.376f;   // [in]
+static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 0.852f;   // [in]
 
 // Programming constants
 static constexpr float_t TURN_FACTOR = 1.0f; // Scalar factor for turning in driver control
