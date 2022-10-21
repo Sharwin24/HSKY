@@ -25,6 +25,10 @@ void initialize() {
     Chassis::initialize();
     Scorer::initialize();
 
+    // Initalize all robot subsystems
+    Chassis::initialize();
+    Scorer::initialize();
+
     // Updates RobotPose in Chassis
     pros::Task odometryHandle(Chassis::odometryTask);
     pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
