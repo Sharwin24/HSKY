@@ -3,7 +3,6 @@
 #include "robot_constants.hpp"
 
 namespace src::AutonSelector {
-// Auton Selector Defaults and Variables
 int autonIndexSelected = 0;
 int autonCount;
 const char *autonNames[] = {"", "", "", "", "", "", "", "", "", "", ""}; // up to 10 autons
@@ -28,12 +27,12 @@ lv_obj_t *tabView;
 lv_obj_t *redButton;
 lv_obj_t *blueButton;
 
-// Auton Selector Functions
+// Button Actions
 lv_res_t redButtonAction(lv_obj_t *button, const char *text) {
     // Find the index of the auton name
     for (int i = 0; i < autonCount; i++) {
         if (strcmp(text, autonNames[i]) == 0) {
-            autonIndexSelected = i + 1;
+            autonIndexSelected = i + 1; // +1 because 0 is skills
             break;
         }
     }
@@ -45,7 +44,7 @@ lv_res_t blueButtonAction(lv_obj_t *button, const char *text) {
     // Find the index of the auton name
     for (int i = 0; i < autonCount; i++) {
         if (strcmp(text, autonNames[i]) == 0) {
-            autonIndexSelected = -(i + 1);
+            autonIndexSelected = -(i + 1); // - because blue is negative and +1 because 0 is skills
             break;
         }
     }
@@ -61,7 +60,6 @@ lv_res_t skillsButtonAction(lv_obj_t *button) {
 void tabWatcherTask() {
     int activeTab = lv_tabview_get_tab_act(tabView);
     while (true) {
-        // Get the current tab
         int currentTab = lv_tabview_get_tab_act(tabView);
         if (currentTab != activeTab) {
             activeTab = currentTab;
@@ -79,7 +77,6 @@ void tabWatcherTask() {
                 autonIndexSelected = 0;
             }
         }
-
         pros::delay(20);
     }
 }
