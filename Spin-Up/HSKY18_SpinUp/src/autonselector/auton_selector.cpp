@@ -1,11 +1,27 @@
 #include "auton_selector.hpp"
 #include "main.h"
+#include "robot_constants.hpp"
 
 namespace src::AutonSelector {
 // Auton Selector Defaults and Variables
 int autonIndexSelected = 0;
-int AUTON_COUNT;                                                         // Set to actual number of autons
+int autonCount;
 const char *autonNames[] = {"", "", "", "", "", "", "", "", "", "", ""}; // up to 10 autons
+
+Auton getSelectedAuton() {
+    switch (autonIndexSelected) {
+        case 0:
+            return Auton::SKILLS;
+        case 1:
+            return Auton::NO_OPERATION;
+        case 2:
+            return Auton::AUTON_1;
+        case 3:
+            return Auton::AUTON_2;
+        default:
+            return Auton::NO_OPERATION;
+    }
+}
 
 // Graphical Variables
 lv_obj_t *tabView;
@@ -15,10 +31,10 @@ lv_obj_t *blueButton;
 // Auton Selector Functions
 lv_res_t redButtonAction(lv_obj_t *button, const char *text) {
     // Find the index of the auton name
-    for (int i = 0; i < AUTON_COUNT; i++) {
+    for (int i = 0; i < autonCount; i++) {
         if (strcmp(text, autonNames[i]) == 0) {
             autonIndexSelected = i + 1;
-            // break;
+            break;
         }
     }
 
@@ -27,10 +43,10 @@ lv_res_t redButtonAction(lv_obj_t *button, const char *text) {
 
 lv_res_t blueButtonAction(lv_obj_t *button, const char *text) {
     // Find the index of the auton name
-    for (int i = 0; i < AUTON_COUNT; i++) {
+    for (int i = 0; i < autonCount; i++) {
         if (strcmp(text, autonNames[i]) == 0) {
             autonIndexSelected = -(i + 1);
-            // break;
+            break;
         }
     }
 
@@ -68,19 +84,19 @@ void tabWatcherTask() {
     }
 }
 
-void initialize(const char **autons) {
+void initialize() {
     // Allocate some memory with some classic C
     int i = 0;
     do {
-        memcpy(&autonNames[i], &autons[i], sizeof(&autons));
+        memcpy(&autonNames[i], &AUTON_LIST[i], sizeof(&AUTON_LIST));
         i++;
-    } while (strcmp(autons[i], "") != 0);
-
-    AUTON_COUNT = i;
+    } while (strcmp(AUTON_LIST[i], "") != 0);
+    // Assign the auton count and set the default auton
+    autonCount = i;
     autonIndexSelected = 1; // Default to No-op
 
     // lvgl theme
-    lv_theme_t *th = lv_theme_alien_init(SELECTOR_HUE, NULL); // Set a HUE value and keep font default RED
+    lv_theme_t *th = lv_theme_alien_init(AUTON_SELECTOR_HUE, NULL); // Set a HUE value and keep font default RED
     lv_theme_set_current(th);
 
     // Create a tab view object

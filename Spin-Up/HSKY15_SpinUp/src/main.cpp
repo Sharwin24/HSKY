@@ -1,5 +1,6 @@
 #include "main.h"
 #include "api.h"
+#include "autonselector/auton_selector.hpp"
 #include "chassis/chassis.hpp"
 #include "okapi/api.hpp"
 #include "pros/misc.h"
@@ -10,6 +11,8 @@
 #define Chassis src::Chassis
 #define Scorer src::Scorer
 #define Pose Chassis::Pose_t
+#define AutonSelector src::AutonSelector
+#define Auton AutonSelector::Auton
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -44,7 +47,9 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+    AutonSelector::initialize();
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -58,13 +63,18 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-    Pose currentPose = Chassis::getRobotPose();             // Initial Pose is [0, 0, 0]
-    Scorer::setIntakeMotion(Scorer::IntakeState::INTAKING); // Start intaking
-    Chassis::movePID(24, 24, 1000);                         // move forward 24 inches
-    Chassis::gyroPID(90, true);                             // turn 90 degrees clockwise
-    Scorer::pullDownAndFireCatapult();                      // pull down and fire catapult
-    Scorer::setIntakeMotion(Scorer::IntakeState::STOPPED);  // stop intaking
-    Pose newPose = Chassis::getRobotPose();                 // New Pose is [24, 24, 90]
+    if (AutonSelector::getSelectedAuton() == Auton::SKILLS) {
+        // Skills
+    } else if (AutonSelector::getSelectedAuton() == Auton::NO_OPERATION) {
+        // No Operation
+    }
+    // Pose currentPose = Chassis::getRobotPose();             // Initial Pose is [0, 0, 0]
+    // Scorer::setIntakeMotion(Scorer::IntakeState::INTAKING); // Start intaking
+    // Chassis::movePID(24, 24, 1000);                         // move forward 24 inches
+    // Chassis::gyroPID(90, true);                             // turn 90 degrees clockwise
+    // Scorer::pullDownAndFireCatapult();                      // pull down and fire catapult
+    // Scorer::setIntakeMotion(Scorer::IntakeState::STOPPED);  // stop intaking
+    // Pose newPose = Chassis::getRobotPose();                 // New Pose is [24, 24, 90]
 }
 
 /**
