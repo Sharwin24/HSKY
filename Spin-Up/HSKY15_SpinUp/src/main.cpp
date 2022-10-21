@@ -38,6 +38,10 @@ void initialize() {
 
     pros::lcd::register_btn1_cb(on_center_button);
 
+    // Initalize all robot subsystems
+    Chassis::initialize();
+    Scorer::initialize();
+
     // Updates RobotPose in Chassis
     pros::Task odometryHandle(Chassis::odometryTask);
     pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
@@ -97,10 +101,6 @@ void autonomous() {
  */
 
 void opcontrol() {
-    // Initalize all robot subsystems
-    Chassis::initialize();
-    Scorer::initialize();
-
     while (true) {
         // Subsystem update will manipulate internal state from controller input
         Chassis::update();
