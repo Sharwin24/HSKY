@@ -1,5 +1,6 @@
 #include "main.h"
 #include "api.h"
+#include "autonselector/auton_selector.hpp"
 #include "chassis/chassis.hpp"
 #include "okapi/api.hpp"
 #include "pros/misc.h"
@@ -10,22 +11,8 @@
 #define Chassis src::Chassis
 #define Scorer src::Scorer
 #define Pose Chassis::Pose_t
-
-/**
- * A callback function for LLEMU's center button.
- *
- * When this callback is fired, it will toggle line 2 of the LCD text between
- * "I was pressed!" and nothing.
- */
-void on_center_button() {
-    static bool pressed = false;
-    pressed = !pressed;
-    if (pressed) {
-        pros::lcd::set_text(2, "I was pressed!");
-    } else {
-        pros::lcd::clear_line(2);
-    }
-}
+#define AutonSelector src::AutonSelector
+#define Auton AutonSelector::Auton
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -34,10 +21,9 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-    pros::lcd::initialize();
-    pros::lcd::set_text(1, "Hello PROS User!");
-
-    pros::lcd::register_btn1_cb(on_center_button);
+    // Initalize all robot subsystems
+    Chassis::initialize();
+    Scorer::initialize();
 
     // Initalize all robot subsystems
     Chassis::initialize();
@@ -68,7 +54,9 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+    AutonSelector::initialize();
+}
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -81,7 +69,11 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+    if (AutonSelector::getSelectedAuton() == Auton::SKILLS) {
+        // Skills
+    }
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -106,6 +98,6 @@ void opcontrol() {
         Chassis::act();
         Scorer::act();
 
-        pros::delay(10); // Here's a comment
+        pros::delay(10);
     }
 }
