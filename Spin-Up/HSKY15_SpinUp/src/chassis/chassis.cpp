@@ -177,6 +177,7 @@ void resetImu(bool print = true) {
 
 void initialize() {
     setChassisBrakeMode(AbstractMotor::brakeMode::hold);
+    robotPose = {0, 0, 0};
     resetImu();
 }
 
