@@ -15,6 +15,7 @@
 #define AutonSelector src::AutonSelector
 #define Auton AutonSelector::Auton
 #define AutonRoutines src::AutonRoutines
+#define StartingPosition Chassis::StartingPosition
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -23,10 +24,6 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-
-    // Initalize all robot subsystems
-    Chassis::initialize();
-    Scorer::initialize();
 
     // Initalize all robot subsystems
     Chassis::initialize();
@@ -71,6 +68,7 @@ void competition_initialize() {
 void autonomous() {
     if (AutonSelector::getSelectedAuton() == Auton::SKILLS) {
         AutonRoutines::skills();
+        Chassis::setRobotStartingPosition(StartingPosition::RED_FRONT);
     } else if (AutonSelector::getSelectedAuton() == Auton::AUTON_1) {
         AutonRoutines::auton1();
     } else if (AutonSelector::getSelectedAuton() == Auton::AUTON_2) {

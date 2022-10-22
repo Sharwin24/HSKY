@@ -14,11 +14,38 @@ namespace src::Chassis {
 
 // Struct for Position and Orientation (Pose)
 // Orientation is absolute angle in radians
+// [0,0,0] is the starting position of the robot instead of a constant field origin
 typedef struct Pose {
     float x;     // [in]
     float y;     // [in]
     float theta; // [rad]
 } Pose_t;
+
+enum class StartingPosition { // Figure out all possible starting positions and name them
+    RED_FRONT,
+    RED_BACK,
+    BLUE_FRONT,
+    BLUE_BACK,
+};
+
+class FieldConstants {
+  public:
+    FieldConstants(){};
+    ~FieldConstants(){};
+
+    void setStartingPosition(StartingPosition position);
+    float getTileSize() const { return 24.0f; }   // [in]
+    float getFieldSize() const { return 144.0f; } // [in]
+    Pose_t getRedGoalPosition() const { return this->redGoalPosition; }
+    Pose_t getBlueGoalPosition() const { return this->blueGoalPosition; }
+
+  private:
+    StartingPosition startingPosition;
+    void setRedGoalPosition(Pose_t pose);
+    void setBlueGoalPosition(Pose_t pose);
+    Pose_t redGoalPosition;
+    Pose_t blueGoalPosition;
+};
 
 class OdometrySuite {
   public:
@@ -87,6 +114,7 @@ extern void gyroPID(int degree, bool CW, int ms = 1000);
 extern void ultrasonicPID(int distance, int ms = 2000);
 
 // Chassis state functions
+extern void setRobotStartingPosition(StartingPosition position);
 extern void setChassisBrakeMode(AbstractMotor::brakeMode mode);
 
 // Chassis Odometry functions

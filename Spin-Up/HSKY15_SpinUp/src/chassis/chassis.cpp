@@ -14,6 +14,30 @@ using namespace okapi;
 
 namespace src::Chassis {
 
+// Field Constants, Red and Blue goal must be assigned depending on starting position
+FieldConstants fieldConstants = FieldConstants();
+void FieldConstants::setStartingPosition(StartingPosition position) {
+    this->startingPosition = position;
+    switch (position) { // TODO: Set these constants
+        case StartingPosition::RED_FRONT:
+            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            break;
+        case StartingPosition::RED_BACK:
+            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            break;
+        case StartingPosition::BLUE_FRONT:
+            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            break;
+        case StartingPosition::BLUE_BACK:
+            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            break;
+    }
+}
+
 // Mutex for assigning and accessing RobotPose
 pros::Mutex odometryMutex = pros::Mutex();
 
@@ -172,7 +196,15 @@ void resetImu(bool print = true) {
             pros::delay(100);
         }
         printf("IMU Calibrated in %d [ms]\n", iter - time);
+    } else {
+        while (imuSensor.is_calibrating()) {
+            pros::delay(50);
+        }
     }
+}
+
+void setRobotStartingPosition(StartingPosition startPosition) {
+    fieldConstants.setStartingPosition(startPosition);
 }
 
 void initialize() {
