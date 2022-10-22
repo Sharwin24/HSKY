@@ -1,5 +1,6 @@
 #include "main.h"
 #include "api.h"
+#include "autons.hpp"
 #include "autonselector/auton_selector.hpp"
 #include "chassis/chassis.hpp"
 #include "okapi/api.hpp"
@@ -13,6 +14,7 @@
 #define Pose Chassis::Pose_t
 #define AutonSelector src::AutonSelector
 #define Auton AutonSelector::Auton
+#define AutonRoutines src::AutonRoutines
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -72,6 +74,7 @@ void competition_initialize() {
 void autonomous() {
     if (AutonSelector::getSelectedAuton() == Auton::SKILLS) {
         // Skills
+        AutonRoutines::skills();
     }
 }
 
