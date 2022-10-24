@@ -303,9 +303,9 @@ void turnPID(float degree, bool CW, int ms) {
     // Arc Length Formula: s = r * theta
     float targetWheelTravel = (WHEEL_TRACK / 2.0f) * degree; // [in]
     if (CW) {
-        movePID(targetWheelTravel, -1.0f * targetWheelTravel, ms);
+        movePID(targetWheelTravel, -1.0f * targetWheelTravel, ms, 0.5f);
     } else {
-        movePID(-1.0f * targetWheelTravel, targetWheelTravel, ms);
+        movePID(-1.0f * targetWheelTravel, targetWheelTravel, ms, 0.5f);
     }
 }
 

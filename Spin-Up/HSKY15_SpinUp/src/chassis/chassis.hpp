@@ -109,7 +109,7 @@ extern void update();
 extern void act();
 
 // Chassis motion functions
-extern void movePID(float leftTarget, float rightTarget, int ms, float maxV = 1);
+extern void movePID(float leftTarget, float rightTarget, int ms, float maxV = 1.0f);
 extern void gyroPID(float degree, bool CW, int ms = 1000);
 extern void turnPID(float degree, bool CW, int ms = 1000);
 extern void ultrasonicPID(int distance, int ms = 2000);
