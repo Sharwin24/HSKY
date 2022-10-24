@@ -195,7 +195,7 @@ void resetImu(bool print = true) {
         printf("IMU Calibrated in %d [ms]\n", iter - time);
     } else {
         while (imuSensor.is_calibrating()) {
-            pros::delay(50);
+            pros::delay(100);
         }
     }
 }
@@ -205,7 +205,7 @@ void setRobotStartingPosition(StartingPosition startPosition) {
 }
 
 void initialize() {
-    setChassisBrakeMode(AbstractMotor::brakeMode::hold);
+    setChassisBrakeMode(AbstractMotor::brakeMode::brake);
     robotPose = {0, 0, 0};
     resetImu();
 }
