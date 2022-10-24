@@ -53,11 +53,8 @@ std::shared_ptr<ChassisController> chassis =
 static Pose_t robotPose = {0, 0, 0};
 
 Pose_t getRobotPose() {
-    Pose_t pose = {0, 0, 0};
     odometryMutex.take();
-    pose.x = robotPose.x;
-    pose.y = robotPose.y;
-    pose.theta = robotPose.theta;
+    const Pose_t pose = {robotPose.x, robotPose.y, robotPose.theta};
     odometryMutex.give();
     return pose;
 }
@@ -239,8 +236,8 @@ void act() { // OpControl for chassis
  * @param maxV Scalar for velocity of the robot, defaults to 1 [0, 1]
  */
 void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
-    float degreesL = ((leftTarget * 360) / (pi * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
-    float degreesR = ((rightTarget * 360) / (pi * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
+    float degreesL = ((leftTarget * 360.0f) / (M_PI * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
+    float degreesR = ((rightTarget * 360.0f) / (M_PI * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
     IterativePosPIDController drivePIDL = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
     IterativePosPIDController drivePIDR = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
     chassis->getModel()->resetSensors();
@@ -255,8 +252,8 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
         powerL = drivePIDL.step(errorL);
         powerR = drivePIDR.step(errorR);
         chassis->getModel()->tank(powerL * maxV, powerR * maxV);
-        pros::delay(10);
         timer += 10;
+        pros::delay(10);
     }
     chassis->getModel()->tank(0, 0);
 }
@@ -264,14 +261,14 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
 /**
  * @brief Rotates the chassis given a target angle [deg] in the specified direction [CW] within a given time [ms] using a PID control loop .
  * Target angle is relative to the current position. The robot will exit the control loop after the time limit is reached,
- * regardless if the target is reached or not.
+ * regardless if the target is reached or not. Utilizes the IMU sensor.
  *
  * @param degree Target angle [deg]
  * @param CW Direction of rotation [true = CW, false = CCW]
  * @param ms Time to complete the movement, defaults to 1000 [ms]
  */
-void gyroPID(int degree, bool CW, int ms) {
-    imuSensor.set_rotation(0);
+void gyroPID(float degree, bool CW, int ms) {
+    imuSensor.tare_rotation();
     int timer = 0;
     float prevError = 0;
     float integral = 0;
@@ -283,14 +280,33 @@ void gyroPID(int degree, bool CW, int ms) {
         integral += error;
         float power = (P_GAIN_TURN * error) + (I_GAIN_TURN * integral) + (D_GAIN_TURN * derivative);
         if (CW) {
-            chassis->getModel()->tank(power, -1 * power);
+            chassis->getModel()->tank(power, -1.0f * power);
         } else {
-            chassis->getModel()->tank(-1 * power, power);
+            chassis->getModel()->tank(-1.0f * power, power);
         }
         timer += 10;
         pros::delay(10);
     }
     chassis->getModel()->tank(0, 0);
+}
+
+/**
+ * @brief Rotates the chassis given a target angle [deg] in the specified direction [CW] within a given time [ms] using a PID control loop .
+ * Target angle is relative to the current position. The robot will exit the control loop after the time limit is reached,
+ * regardless if the target is reached or not. Utilizes motor encoders.
+ *
+ * @param degree Target angle [deg] within [0, 360]
+ * @param CW Direction of rotation [true = CW, false = CCW]
+ * @param ms Time to complete the movement, defaults to 1000 [ms]
+ */
+void turnPID(float degree, bool CW, int ms) {
+    // Arc Length Formula: s = r * theta
+    float targetWheelTravel = (WHEEL_TRACK / 2.0f) * degree; // [in]
+    if (CW) {
+        movePID(targetWheelTravel, -1.0f * targetWheelTravel, ms);
+    } else {
+        movePID(-1.0f * targetWheelTravel, targetWheelTravel, ms);
+    }
 }
 
 /**
