@@ -89,6 +89,7 @@ void setFlywheelMotion(FlywheelState state) {
 void flywheelControlTask(void *) {
     while (true) {
         if (currentFlywheelState == FlywheelState::OFF) {
+            pros::delay(20);
             continue;
         }
         switch (flywheelControlAlgorithm) {
@@ -102,14 +103,14 @@ void flywheelControlTask(void *) {
                 // Flywheel Take Back Half Controller
                 break;
             case FlywheelControlAlgorithm::BANG_BANG:
-                // Using Rotation Sensor
-                float currentFWRPM = flywheelEncoder.get_velocity() * (60.0f / 1.0f) * (1.0f / 36000.0f) * FLYWHEEL_GEAR_RATIO; // centidegrees / sec -> RPM
-                currentFWRPM < flywheelTargetRPM ? flywheelMotorGroup.moveVoltage(12000) : flywheelMotorGroup.moveVoltage(0);
-                // Using Motor Encoder
-                if ((flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO) < flywheelTargetRPM) {
+                float error = flywheelTargetRPM - (flywheelEncoder.get_velocity() * FLYWHEEL_GEAR_RATIO);
+                float threshold = 0.8f * flywheelTargetRPM; // Not sure what this should be
+                if (error > threshold) {
                     flywheelMotorGroup.moveVoltage(12000);
-                } else {
+                } else if (error < -threshold) {
                     flywheelMotorGroup.moveVoltage(0);
+                } else {
+                    flywheelMotorGroup.moveVoltage((flywheelTargetRPM * FW_VOLTAGE_CONSTANT) + (error * FW_PROPORTIONAL));
                 }
                 break;
         }
