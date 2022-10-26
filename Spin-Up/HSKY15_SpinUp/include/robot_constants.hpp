@@ -40,6 +40,7 @@ static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 4.676f;   // [in]
 // Programming constants
 static constexpr float_t TURN_FACTOR = 0.90f;                 // Scalar factor for turning in driver control
 static constexpr float_t DEGREES_TO_ENGAGE_SLIP_GEAR = 15.0f; // [degrees]
+static constexpr uint16_t CATA_PULL_DOWN_DELAY_MS = 500;      // Delay between firing and pulling down catapult arm [ms]
 static constexpr float_t P_GAIN_DRIVE = 0.00185f;
 static constexpr float_t I_GAIN_DRIVE = 0.0f;
 static constexpr float_t D_GAIN_DRIVE = 0.0001f;

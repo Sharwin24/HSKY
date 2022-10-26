@@ -85,6 +85,7 @@ extern void act();
 extern void movePID(float leftTarget, float rightTarget, int ms, float maxV = 1);
 extern void gyroPID(int degree, bool CW, int ms = 1000);
 extern void ultrasonicPID(int distance, int ms = 2000);
+extern void turnToPoint(float targetX, float targetY);
 
 // Chassis state functions
 extern void setChassisBrakeMode(AbstractMotor::brakeMode mode);

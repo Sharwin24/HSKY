@@ -27,13 +27,13 @@ CatapultState currentCatapultState = CatapultState::READY;
 void setIntakeMotion(IntakeState state) {
     switch (state) {
         case IntakeState::STOPPED:
-            intakeMotor.moveVelocity(0);
+            intakeMotor.moveVoltage(0);
             break;
         case IntakeState::INTAKING:
-            intakeMotor.moveVelocity(200);
+            intakeMotor.moveVoltage(12000);
             break;
         case IntakeState::OUTTAKING:
-            intakeMotor.moveVelocity(-200);
+            intakeMotor.moveVoltage(-12000);
             break;
     }
 }
@@ -52,6 +52,7 @@ void setCatapultMotion(CatapultState state) {
         case CatapultState::FIRING:
             // Fire catapult, then reset, and set state to READY
             pullDownAndFireCatapult();
+            pros::delay(CATA_PULL_DOWN_DELAY_MS);
             pullDownCatapult();
             currentCatapultState = CatapultState::READY;
             break;
@@ -65,10 +66,10 @@ void setCatapultMotion(CatapultState state) {
 void pullDownCatapult() {
     // Move the motor down until the limit switch is pressed
     while (!catapultButton.get_value()) {
-        catapultMotor.moveVelocity(100);
+        catapultMotor.moveVoltage(12000);
         pros::delay(10);
     }
-    catapultMotor.moveVelocity(0);
+    catapultMotor.moveVoltage(0);
 }
 
 /**

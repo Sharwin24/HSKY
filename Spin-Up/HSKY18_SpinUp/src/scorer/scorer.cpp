@@ -32,13 +32,13 @@ static float_t flywheelTargetRPM = 0;
 void setIntakeMotion(IntakeState state) {
     switch (state) {
         case IntakeState::STOPPED:
-            intakeMotor.moveVelocity(0);
+            intakeMotor.moveVoltage(0);
             break;
         case IntakeState::INTAKING:
-            intakeMotor.moveVelocity(200);
+            intakeMotor.moveVoltage(12000);
             break;
         case IntakeState::OUTTAKING:
-            intakeMotor.moveVelocity(-200);
+            intakeMotor.moveVoltage(-12000);
             break;
     }
 }
@@ -51,13 +51,13 @@ void setIntakeMotion(IntakeState state) {
 void setIndexerMotion(IndexerState state) {
     switch (state) {
         case IndexerState::STOPPED:
-            indexerMotor.moveVelocity(0);
+            indexerMotor.moveVoltage(0);
             break;
         case IndexerState::INDEXING:
-            indexerMotor.moveVelocity(200);
+            indexerMotor.moveVoltage(12000);
             break;
         case IndexerState::OUTDEXING:
-            indexerMotor.moveVelocity(-200);
+            indexerMotor.moveVoltage(-12000);
             break;
     }
 }
@@ -104,12 +104,12 @@ void flywheelControlTask(void *) {
                 break;
             case FlywheelControlAlgorithm::BANG_BANG:
                 float error = flywheelTargetRPM - (flywheelEncoder.get_velocity() * FLYWHEEL_GEAR_RATIO);
-                float threshold = 0.8f * flywheelTargetRPM; // Not sure what this should be
-                if (error > threshold) {
+                float thresholdRPM = 200; // RPM above/below the target RPM to be considered "on target"
+                if (error > (flywheelTargetRPM - thresholdRPM)) {
                     flywheelMotorGroup.moveVoltage(12000);
-                } else if (error < -threshold) {
+                } else if (error <= -thresholdRPM) {
                     flywheelMotorGroup.moveVoltage(0);
-                } else {
+                } else { // Within threshold window -> Use Feedforward and P Controller
                     flywheelMotorGroup.moveVoltage((flywheelTargetRPM * FW_VOLTAGE_CONSTANT) + (error * FW_PROPORTIONAL));
                 }
                 break;

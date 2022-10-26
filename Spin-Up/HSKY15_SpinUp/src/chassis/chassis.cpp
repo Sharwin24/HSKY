@@ -298,14 +298,15 @@ void gyroPID(float degree, bool CW, int ms) {
  * @param degree Target angle [deg] within [0, 360]
  * @param CW Direction of rotation [true = CW, false = CCW]
  * @param ms Time to complete the movement, defaults to 1000 [ms]
+ * @param maxV Scalar for velocity of the robot, defaults to 0.5 [0, 1]
  */
-void turnPID(float degree, bool CW, int ms) {
+void turnPID(float degree, bool CW, int ms, float maxV) {
     // Arc Length Formula: s = r * theta
     float targetWheelTravel = (WHEEL_TRACK / 2.0f) * degree; // [in]
     if (CW) {
-        movePID(targetWheelTravel, -1.0f * targetWheelTravel, ms, 0.5f);
+        movePID(targetWheelTravel, -1.0f * targetWheelTravel, ms, maxV);
     } else {
-        movePID(-1.0f * targetWheelTravel, targetWheelTravel, ms, 0.5f);
+        movePID(-1.0f * targetWheelTravel, targetWheelTravel, ms, maxV);
     }
 }
 
@@ -332,6 +333,29 @@ void ultrasonicPID(float distance, int ms) {
         pros::delay(20);
     }
     chassis->getModel()->tank(0, 0);
+}
+
+/**
+ * @brief Using the current RobotPose and a target [X,Y], rotates the chassis to face the target.
+ *
+ * @param targetX Target X coordinate [in]
+ * @param targetY Target Y coordinate [in]
+ */
+void turnToPoint(float targetX, float targetY) {
+    float currentX = robotPose.x;
+    float currentY = robotPose.y;
+    float deltaX = targetX - currentX;
+    float deltaY = targetY - currentY;
+    float targetAngle = atan2(deltaY, deltaX) * (180.0f / M_PI);
+    float currentAngle = robotPose.theta;
+    float deltaAngle = targetAngle - currentAngle;
+    if (deltaAngle > 180.0f) {
+        deltaAngle -= 360.0f;
+    } else if (deltaAngle < -180.0f) {
+        deltaAngle += 360.0f;
+    }
+    // gyroPID(deltaAngle, deltaAngle > 0);
+    turnPID(deltaAngle, deltaAngle > 0);
 }
 
 } // namespace src::Chassis
