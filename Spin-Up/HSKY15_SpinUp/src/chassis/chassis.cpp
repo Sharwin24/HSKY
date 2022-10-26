@@ -90,7 +90,7 @@ void OdometrySuite::reset() {
     this->xPosition = 0;
     this->yPosition = 0;
     this->orientation = 0;
-    imuSensor.reset();
+    // imuSensor.reset(); // IMU should already be reset from Chassis::initialize()
     leftEncoder.reset();
     rightEncoder.reset();
     horizontalEncoder.reset();

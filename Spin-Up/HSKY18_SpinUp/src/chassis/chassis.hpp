@@ -20,6 +20,32 @@ typedef struct Pose {
     float theta; // [rad]
 } Pose_t;
 
+enum class StartingPosition { // Figure out all possible starting positions and name them
+    RED_FRONT,
+    RED_BACK,
+    BLUE_FRONT,
+    BLUE_BACK,
+};
+
+class FieldConstants {
+  public:
+    FieldConstants(){};
+    ~FieldConstants(){};
+
+    void setStartingPosition(StartingPosition position);
+    float getTileSize() const { return 24.0f; }   // [in]
+    float getFieldSize() const { return 144.0f; } // [in]
+    Pose_t getRedGoalPosition() const { return this->redGoalPosition; }
+    Pose_t getBlueGoalPosition() const { return this->blueGoalPosition; }
+
+  private:
+    StartingPosition startingPosition;
+    void setRedGoalPosition(Pose_t pose);
+    void setBlueGoalPosition(Pose_t pose);
+    Pose_t redGoalPosition;
+    Pose_t blueGoalPosition;
+};
+
 class OdometrySuite {
   public:
     // Constructor and Destructor
@@ -84,6 +110,7 @@ extern void act();
 // Chassis motion functions
 extern void movePID(float leftTarget, float rightTarget, int ms, float maxV = 1);
 extern void gyroPID(int degree, bool CW, int ms = 1000);
+extern void turnPID(float degree, bool CW, int ms = 1000, float maxV = 0.5f);
 extern void ultrasonicPID(int distance, int ms = 2000);
 extern void turnToPoint(float targetX, float targetY);
 

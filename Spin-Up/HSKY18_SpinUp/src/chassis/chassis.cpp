@@ -14,6 +14,30 @@ using namespace okapi;
 
 namespace src::Chassis {
 
+// Field Constants, Red and Blue goal must be assigned depending on starting position
+FieldConstants fieldConstants = FieldConstants();
+void FieldConstants::setStartingPosition(StartingPosition position) {
+    this->startingPosition = position;
+    switch (position) { // TODO: Set these constants
+        case StartingPosition::RED_FRONT:
+            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            break;
+        case StartingPosition::RED_BACK:
+            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            break;
+        case StartingPosition::BLUE_FRONT:
+            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            break;
+        case StartingPosition::BLUE_BACK:
+            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            break;
+    }
+}
+
 // Mutex for assigning and accessing RobotPose
 pros::Mutex odometryMutex = pros::Mutex();
 
@@ -42,7 +66,8 @@ void printRobotPoseTask(void *) {
     while (true) {
         pros::lcd::clear_line(1);
         odometryMutex.take();
-        pros::lcd::print(1, "Odometry -> [X: %f, Y: $f, Theta: %f]", robotPose.x, robotPose.y, robotPose.theta);
+        pros::lcd::print(1, "Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.x, robotPose.y, robotPose.theta);
+        printf("Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.x, robotPose.y, robotPose.theta);
         odometryMutex.give();
         pros::delay(20);
     }
@@ -69,7 +94,7 @@ void OdometrySuite::reset() {
     this->xPosition = 0;
     this->yPosition = 0;
     this->orientation = 0;
-    imuSensor.reset();
+    // imuSensor.reset(); // IMU should already be reset from Chassis::initialize()
     leftEncoder.reset();
     rightEncoder.reset();
     horizontalEncoder.reset();
@@ -175,6 +200,10 @@ void resetImu(bool print = true) {
     }
 }
 
+void setRobotStartingPosition(StartingPosition startPosition) {
+    fieldConstants.setStartingPosition(startPosition);
+}
+
 void initialize() {
     setChassisBrakeMode(AbstractMotor::brakeMode::hold);
     resetImu();
@@ -261,6 +290,26 @@ void gyroPID(int degree, bool CW, int ms) {
 }
 
 /**
+ * @brief Rotates the chassis given a target angle [deg] in the specified direction [CW] within a given time [ms] using a PID control loop .
+ * Target angle is relative to the current position. The robot will exit the control loop after the time limit is reached,
+ * regardless if the target is reached or not. Utilizes motor encoders.
+ *
+ * @param degree Target angle [deg] within [0, 360]
+ * @param CW Direction of rotation [true = CW, false = CCW]
+ * @param ms Time to complete the movement, defaults to 1000 [ms]
+ * @param maxV Scalar for velocity of the robot, defaults to 0.5 [0, 1]
+ */
+void turnPID(float degree, bool CW, int ms, float maxV) {
+    // Arc Length Formula: s = r * theta
+    float targetWheelTravel = (WHEEL_TRACK / 2.0f) * degree; // [in]
+    if (CW) {
+        movePID(targetWheelTravel, -1.0f * targetWheelTravel, ms, maxV);
+    } else {
+        movePID(-1.0f * targetWheelTravel, targetWheelTravel, ms, maxV);
+    }
+}
+
+/**
  * @brief Moves the chassis until the given distance [in] is read by the ultrasonic sensor within a given time [ms] using a PID control loop.
  * Uses less aggressive PID constants to move the robot slower.
  *
@@ -283,6 +332,29 @@ void ultrasonicPID(float distance, int ms) {
         pros::delay(20);
     }
     chassis->getModel()->tank(0, 0);
+}
+
+/**
+ * @brief Using the current RobotPose and a target [X,Y], rotates the chassis to face the target.
+ *
+ * @param targetX Target X coordinate [in]
+ * @param targetY Target Y coordinate [in]
+ */
+void turnToPoint(float targetX, float targetY) {
+    float currentX = robotPose.x;
+    float currentY = robotPose.y;
+    float deltaX = targetX - currentX;
+    float deltaY = targetY - currentY;
+    float targetAngle = atan2(deltaY, deltaX) * (180.0f / M_PI);
+    float currentAngle = robotPose.theta;
+    float deltaAngle = targetAngle - currentAngle;
+    if (deltaAngle > 180.0f) {
+        deltaAngle -= 360.0f;
+    } else if (deltaAngle < -180.0f) {
+        deltaAngle += 360.0f;
+    }
+    // gyroPID(deltaAngle, deltaAngle > 0);
+    turnPID(deltaAngle, deltaAngle > 0);
 }
 
 } // namespace src::Chassis
