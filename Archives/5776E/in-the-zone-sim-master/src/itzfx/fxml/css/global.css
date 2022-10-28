@@ -1,0 +1,315 @@
+
+* {
+    /*
+    Base color scheme
+    */
+    -cone-color:#ffff00;
+    -cone-stacked-top:#cfcf00;
+    -blue-mobile-goal:#4444ff;
+    -blue-mobile-goal-stop:#2d2db4;
+    -red-mobile-goal:#ff4444;
+    -red-mobile-goal-stop:#b42d2d;
+    -red-alliance:#ff4444;
+    -blue-alliance:#4444ff;
+    -tile-color:#787878;
+    -perimeter-color:#000000;
+    -stationary-goal-base:#4b4b4b;
+
+    /*
+    Cone level colors
+    */
+    -cone-base:radial-gradient(focus-angle 0deg, focus-distance 0%, center 50% 50%, radius 100%, derive(-cone-color, 25%), -cone-color);
+    -cone-wedge:radial-gradient(focus-angle 0deg, focus-distance 0%, center 50% 50%, radius 100%, derive(-cone-color, -25%), derive(-cone-color, -50%));
+
+    -cone-stacked-darkened:radial-gradient(focus-angle 0deg, focus-distance 0%, center 50% 50%, radius 100%, derive(-cone-color, 35%), derive(-cone-color, -55%));
+    /*
+    Mobile Goal level colors
+    */
+    -blue-mobile-goal-base:radial-gradient(focus-angle 0deg, focus-distance 0%, center 50% 50%, radius 100%, -blue-mobile-goal-stop, -blue-mobile-goal);
+    -blue-mobile-goal-wedge:radial-gradient(focus-angle 0deg, focus-distance 0%, center 50% 50%, radius 100%, derive(-blue-mobile-goal, -25%), derive(-blue-mobile-goal-stop, -25%));
+    -blue-mobile-goal-pocket:#181844;
+
+    -red-mobile-goal-base:radial-gradient(focus-angle 0deg, focus-distance 0%, center 50% 50%, radius 100%, -red-mobile-goal, -red-mobile-goal-stop);
+    -red-mobile-goal-wedge:radial-gradient(focus-angle 0deg, focus-distance 0%, center 50% 50%, radius 100%, derive(-red-mobile-goal, -25%), derive(-red-mobile-goal-stop, -25%));
+    -red-mobile-goal-pocket:#441818;
+
+    /*
+    Stationary Goal gradient
+    */
+    -stationary-goal:radial-gradient(focus-angle 0deg, focus-distance 0%, center 50% 50%, radius 100%, -stationary-goal-base 0%, black 40%, -stationary-goal-base 80%, black 100%);
+
+    /*
+    Transparent colors
+    */
+    -blue-alliance-transp:rgba(68, 68, 255, 0.1);
+    -red-alliance-transp:rgba(255, 68, 68, 0.1);
+
+    /*
+    Other colors
+    */
+    -blue-bar-gradient:linear-gradient(to left, black 0%, -blue-alliance 40%, -blue-alliance 60%, black 100%);
+    -red-bar-gradient:linear-gradient(to left, black 0%, -red-alliance 40%, -red-alliance 60%, black 100%);
+    -tape:white;
+}
+
+/*
+Cone stuff
+*/
+
+.cone > .base, .cone > .level1, .cone > .level2, .cone > .tip {
+    -fx-stroke:black;
+    -fx-stroke-width: 1;
+    -fx-effect:dropshadow(three-pass-box, black, 15, 0, 0, 0);
+}
+
+.cone > .wedge {
+    -fx-stroke:black;
+    -fx-stroke-width: 0.75;
+}
+
+.cone > .base {
+    -fx-fill:-cone-base;
+}
+
+.cone > .level1 {
+    -fx-fill:-cone-base;
+}
+
+.cone > .level2 {
+    -fx-fill:-cone-base;
+}
+
+.cone > .tip {
+    -fx-fill:-cone-base;
+}
+
+.cone > .wedge {
+    -fx-fill:-cone-wedge;
+}
+
+.cone > .stack-top {
+    -fx-fill:-cone-stacked-darkened;
+    -fx-effect:dropshadow(three-pass-box, black, 10, 0, 0, 0);
+}
+
+/*
+Mobile Goal Stuff
+*/
+
+.blue-mobile-goal > .base, .red-mobile-goal > .base,
+.blue-mobile-goal > .sep, .red-mobile-goal > .sep,
+.blue-mobile-goal > .mid, .red-mobile-goal > .mid,
+.blue-mobile-goal > .tip, .red-mobile-goal > .tip {
+    -fx-effect:dropshadow(three-pass-box, black, 15, 0, 0, 0);
+}
+
+.blue-mobile-goal > .base, .red-mobile-goal > .base, .blue-mobile-goal > .mid, .red-mobile-goal > .mid,
+.blue-mobile-goal > .tip, .red-mobile-goal > .tip {
+    -fx-stroke:#000000;
+    -fx-stroke-width:0.75;
+}
+
+.blue-mobile-goal > .base {
+    -fx-fill:-blue-mobile-goal-base;
+}
+
+.blue-mobile-goal > .pocket {
+    -fx-fill:-blue-mobile-goal-pocket;
+}
+
+.blue-mobile-goal > .mid, .blue-mobile-goal > .sep {
+    -fx-fill:-blue-mobile-goal-base;
+}
+
+.blue-mobile-goal > .wedge {
+    -fx-fill:-blue-mobile-goal-wedge;
+}
+
+.blue-mobile-goal > .tip {
+    -fx-fill:-blue-mobile-goal;
+}
+
+.red-mobile-goal > .base {
+    -fx-fill:-red-mobile-goal-base;
+}
+
+.red-mobile-goal > .pocket {
+    -fx-fill:-red-mobile-goal-pocket;
+}
+
+.red-mobile-goal > .mid, .red-mobile-goal > .sep {
+    -fx-fill:-red-mobile-goal-base;
+}
+
+.red-mobile-goal > .wedge {
+    -fx-fill:-red-mobile-goal-wedge;
+}
+
+.red-mobile-goal > .tip {
+    -fx-fill:-red-mobile-goal;
+}
+
+.label .stack-label {
+    -fx-fill:black;
+    -fx-text-fill:black;
+}
+
+/*
+Stationary goal
+*/
+
+.stationary-goal > .base {
+    -fx-fill:-stationary-goal;
+}
+
+.stationary-goal > .wedge {
+    -fx-fill:transparent;
+    -fx-stroke:black;
+    -fx-stroke-width:.5;
+}
+
+/*
+Other things
+*/
+
+.stationary-goal {
+    -fx-fill:-stationary-goal;
+    -fx-effect:dropshadow(two-pass-box, black, 10, 0, 0, 0);
+}
+
+.field {
+    -fx-border-color:-perimeter-color;
+    -fx-border-width:5;
+}
+
+.tile {
+    -fx-fill:-tile-color;
+    -fx-stroke:black;
+}
+
+.red-alliance-tile {
+    -fx-fill:-red-alliance;
+}
+
+.blue-alliance-tile {
+    -fx-fill:-blue-alliance;
+}
+
+.blue-bar, .red-bar {
+    -fx-effect:dropshadow(two-pass-box, black, 10, 0, 0, 0);
+}
+
+.blue-bar {
+    -fx-fill:-blue-bar-gradient;
+    -fx-effect:dropshadow(three-pass-box, black, 15, 0, 0, 0);
+}
+
+.red-bar {
+    -fx-fill:-red-bar-gradient;
+    -fx-effect:dropshadow(three-pass-box, black, 15, 0, 0, 0);
+}
+
+.tape {
+    -fx-fill:-tape;
+}
+
+/*
+Alliance marking
+*/
+
+.blue-alliance {
+    -fx-fill:-blue-alliance;
+}
+
+.red-alliance {
+    -fx-fill:-red-alliance;
+}
+
+.blue-alliance-backing {
+    -fx-background-color:-blue-alliance;
+}
+
+.red-alliance-backing {
+    -fx-background-color:-red-alliance;
+}
+
+.blue-alliance-border {
+    -fx-border-color:-blue-alliance;
+}
+
+.red-alliance-border {
+    -fx-border-color:-red-alliance;
+}
+
+.robot:red > .filter {
+    -fx-fill:-red-alliance-transp;
+}
+
+.robot:blue > .filter {
+    -fx-fill:-blue-alliance-transp;
+}
+
+/*
+Images
+*/
+
+.robot > .image {
+    -fx-image:url(../../images/topviewicon.png);
+    -fx-effect:dropshadow(three-pass-box, black, 20, 0, 0, 0);
+}
+
+.vex-logo {
+    -fx-image:url(../../images/VEXEDR-stacked-red-transp-1000px.png);
+}
+
+.dvhs-robotics-logo {
+    -fx-image:url(../../images/dvhsroboticslogo2015.png);
+}
+
+.check {
+    -fx-image:url(../../images/check.png);
+}
+
+.logo {
+    -fx-image:url(../../images/icon.png);
+}
+
+.robot-cad {
+    -fx-image:url(../../images/pEc-3PREM1.png);
+}
+
+.mobile-goal-cad {
+    -fx-image:url(../../images/redMOGO.png);
+}
+
+.cone-cad {
+    -fx-image:url(../../images/cone.png);
+}
+
+.report {
+    -fx-image:url(../../images/report.jpg);
+}
+
+/*
+Error text
+*/
+
+.error-text {
+    -fx-fill:red;
+}
+
+.error-text:hover {
+    -fx-fill:derive(red, 10%);
+}
+
+/*
+Success text
+*/
+
+.success-text {
+    -fx-fill:green;
+}
+
+.success-text:hover {
+    -fx-fill:derive(green, 10%);
+}

@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="360.0" prefWidth="1200.0" styleClass="default-background" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.controller.Keyboard">
+    <children>
+        <Group fx:id="keyGroup" layoutX="300.0" layoutY="90.0" scaleX="2.0" scaleY="2.0">
+            <children>
+                <StackPane layoutX="9.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Esc" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="52.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="24.0" />
+                        <Label mouseTransparent="true" text="F1" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="77.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F2" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="103.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F3" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="129.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F4" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="172.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F5" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="198.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F6" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="224.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F7" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="250.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F8" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="292.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F9" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="318.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F10" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="344.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F11" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="370.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F12" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="404.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="PrtSc">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="430.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="ScrLck">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="456.0" layoutY="9.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Pause">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="9.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="`" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="35.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D1" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="61.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D2" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="87.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D3" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="112.5" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D4" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="138.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D5" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="163.5" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D6" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="189.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D7" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="214.5" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D8" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="240.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D9" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="266.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D0" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="291.5" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="-" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="317.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="=" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="343.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="52.0" />
+                        <Label mouseTransparent="true" text="Backspace">
+                            <font>
+                                <Font size="9.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="404.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Insert">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="430.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Home">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="456.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="PgUp">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="490.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Num&#10;Lock" textAlignment="CENTER">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="516.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="/" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="542.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="*" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="568.0" layoutY="42.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="-" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="9.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="37.0" />
+                        <Label mouseTransparent="true" text="Tab" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="47.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Q" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="73.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="W" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="99.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="E" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="125.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="R" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="151.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="T" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="177.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Y" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="203.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="U" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="229.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="I" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="254.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="O" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="280.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="P" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="305.5" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="[" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="331.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="]" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="357.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="38.0" />
+                        <Label mouseTransparent="true" text="\\" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="404.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Delete">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="430.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="End">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="456.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="PgDn">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="490.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N7" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="516.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N8" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="542.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N9" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="568.0" layoutY="68.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="+" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="9.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="44.0" />
+                        <Label mouseTransparent="true" text="CapsLk" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="54.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="A" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="80.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="S" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="106.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="D" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="131.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="F" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="157.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="G" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="183.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="H" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="208.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="J" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="234.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="K" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="260.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="L" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="286.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text=";" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="311.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="'" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="337.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="57.0" />
+                        <Label mouseTransparent="true" text="Enter" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="490.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N4" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="516.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N5" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="542.0" layoutY="94.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N6" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="9.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="57.0" />
+                        <Label mouseTransparent="true" text="Shift" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="67.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Z" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="94.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="24.0" />
+                        <Label mouseTransparent="true" text="X" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="119.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="24.0" />
+                        <Label mouseTransparent="true" text="C" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="145.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="24.0" />
+                        <Label mouseTransparent="true" text="V" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="171.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="24.0" />
+                        <Label mouseTransparent="true" text="B" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="196.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="222.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="M" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="247.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="," />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="273.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="." />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="299.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="/" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="325.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="69.0" />
+                        <Label mouseTransparent="true" text="Shift" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="430.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="↑" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="490.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N1" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="516.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N2" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="542.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="N3" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="568.0" layoutY="119.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="51.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="Enter">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="9.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="38.0" />
+                        <Label mouseTransparent="true" text="Ctrl" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="48.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="31.0" />
+                        <Label mouseTransparent="true" text="Win" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="80.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="31.0" />
+                        <Label mouseTransparent="true" text="Alt" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="112.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="148.0" />
+                        <Label mouseTransparent="true" text="Space" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="261.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="30.0" />
+                        <Label mouseTransparent="true" text="Alt" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="293.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="30.0" />
+                        <Label mouseTransparent="true" text="Fn" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="324.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="32.0" />
+                        <Label mouseTransparent="true" text="PgBrk">
+                            <font>
+                                <Font size="8.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </StackPane>
+                <StackPane layoutX="357.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" disable="true" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="38.0" />
+                        <Label mouseTransparent="true" text="Ctrl" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="404.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="←" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="430.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="↓" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="456.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="→" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="490.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="51.0" />
+                        <Label mouseTransparent="true" text="N0" />
+                    </children>
+                </StackPane>
+                <StackPane layoutX="542.0" layoutY="145.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="keyboard-rect" width="25.0" />
+                        <Label mouseTransparent="true" text="." />
+                    </children>
+                </StackPane>
+            </children>
+        </Group>
+    </children>
+</AnchorPane>
