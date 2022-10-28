@@ -1,0 +1,54 @@
+7/1/2021:
+-Initial import from Wispt's code
+
+9/17/2021:
+-Move Auton over to Object Oriented class
+-Start work on autonomous motion methods like direction, and get target direction
+
+9/19/2021:
+-Fixed drivetrain bugs
+-Fix issues with recognizing the Auton class
+-Odometry rc1
+-Autonomous rotate method using angle deltas
+
+10/2/2021:
+-Display management with autonomous selection (new display class)
+-Cleaned up display.h and added methods to modify autonomous and added pointers
+
+1/4/2021:
+-Add methods to calculate target distance and angle
+-Set up equations and methods to calculate motor power for motion algorithm
+-Change method names to fit snake_case
+-Deprecate rDriveDir (now r_drive_dir)
+
+1/5/2021:
+-First implementation of a power motion algorithm
+-Entirely removed r_drive_dir
+-Fixed angle of motion in motor power calculations
+-Reimplemented a way to show robot position without affecting odometry accuracy
+
+1/7/2021:
+-Made the motion algorithm nonlinear using sine function
+-Changed the equation to find the drivetrain's angle of motion in the algorithm
+
+10/11/2021:
+-change angle references in calculations to radians
+-adjust rotation algorithm (include nonlinear velocity scaling)
+-adjust nonlinear expression for
+
+10/15/2021:
+-Fix a small issue preventing the motion algorithm from entering the motion loop
+
+10/16/2021:
+-Rework of the motor power calculation using driver control code
+
+11/5/2021:
+-rework trajectory calculation
+-restructure Auton class
+-remove class interaction methods (not needed anymore)
+
+11/18/2021:
+-Autonomous win point code
+-Work on autonomous for winning the autonomous period (not the same)
+-Import temporary method of rotation
+-Remove unused variables
