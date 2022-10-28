@@ -36,15 +36,21 @@ class FieldConstants {
     void setStartingPosition(StartingPosition position);
     float getTileSize() const { return 24.0f; }   // [in]
     float getFieldSize() const { return 144.0f; } // [in]
-    Pose_t getRedGoalPosition() const { return this->redGoalPosition; }
-    Pose_t getBlueGoalPosition() const { return this->blueGoalPosition; }
+    float getRedGoalPositionX() const { return this->redGoalPositionX; }
+    float getRedGoalPositionY() const { return this->redGoalPositionY; }
+    float getBlueGoalPositionX() const { return this->blueGoalPositionX; }
+    float getBlueGoalPositionY() const { return this->blueGoalPositionY; }
+    
 
   private:
     StartingPosition startingPosition;
-    void setRedGoalPosition(Pose_t pose);
-    void setBlueGoalPosition(Pose_t pose);
-    Pose_t redGoalPosition;
-    Pose_t blueGoalPosition;
+    void setRedGoalPosition(float x, float y);
+    void setBlueGoalPosition(float x, float y);
+    float redGoalPositionX;
+    float redGoalPositionY;
+    float blueGoalPositionX;
+    float blueGoalPositionY;
+    
 };
 
 class OdometrySuite {
