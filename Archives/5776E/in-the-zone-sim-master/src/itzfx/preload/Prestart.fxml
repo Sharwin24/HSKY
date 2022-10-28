@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="700.0" styleClass="default-background" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="logo" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <ImageView fitHeight="166.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" styleClass="vex-logo" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <StackPane prefHeight="89.0" prefWidth="327.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="39.0" prefWidth="327.0" spacing="20.0" StackPane.alignment="CENTER">
+               <children>
+                  <StackPane>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Loading 'In The Zone'..." textAlignment="CENTER" wrappingWidth="238.67230224609375">
+                           <font>
+                              <Font name="Ebrima Bold" size="36.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </StackPane>
+                  <StackPane>
+                     <children>
+                        <ProgressBar fx:id="bar" prefWidth="200.0" progress="0.0" styleClass="flat-progress-bar" />
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </center>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+   <bottom>
+      <Label fx:id="loading" BorderPane.alignment="CENTER_LEFT" />
+   </bottom>
+</BorderPane>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.tabs.SystemStatsController">
+    <children>
+        <TabPane prefHeight="250.0" prefWidth="700.0" styleClass="flat-tab-pane" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Memory Usage">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <StackPane prefHeight="221.0" prefWidth="700.0">
+                                    <children>
+                                        <AreaChart fx:id="memoryChart" createSymbols="false" legendVisible="false">
+                                            <xAxis>
+                                                <NumberAxis animated="false" forceZeroInRange="false" side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                                <NumberAxis animated="false" label="Memory Usage (MB)" side="LEFT" />
+                                            </yAxis>
+                                        </AreaChart>
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Program CPU Usage">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <StackPane prefHeight="220.0" prefWidth="700.0">
+                                    <children>
+                                        <AreaChart fx:id="processCPUChart" createSymbols="false" legendVisible="false">
+                                            <xAxis>
+                                                <NumberAxis animated="false" forceZeroInRange="false" side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                                <NumberAxis animated="false" autoRanging="false" side="LEFT" tickUnit="20.0" />
+                                            </yAxis>
+                                        </AreaChart>
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="System CPU Activity">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <StackPane prefHeight="220.0" prefWidth="700.0">
+                                    <children>
+                                        <AreaChart fx:id="systemCPUChart" createSymbols="false" legendVisible="false">
+                                            <xAxis>
+                                                <NumberAxis animated="false" forceZeroInRange="false" side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                                <NumberAxis animated="false" autoRanging="false" side="LEFT" tickUnit="20.0" />
+                                            </yAxis>
+                                        </AreaChart>
+                                    </children>
+                                </StackPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>

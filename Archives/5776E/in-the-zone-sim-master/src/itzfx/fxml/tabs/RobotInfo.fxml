@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="250.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.tabs.RobotInfoController">
+    <children>
+        <TabPane prefHeight="250.0" prefWidth="700.0" side="LEFT" styleClass="flat-tab-pane" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Robot 1">
+                    <content>
+                        <fx:include fx:id="worker1" source="RobotInfoWorker.fxml" />
+                    </content>
+                </Tab>
+                <Tab text="Robot 2">
+                    <content>
+                        <fx:include fx:id="worker2" source="RobotInfoWorker.fxml" />
+                    </content>
+                </Tab>
+                <Tab text="Robot 3">
+                    <content>
+                        <fx:include fx:id="worker3" source="RobotInfoWorker.fxml" />
+                    </content>
+                </Tab>
+                <Tab text="Robot 4">
+                    <content>
+                        <fx:include fx:id="worker4" source="RobotInfoWorker.fxml" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>

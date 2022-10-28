@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Circle?>
+
+<Pane fx:id="mobile" cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#onDragged" onMousePressed="#onPress" prefHeight="50.0" prefWidth="50.0" styleClass="blue-mobile-goal" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.game.objects.MobileController">
+    <children>
+        <Circle centerX="25.0" centerY="25.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" styleClass="base" />
+        <Arc centerX="25.0" centerY="25.0" length="75.0" radiusX="21.0" radiusY="21.0" startAngle="50.0" strokeType="INSIDE" styleClass="pocket" type="ROUND" />
+        <Arc centerX="25.0" centerY="25.0" length="75.0" radiusX="21.0" radiusY="21.0" startAngle="140.0" strokeType="INSIDE" styleClass="pocket" type="ROUND" />
+        <Arc centerX="25.0" centerY="25.0" length="75.0" radiusX="21.0" radiusY="21.0" startAngle="230.0" strokeType="INSIDE" styleClass="pocket" type="ROUND" />
+        <Arc centerX="25.0" centerY="25.0" length="75.0" radiusX="21.0" radiusY="21.0" startAngle="320.0" strokeType="INSIDE" styleClass="pocket" type="ROUND" />
+        <Circle centerX="25.0" centerY="25.0" radius="17.0" strokeType="INSIDE" styleClass="sep" />
+        <Circle centerX="25.0" centerY="25.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="mid" />
+        <Arc centerX="25.0" centerY="25.0" length="65.0" radiusX="13.0" radiusY="13.0" startAngle="55.0" stroke="BLACK" strokeType="INSIDE" styleClass="wedge" type="ROUND" />
+        <Arc centerX="25.0" centerY="25.0" length="65.0" radiusX="13.0" radiusY="13.0" startAngle="145.0" stroke="BLACK" strokeType="INSIDE" styleClass="wedge" type="ROUND" />
+        <Arc centerX="25.0" centerY="25.0" length="65.0" radiusX="13.0" radiusY="13.0" startAngle="325.0" stroke="BLACK" strokeType="INSIDE" styleClass="wedge" type="ROUND" />
+        <Arc centerX="25.0" centerY="25.0" length="65.0" radiusX="13.0" radiusY="13.0" startAngle="235.0" stroke="BLACK" strokeType="INSIDE" styleClass="wedge" type="ROUND" />
+        <Circle centerX="25.0" centerY="25.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" styleClass="tip" />
+    </children>
+</Pane>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" styleClass="default-background" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.FXMLController">
+    <top>
+        <MenuBar styleClass="flat-menu-bar" BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#close" styleClass="redden" text="Close">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="W" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#screenshot" text="Screenshot">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Field">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#reset" text="Reset">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                            </accelerator>
+                        </MenuItem>
+                        <CheckMenuItem fx:id="showHitboxes" mnemonicParsing="false" text="Show Hitboxes">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="DOWN" shortcut="DOWN" />
+                            </accelerator>
+                        </CheckMenuItem>
+                        <CheckMenuItem mnemonicParsing="false" text="Muted">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="M" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                            </accelerator>
+                        </CheckMenuItem>
+                        <Menu mnemonicParsing="false" text="Mode">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#auton" text="Autonomous">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="DIGIT1" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#dc" text="Driver Control">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="DIGIT2" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#ds" text="Driver Skills">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="DIGIT3" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#ps" text="Programming Skills">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="DIGIT4" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem mnemonicParsing="false" onAction="#fp" text="Free Play">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="DIGIT0" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                            </items>
+                        </Menu>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#about" text="About">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <right>
+        <StackPane BorderPane.alignment="CENTER">
+            <children>
+                <VBox fx:id="right" prefHeight="974.4" prefWidth="731.2" spacing="15.0">
+                    <children>
+                        <fx:include source="ScoringBox.fxml" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                            <children>
+                                <ImageView fitHeight="220.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" styleClass="vex-logo" />
+                                <Pane prefHeight="200.0" prefWidth="200.0" />
+                                <ImageView fitHeight="220.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true" styleClass="dvhs-robotics-logo" />
+                            </children>
+                        </HBox>
+                        <StackPane prefHeight="300.0" prefWidth="700.0">
+                            <children>
+                                <fx:include fx:id="tabManager" source="tabs/TabManager.fxml" />
+                            </children>
+                        </StackPane>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </StackPane>
+    </right>
+    <center>
+        <Pane fx:id="fieldPane" BorderPane.alignment="CENTER">
+            <children>
+                <BorderPane layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="850.0">
+                    <top>
+                        <HBox BorderPane.alignment="CENTER">
+                            <children>
+                                <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="730.0">
+                                    <left>
+                                        <Rectangle height="120.0" strokeType="INSIDE" styleClass="blue-alliance" width="5.0" BorderPane.alignment="CENTER" />
+                                    </left>
+                                    <opaqueInsets>
+                                        <Insets left="120.0" />
+                                    </opaqueInsets>
+                                    <bottom>
+                                        <Rectangle height="5.0" strokeType="INSIDE" styleClass="blue-alliance" width="730.0" BorderPane.alignment="TOP_LEFT" />
+                                    </bottom>
+                                    <right>
+                                        <Rectangle height="120.0" strokeType="INSIDE" styleClass="blue-alliance" width="5.0" BorderPane.alignment="CENTER" />
+                                    </right>
+                                    <HBox.margin>
+                                        <Insets left="120.0" />
+                                    </HBox.margin>
+                                </BorderPane>
+                            </children>
+                        </HBox>
+                    </top>
+                    <center>
+                        <Pane prefHeight="750.0" prefWidth="730.0">
+                            <children>
+                                <fx:include fx:id="field" source="Field.fxml" />
+                            </children>
+                        </Pane>
+                    </center>
+                    <left>
+                        <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="120.0" translateY="-10.0" BorderPane.alignment="CENTER">
+                            <top>
+                                <Rectangle height="5.0" strokeType="INSIDE" styleClass="red-alliance" width="120.0" BorderPane.alignment="CENTER" />
+                            </top>
+                            <right>
+                                <Rectangle height="730.0" strokeType="INSIDE" styleClass="red-alliance" width="5.0" BorderPane.alignment="CENTER" />
+                            </right>
+                            <bottom>
+                                <Rectangle height="5.0" strokeType="INSIDE" styleClass="red-alliance" width="120.0" BorderPane.alignment="CENTER" />
+                            </bottom>
+                        </BorderPane>
+                    </left>
+                </BorderPane>
+                <ImageView fx:id="logo" fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true" styleClass="logo" />
+            </children>
+        </Pane>
+    </center>
+</BorderPane>

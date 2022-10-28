@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Circle?>
+
+<Pane cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="cone" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Circle layoutX="15.0" layoutY="15.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" styleClass="base" />
+          <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="15.0" radiusY="15.0" startAngle="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+          <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="15.0" radiusY="15.0" startAngle="125.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+          <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="15.0" radiusY="15.0" startAngle="215.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+          <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="15.0" radiusY="15.0" startAngle="305.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Circle layoutX="15.0" layoutY="15.0" radius="11.25" stroke="BLACK" strokeType="INSIDE" styleClass="stack-top" />
+    </children>
+</Pane>
