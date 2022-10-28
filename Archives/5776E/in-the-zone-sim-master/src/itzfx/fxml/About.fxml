@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+
+<ScrollPane styleClass="default-background" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.AboutController">
+   <content>
+      <TextFlow maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="default-background">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="General Guidelines&#10;">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="This program was created for the VEX game " />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="In The Zone">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text=". It is intended to be used as a visual tool for simulation of runs and practicing without a robot present. &#10;&#10;This program is not sponsored, supported by VEX Robotics, RECF, or any parent companies/subsidiaries in any way, shape, or form.&#10;&#10;Link to game manual:" />
+            <Hyperlink onAction="#gameManual" styleClass="link" text="VEX In The Zone Game Manual" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="&#10;&#10;&#10;" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Usage/Modifications&#10;">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="This software is free to use, distribute, and modify, with the condition that the original author be credited with the following: &#10;&#10;" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Name: " />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Prem Chintalapudi - 5776E&#10;">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Github Link: " />
+            <Hyperlink onAction="#github" styleClass="link" text="https://github.com/5776E/In-The-Zone-Simulation" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="&#10;&#10;" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="In addition, a copy of the above section (Usage/Modifications)" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text=" must ">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="be accessible within two mouse clicks of the user upon normal startup." />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </TextFlow>
+   </content>
+</ScrollPane>
