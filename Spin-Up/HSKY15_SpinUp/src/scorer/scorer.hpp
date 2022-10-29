@@ -9,6 +9,21 @@ using namespace okapi;
 
 namespace src::Scorer {
 
+// Class for handling suite of proximity sensors within the Scorer mechanism and observing the scorer's state
+class ProximitySensorSuite {
+  public:
+    ProximitySensorSuite(const char bottomPort, const char middlePort, const char topPort);
+    ~ProximitySensorSuite();
+
+    int getNumDiscsInBasket();
+
+  private:
+    pros::ADIDigitalIn bottomBasketSensor;
+    pros::ADIDigitalIn middleBasketSensor;
+    pros::ADIDigitalIn topBasketSensor;
+    // pros::ADIDigitalIn intakeSensor;
+};
+
 /**
  * @brief Enum to represent a state of the Intake mechanism
  *
