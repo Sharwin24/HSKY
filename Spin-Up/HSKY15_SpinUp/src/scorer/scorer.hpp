@@ -15,9 +15,11 @@ class ProximitySensorSuite {
     ProximitySensorSuite(const char bottomPort, const char middlePort, const char topPort);
     ~ProximitySensorSuite();
 
-    int getNumDiscsInBasket();
+    int getNumDiscsInBasket() { return this->numDiscsInBasket; }
 
   private:
+    int numDiscsInBasket = 0;
+    // Sensors
     pros::ADIDigitalIn bottomBasketSensor;
     pros::ADIDigitalIn middleBasketSensor;
     pros::ADIDigitalIn topBasketSensor;
