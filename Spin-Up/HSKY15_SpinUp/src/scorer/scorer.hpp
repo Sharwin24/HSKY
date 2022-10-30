@@ -9,23 +9,6 @@ using namespace okapi;
 
 namespace src::Scorer {
 
-// Class for handling suite of proximity sensors within the Scorer mechanism and observing the scorer's state
-class ProximitySensorSuite {
-  public:
-    ProximitySensorSuite(const char bottomPort, const char middlePort, const char topPort);
-    ~ProximitySensorSuite();
-
-    int getNumDiscsInBasket() { return this->numDiscsInBasket; }
-
-  private:
-    int numDiscsInBasket = 0;
-    // Sensors
-    pros::ADIDigitalIn bottomBasketSensor;
-    pros::ADIDigitalIn middleBasketSensor;
-    pros::ADIDigitalIn topBasketSensor;
-    // pros::ADIDigitalIn intakeSensor;
-};
-
 /**
  * @brief Enum to represent a state of the Intake mechanism
  *
@@ -65,5 +48,8 @@ static Motor intakeMotor = Motor(INTAKE_PORT, false, AbstractMotor::gearset::gre
 // Scorer sensors
 static pros::Optical opticalSensor = pros::Optical(OPTICAL_SENSOR_PORT);
 static pros::ADIDigitalIn catapultButton = pros::ADIDigitalIn(CATAPULT_BUTTON_PORT);
+static pros::ADIDigitalIn bottomBasketSensor = pros::ADIDigitalIn(BOTTOM_PROXIMITY_PORT);
+static pros::ADIDigitalIn middleBasketSensor = pros::ADIDigitalIn(MIDDLE_PROXIMITY_PORT);
+static pros::ADIDigitalIn topBasketSensor = pros::ADIDigitalIn(TOP_PROXIMITY_PORT);
 
 } // namespace src::Scorer
