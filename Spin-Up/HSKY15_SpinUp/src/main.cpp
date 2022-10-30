@@ -9,13 +9,15 @@
 #include "scorer/scorer.hpp"
 
 // Define included namespaces and types
-#define Chassis src::Chassis
-#define Scorer src::Scorer
-#define Pose Chassis::Pose_t
-#define AutonSelector src::AutonSelector
-#define Auton AutonSelector::Auton
-#define AutonRoutines src::AutonRoutines
-#define StartingPosition Chassis::StartingPosition
+// #define Chassis src::Chassis
+// #define Scorer src::Scorer
+// #define Pose Chassis::Pose_t
+// #define AutonSelector src::AutonSelector
+// #define Auton AutonSelector::Auton
+// #define AutonRoutines src::AutonRoutines
+// #define StartingPosition Chassis::StartingPosition
+
+Motor fly = Motor(7);
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -26,12 +28,12 @@
 void initialize() {
 
     // Initalize all robot subsystems
-    Chassis::initialize();
-    Scorer::initialize();
+    // Chassis::initialize();
+    // Scorer::initialize();
 
     // Updates RobotPose in Chassis
-    pros::Task odometryHandle(Chassis::odometryTask);
-    pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
+    // pros::Task odometryHandle(Chassis::odometryTask);
+    // pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
 }
 
 /**
@@ -51,7 +53,6 @@ void disabled() {}
  * starts.
  */
 void competition_initialize() {
-    AutonSelector::initialize();
 }
 
 /**
@@ -66,16 +67,7 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-    if (AutonSelector::getSelectedAuton() == Auton::SKILLS) {
-        AutonRoutines::skills();
-        Chassis::setRobotStartingPosition(StartingPosition::RED_FRONT);
-    } else if (AutonSelector::getSelectedAuton() == Auton::AUTON_1) {
-        AutonRoutines::auton1();
-    } else if (AutonSelector::getSelectedAuton() == Auton::AUTON_2) {
-        AutonRoutines::auton2();
-    } else if (AutonSelector::getSelectedAuton() == Auton::NO_OPERATION) {
-        // No Operation
-    }
+    fly.moveVoltage(12000);
 }
 
 /**
@@ -91,16 +83,18 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-
+Motor intake = Motor(9);
 void opcontrol() {
+    fly.moveVoltage(0);
     while (true) {
-        // Subsystem update will manipulate internal state from controller input
-        Chassis::update();
-        Scorer::update();
+        intake.moveVoltage(12000);
+        // // Subsystem update will manipulate internal state from controller input
+        // Chassis::update();
+        // Scorer::update();
 
-        // Subsystem act will apply internal state to the robot
-        Chassis::act();
-        Scorer::act();
+        // // Subsystem act will apply internal state to the robot
+        // Chassis::act();
+        // Scorer::act();
 
         pros::delay(10);
     }
