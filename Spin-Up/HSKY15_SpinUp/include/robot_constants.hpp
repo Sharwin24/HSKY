@@ -27,6 +27,9 @@ static constexpr uint8_t HORIZONTAL_ENCODER_PORT = 15;
 static constexpr uint8_t CATAPULT_BUTTON_PORT = 'A';
 static constexpr uint8_t ULTRASONIC_PING_PORT = 'B';
 static constexpr uint8_t ULTRASONIC_ECHO_PORT = 'C';
+static constexpr uint8_t BOTTOM_PROXIMITY_PORT = 'D';
+static constexpr uint8_t MIDDLE_PROXIMITY_PORT = 'E';
+static constexpr uint8_t TOP_PROXIMITY_PORT = 'F';
 
 // Physical robot constants
 static constexpr float_t DRIVE_GEAR_RATIO = 60.0f / 36.0f;
