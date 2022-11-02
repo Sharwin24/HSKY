@@ -167,15 +167,27 @@ void OdometrySuite::update() {
     this->previousOrientation = absOrientation;
 }
 
-float OdometrySuite::getXPosition() { return this->xPosition; }
-float OdometrySuite::getYPosition() { return this->yPosition; }
-float OdometrySuite::getOrientation() { return this->orientation; }
-
+/**
+ * @brief Converts cartesian coordinates to polar coordinates
+ *
+ * @param x Cartesian x coordinate [in]
+ * @param y Cartesian y coordinate [in]
+ * @param r Polar radius [in]
+ * @param theta Polar angle [rad]
+ */
 void OdometrySuite::cartesian2Polar(float x, float y, float &r, float &theta) {
     r = sqrt(pow(x, 2) + pow(y, 2)); // [in]
     theta = atan2(y, x);             // [rad]
 }
 
+/**
+ * @brief Converts polar coordinates to cartesian coordinates
+ *
+ * @param r Polar radius [in]
+ * @param theta Polar angle [rad]
+ * @param x Cartesian x coordinate [in]
+ * @param y Cartesian y coordinate [in]
+ */
 void OdometrySuite::polar2Cartesian(float r, float theta, float &x, float &y) {
     x = r * cos(theta); // [in]
     y = r * sin(theta); // [in]

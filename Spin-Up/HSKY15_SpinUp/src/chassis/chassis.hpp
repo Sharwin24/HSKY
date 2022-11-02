@@ -55,9 +55,9 @@ class OdometrySuite {
     void update();
 
     // Getters
-    float getXPosition();
-    float getYPosition();
-    float getOrientation();
+    float getXPosition() { return this->xPosition; };
+    float getYPosition() { return this->yPosition; };
+    float getOrientation() { return this->orientation; };
 
   private:
     // Pose Variables
