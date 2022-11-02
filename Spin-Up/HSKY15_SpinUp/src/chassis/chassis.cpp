@@ -20,44 +20,23 @@ void FieldConstants::setStartingPosition(StartingPosition position) {
     this->startingPosition = position;
     switch (position) { // TODO: Set these constants
         case StartingPosition::RED_FRONT:
-            this->setRedGoalPosition(0,0);
-            this->setBlueGoalPosition(0,0);
+            this->setRedGoalPosition(0, 0);
+            this->setBlueGoalPosition(0, 0);
             break;
         case StartingPosition::RED_BACK:
-            this->setRedGoalPosition(0,0);
-            this->setBlueGoalPosition(0,0);
+            this->setRedGoalPosition(0, 0);
+            this->setBlueGoalPosition(0, 0);
             break;
         case StartingPosition::BLUE_FRONT:
-            this->setRedGoalPosition(0,0);
-            this->setBlueGoalPosition(0,0);
+            this->setRedGoalPosition(0, 0);
+            this->setBlueGoalPosition(0, 0);
             break;
         case StartingPosition::BLUE_BACK:
-            this->setRedGoalPosition(0,0);
-            this->setBlueGoalPosition(0,0);
+            this->setRedGoalPosition(0, 0);
+            this->setBlueGoalPosition(0, 0);
             break;
     }
 }
-
-float FieldConstants::getRedGoalPositionX()
-{
-    return this->redGoalPositionX;
-}
-
-float FieldConstants::getRedGoalPositionY()
-{
-    return this->redGoalPositionY;
-}
-
-float FieldConstants::geBlueGoalPositionX()
-{
-    return this->blueGoalPositionX;
-}
-
-float FieldConstants::getBlueGoalPositionY()
-{
-    return this->blueGoalPositionY;
-}
-
 
 // Mutex for assigning and accessing RobotPose
 pros::Mutex odometryMutex = pros::Mutex();
@@ -70,35 +49,40 @@ std::shared_ptr<ChassisController> chassis =
         .withDimensions(AbstractMotor::gearset::blue, {{WHEEL_DIAMETER, WHEEL_TRACK}, imev5BlueTPR})
         .build();
 
-// Robot's Pose that is updated by the odometry task
-static Pose_t robotPose = {0, 0, 0};
+// static RobotPose object that is updated by the odometry task
+static RobotPose robotPose = RobotPose();
 
-Pose_t getRobotPose() {
+// Obtains the RobotPose object via mutex and returns a new immutable copy
+RobotPose getRobotPose() {
     odometryMutex.take();
-    const Pose_t pose = {robotPose.x, robotPose.y, robotPose.theta};
+    const RobotPose pose = {robotPose.getXPosition(), robotPose.getYPosition(), robotPose.getTheta()};
     odometryMutex.give();
     return pose;
 }
 
+// Prints the RobotPose to the V5 Brain LCD
 void printRobotPoseTask(void *) {
     while (true) {
+        // TODO: Deprecate pros::lcd and use custom graphics following auton selector
         pros::lcd::clear_line(1);
         odometryMutex.take();
-        pros::lcd::print(1, "Odometry -> [X: %f, Y: $f, Theta: %f]", robotPose.x, robotPose.y, robotPose.theta);
+        pros::lcd::print(1, "Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.getXPosition(), robotPose.getYPosition(), robotPose.getTheta());
+        printf("Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.getXPosition(), robotPose.getYPosition(), robotPose.getTheta());
         odometryMutex.give();
         pros::delay(20);
     }
 }
 
-// Task for updating the static RobotPose struct on an interval
+/**
+ * @brief Task for updating the static RobotPose object on an interval
+ *
+ */
 void odometryTask(void *) {
     OdometrySuite odometrySuite = OdometrySuite();
     while (true) {
         odometrySuite.update();
         odometryMutex.take();
-        robotPose.x = odometrySuite.getXPosition();
-        robotPose.y = odometrySuite.getYPosition();
-        robotPose.theta = odometrySuite.getOrientation();
+        robotPose = RobotPose(odometrySuite.getXPosition(), odometrySuite.getYPosition(), odometrySuite.getOrientation());
         odometryMutex.give();
         pros::delay(20);
     }
@@ -183,15 +167,27 @@ void OdometrySuite::update() {
     this->previousOrientation = absOrientation;
 }
 
-float OdometrySuite::getXPosition() { return this->xPosition; }
-float OdometrySuite::getYPosition() { return this->yPosition; }
-float OdometrySuite::getOrientation() { return this->orientation; }
-
+/**
+ * @brief Converts cartesian coordinates to polar coordinates
+ *
+ * @param x Cartesian x coordinate [in]
+ * @param y Cartesian y coordinate [in]
+ * @param r Polar radius [in]
+ * @param theta Polar angle [rad]
+ */
 void OdometrySuite::cartesian2Polar(float x, float y, float &r, float &theta) {
     r = sqrt(pow(x, 2) + pow(y, 2)); // [in]
     theta = atan2(y, x);             // [rad]
 }
 
+/**
+ * @brief Converts polar coordinates to cartesian coordinates
+ *
+ * @param r Polar radius [in]
+ * @param theta Polar angle [rad]
+ * @param x Cartesian x coordinate [in]
+ * @param y Cartesian y coordinate [in]
+ */
 void OdometrySuite::polar2Cartesian(float r, float theta, float &x, float &y) {
     x = r * cos(theta); // [in]
     y = r * sin(theta); // [in]
@@ -222,18 +218,23 @@ void resetImu(bool print = true) {
     }
 }
 
+/**
+ * @brief Set the Robot's Starting Position as one of the predefined positions on the field
+ *
+ * @param startPosition an enum representing which position has been selected (based on the autonomous selection)
+ */
 void setRobotStartingPosition(StartingPosition startPosition) {
     fieldConstants.setStartingPosition(startPosition);
 }
 
 void initialize() {
     setChassisBrakeMode(AbstractMotor::brakeMode::brake);
-    robotPose = {0, 0, 0};
+    robotPose = RobotPose();
     resetImu();
 }
 
 void update() {
-    // Print sensor data
+    // Nifty function that runs in control loop. Useful for debugging during opcontrol
     // printf("IMU: %f", imuSensor.get_heading());
     // printf("Ultrasonic: %d", ultrasonic.get_value());
     // printf("Left Encoder: %d", chassis->getModel()->getSensorVals()[0]);
@@ -243,8 +244,8 @@ void update() {
 
 void act() { // OpControl for chassis
     chassis->getModel()->arcade(
-        controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),
-        TURN_FACTOR * controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
+        controller.getAnalog(ControllerAnalog::leftY),
+        controller.getAnalog(ControllerAnalog::rightX) * TURN_FACTOR);
 }
 
 /**
@@ -262,7 +263,7 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
     float degreesR = ((rightTarget * 360.0f) / (M_PI * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
     IterativePosPIDController drivePIDL = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
     IterativePosPIDController drivePIDR = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
-    chassis->getModel()->resetSensors();
+    chassis->getModel()->resetSensors(); // TODO: Use OdometrySuite Encoders instead of Motor Encoders
     int timer = 0;
     float errorL;
     float errorR;
@@ -364,12 +365,12 @@ void ultrasonicPID(float distance, int ms) {
  * @param targetY Target Y coordinate [in]
  */
 void turnToPoint(float targetX, float targetY) {
-    float currentX = robotPose.x;
-    float currentY = robotPose.y;
+    float currentX = robotPose.getXPosition();
+    float currentY = robotPose.getYPosition();
     float deltaX = targetX - currentX;
     float deltaY = targetY - currentY;
     float targetAngle = atan2(deltaY, deltaX) * (180.0f / M_PI);
-    float currentAngle = robotPose.theta;
+    float currentAngle = robotPose.getTheta();
     float deltaAngle = targetAngle - currentAngle;
     if (deltaAngle > 180.0f) {
         deltaAngle -= 360.0f;
