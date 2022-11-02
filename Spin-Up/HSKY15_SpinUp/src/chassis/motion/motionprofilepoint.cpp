@@ -79,6 +79,4 @@ bool MotionProfilePoint::operator==(const MotionProfilePoint &other) const {
  *
  * @param other The MotionProfilePoint to compare to.
  */
-bool MotionProfilePoint::operator!=(const MotionProfilePoint &other) const {
-    return !(*this == other);
-}
+bool MotionProfilePoint::operator!=(const MotionProfilePoint &other) const { return !(*this == other); }

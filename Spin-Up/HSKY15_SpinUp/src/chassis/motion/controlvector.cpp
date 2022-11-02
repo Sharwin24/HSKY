@@ -81,6 +81,4 @@ bool ControlVector::operator==(const ControlVector &other) const {
  *
  * @param other The ControlVector to compare to
  */
-bool ControlVector::operator!=(const ControlVector &other) const {
-    return !(*this == other);
-}
+bool ControlVector::operator!=(const ControlVector &other) const { return !(*this == other); }

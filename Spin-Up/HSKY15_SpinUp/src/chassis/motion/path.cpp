@@ -53,6 +53,4 @@ bool Path::operator==(const Path &other) const {
  *
  * @param other The Path to compare to
  */
-bool Path::operator!=(const Path &other) const {
-    return !(*this == other);
-}
+bool Path::operator!=(const Path &other) const { return !(*this == other); }
