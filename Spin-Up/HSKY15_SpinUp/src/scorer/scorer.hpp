@@ -48,5 +48,8 @@ static Motor intakeMotor = Motor(INTAKE_PORT, false, AbstractMotor::gearset::gre
 // Scorer sensors
 static pros::Optical opticalSensor = pros::Optical(OPTICAL_SENSOR_PORT);
 static pros::ADIDigitalIn catapultButton = pros::ADIDigitalIn(CATAPULT_BUTTON_PORT);
+static pros::ADIDigitalIn bottomBasketSensor = pros::ADIDigitalIn(BOTTOM_PROXIMITY_PORT);
+static pros::ADIDigitalIn middleBasketSensor = pros::ADIDigitalIn(MIDDLE_PROXIMITY_PORT);
+static pros::ADIDigitalIn topBasketSensor = pros::ADIDigitalIn(TOP_PROXIMITY_PORT);
 
 } // namespace src::Scorer

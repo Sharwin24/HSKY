@@ -90,6 +90,7 @@ void printRobotPoseTask(void *) {
     }
 }
 
+// Task for updating the static RobotPose struct on an interval
 void odometryTask(void *) {
     OdometrySuite odometrySuite = OdometrySuite();
     while (true) {

@@ -142,6 +142,17 @@ void rollIntakeUntilBlue(IntakeState intakeDirection) {
 }
 
 /**
+ * @brief Polls the Basket Proximity Sensors and returns the number of discs present
+ *
+ * @return int the number of discs the sensors detect
+ */
+int getNumDiscsInBasket() {
+    // Read each sensor and determine number of discs in basket
+    // Basket Sensors should read 0 when no disc is present and 1 when a disc is present
+    return bottomBasketSensor.get_value() + middleBasketSensor.get_value() + topBasketSensor.get_value();
+}
+
+/**
  * @brief Initializes the Scorer mechanism motors and states
  *
  */
@@ -177,7 +188,7 @@ void update() {
     // If the catapult is ready, fire it when the fire button is pressed
     // Catapult mechanism will handle FIRING -> READY transition
     if (catapultFire.changedToPressed()) {
-        if (currentCatapultState == CatapultState::READY) {
+        if (currentCatapultState == CatapultState::READY && getNumDiscsInBasket() > 0) {
             currentCatapultState = CatapultState::FIRING;
         }
     }
