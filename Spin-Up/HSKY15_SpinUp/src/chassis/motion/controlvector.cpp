@@ -1,5 +1,6 @@
 #include "controlvector.hpp"
 
+namespace src::Motion {
 /**
  * @brief Construct a new Control Vector object to represent a robot's pose and
  * velocity, acceleration, and jerk at that pose.
@@ -82,3 +83,5 @@ bool ControlVector::operator==(const ControlVector &other) const {
  * @param other The ControlVector to compare to
  */
 bool ControlVector::operator!=(const ControlVector &other) const { return !(*this == other); }
+
+} // namespace src::Motion

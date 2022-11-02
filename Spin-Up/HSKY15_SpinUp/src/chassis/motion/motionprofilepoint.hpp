@@ -2,6 +2,8 @@
 
 #include "controlvector.hpp"
 
+namespace src::Motion {
+
 /**
  * @brief A class to represent a state along a motion-profiled path as a collection of
  * a ControlVector, left/right chassis velocities, curvature, and timestamp.
@@ -26,3 +28,5 @@ class MotionProfilePoint {
     float curvature;
     float timestamp;
 };
+
+} // namespace src::Motion

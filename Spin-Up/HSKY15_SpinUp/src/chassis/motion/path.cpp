@@ -1,5 +1,7 @@
 #include "path.hpp"
 
+namespace src::Motion {
+
 /**
  * @brief Construct a new Path object that represents a list of states along a motion-profiled path
  * in chronological order.
@@ -54,3 +56,5 @@ bool Path::operator==(const Path &other) const {
  * @param other The Path to compare to
  */
 bool Path::operator!=(const Path &other) const { return !(*this == other); }
+
+} // namespace src::Motion

@@ -1,5 +1,6 @@
 #pragma once
 
+namespace src::Motion {
 /**
  * @brief A class to represent the current position and orientation of the robot
  * with x position, y position, and angle.
@@ -21,3 +22,5 @@ class RobotPose {
     float yPosition; // [in]
     float theta;     // [rad]
 };
+
+} // namespace src::Motion

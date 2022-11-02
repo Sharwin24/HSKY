@@ -1,6 +1,8 @@
 #pragma once
 #include "robotpose.hpp"
 
+namespace src::Motion {
+
 /**
  * @brief A class to represent a robot's pose and
  * velocity, acceleration, and jerk at that pose.
@@ -24,3 +26,5 @@ class ControlVector {
     float chassisAcceleration;
     float chassisJerk;
 };
+
+} // namespace src::Motion

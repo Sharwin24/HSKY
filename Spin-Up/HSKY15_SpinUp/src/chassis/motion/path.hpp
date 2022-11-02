@@ -3,6 +3,8 @@
 #include "motionprofilepoint.hpp"
 #include <vector>
 
+namespace src::Motion {
+
 /**
  * @brief A class to represent a list of states along a motion-profiled path in chronological order.
  */
@@ -19,3 +21,5 @@ class Path {
   private:
     std::vector<MotionProfilePoint> profilePoints;
 };
+
+} // namespace src::Motion

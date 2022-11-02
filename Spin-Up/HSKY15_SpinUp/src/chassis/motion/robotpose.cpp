@@ -1,5 +1,6 @@
 #include "robotpose.hpp"
 
+namespace src::Motion {
 /**
  * @brief Construct a new Robot Pose object that represents the current position
  * and orientation of the robot with x position, y position, and angle.
@@ -64,3 +65,5 @@ bool RobotPose::operator==(const RobotPose &other) const {
  * @param other the RobotPose to compare to
  */
 bool RobotPose::operator!=(const RobotPose &other) const { return !(*this == other); }
+
+} // namespace src::Motion

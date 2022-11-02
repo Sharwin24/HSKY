@@ -12,6 +12,8 @@
 
 using namespace okapi;
 
+#define RobotPose Motion::RobotPose
+
 namespace src::Chassis {
 
 enum class StartingPosition { // Figure out all possible starting positions and name them

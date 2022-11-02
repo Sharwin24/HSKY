@@ -1,5 +1,6 @@
 #include "motionprofilepoint.hpp"
 
+namespace src::Motion {
 /**
  * @brief Construct a new Motion Profile Point object that represent a state along a
  * motion-profiled path as a collection of a ControlVector, left/right chassis velocities,
@@ -80,3 +81,5 @@ bool MotionProfilePoint::operator==(const MotionProfilePoint &other) const {
  * @param other The MotionProfilePoint to compare to.
  */
 bool MotionProfilePoint::operator!=(const MotionProfilePoint &other) const { return !(*this == other); }
+
+} // namespace src::Motion
