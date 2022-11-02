@@ -1,3 +1,5 @@
+#pragma once
+
 #include "controlvector.hpp"
 
 /**
@@ -11,13 +13,16 @@ class MotionProfilePoint {
     ControlVector getControlVector();
     float getLeftChassisVelocity();
     float getRightChassisVelocity();
-    float getCurve();
+    float getCurvature();
     float getTimestamp();
+
+    bool operator==(const MotionProfilePoint &other) const;
+    bool operator!=(const MotionProfilePoint &other) const;
 
   private:
     ControlVector controlVector;
     float leftChassisVelocity;
     float rightChassisVelocity;
-    float curve;
+    float curvature;
     float timestamp;
 };

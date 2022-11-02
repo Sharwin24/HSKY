@@ -3,6 +3,8 @@
 #include <memory>
 
 #include "main.h"
+#include "motion/motion.hpp"
+#include "okapi//impl/device/controller.hpp"
 #include "okapi/api/util/mathUtil.hpp"
 #include "okapi/impl/chassis/controller/chassisControllerBuilder.hpp"
 #include "pros/misc.hpp"
@@ -11,15 +13,6 @@
 using namespace okapi;
 
 namespace src::Chassis {
-
-// Struct for Position and Orientation (Pose)
-// Orientation is absolute angle in radians
-// [0,0,0] is the starting position of the robot instead of a constant field origin
-typedef struct Pose {
-    float x;     // [in]
-    float y;     // [in]
-    float theta; // [rad]
-} Pose_t;
 
 enum class StartingPosition { // Figure out all possible starting positions and name them
     RED_FRONT,
@@ -40,7 +33,6 @@ class FieldConstants {
     float getRedGoalPositionY() const { return this->redGoalPositionY; }
     float getBlueGoalPositionX() const { return this->blueGoalPositionX; }
     float getBlueGoalPositionY() const { return this->blueGoalPositionY; }
-    
 
   private:
     StartingPosition startingPosition;
@@ -50,7 +42,6 @@ class FieldConstants {
     float redGoalPositionY;
     float blueGoalPositionX;
     float blueGoalPositionY;
-    
 };
 
 class OdometrySuite {
@@ -107,7 +98,7 @@ static MotorGroup rightChassisMotorGroup = {
 
 // Chassis pointer for access to chassis model: chassis->getModel()
 extern std::shared_ptr<ChassisController> chassis;
-static pros::Controller controller = pros::Controller(pros::E_CONTROLLER_MASTER);
+static Controller controller = Controller();
 
 // Control loop functions
 extern void initialize();
@@ -127,7 +118,7 @@ extern void setChassisBrakeMode(AbstractMotor::brakeMode mode);
 
 // Chassis Odometry functions
 extern void odometryTask(void *);
-extern Pose_t getRobotPose();
+extern RobotPose getRobotPose();
 extern void printRobotPoseTask(void *);
 
 // Chassis sensors
