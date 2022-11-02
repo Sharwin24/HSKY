@@ -263,7 +263,7 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
     float degreesR = ((rightTarget * 360.0f) / (M_PI * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
     IterativePosPIDController drivePIDL = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
     IterativePosPIDController drivePIDR = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
-    chassis->getModel()->resetSensors(); // TODO: Use OdometrySuite Encoders instead of Motor Encoders
+    chassis->getModel()->resetSensors();
     int timer = 0;
     float errorL;
     float errorR;
@@ -274,6 +274,49 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
         errorR = degreesR + chassis->getModel()->getSensorVals()[1];
         powerL = drivePIDL.step(errorL);
         powerR = drivePIDR.step(errorR);
+        chassis->getModel()->tank(powerL * maxV, powerR * maxV);
+        timer += 10;
+        pros::delay(10);
+    }
+    chassis->getModel()->tank(0, 0);
+}
+
+/**
+ * @brief Moves the chassis given a target distance for each side [in] within a given time [ms] using a PID control loop.
+ * Target distance is relative to the current position. Also takes a maximum velocity to scale the speed of the robot.
+ * The robot will exit the control loop after the time limit is reached, regardless if the target is reached or not.
+ * Utilizes OdometrySuite Encoders instead of Motor Encoders. Does not reset the encoders.
+ *
+ * @param leftTarget Target distance for the left side [in]
+ * @param rightTarget Target distance for the right side [in]
+ * @param ms Time to complete the movement [ms]
+ * @param maxV Scalar for velocity of the robot, defaults to 1 [0, 1]
+ */
+void movePIDOdom(float leftTarget, float rightTarget, int ms, float maxV) {
+    float currentLeftTravel = (leftEncoder.get_position() * (ENCODER_WHEEL_DIAMETER * M_PI)) / 36000.0f;   // [in]
+    float currentRightTravel = (rightEncoder.get_position()) * (ENCODER_WHEEL_DIAMETER * M_PI) / 36000.0f; // [in]
+    float leftTargetTravel = currentLeftTravel + leftTarget;                                               // [in]
+    float rightTargetTravel = currentRightTravel + rightTarget;                                            // [in]
+    float prevErrorL = 0;
+    float prevErrorR = 0;
+    float integralL = 0;
+    float integralR = 0;
+    int timer = 0;
+    while (timer < ms) { // Within time limit, increment PID loop
+        // Compute PID values from current wheel travel measurements
+        currentLeftTravel = (leftEncoder.get_position() * (ENCODER_WHEEL_DIAMETER * M_PI)) / 36000.0f;
+        currentRightTravel = (rightEncoder.get_position()) * (ENCODER_WHEEL_DIAMETER * M_PI) / 36000.0f;
+        float errorL = leftTargetTravel - currentLeftTravel;
+        float errorR = rightTargetTravel - currentRightTravel;
+        integralL += errorL;
+        integralR += errorR;
+        float derivativeL = errorL - prevErrorL;
+        float derivativeR = errorR - prevErrorR;
+        prevErrorL = errorL;
+        prevErrorR = errorR;
+        // Calculate power using PID
+        float powerL = (P_GAIN_DRIVE * errorL) + (I_GAIN_DRIVE * integralL) + (D_GAIN_DRIVE * derivativeL);
+        float powerR = (P_GAIN_DRIVE * errorR) + (I_GAIN_DRIVE * integralR) + (D_GAIN_DRIVE * derivativeR);
         chassis->getModel()->tank(powerL * maxV, powerR * maxV);
         timer += 10;
         pros::delay(10);
