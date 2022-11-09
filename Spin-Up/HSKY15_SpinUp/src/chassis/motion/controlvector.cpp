@@ -42,33 +42,6 @@ RobotPose ControlVector::getPose() {
 }
 
 /**
- * @brief Gets the robot's current velocity.
- *
- * @return the robot's current velocity as a float [in/s]
- */
-float ControlVector::getChassisVelocity() {
-    return this->chassisVelocity;
-}
-
-/**
- * @brief Gets the robot's current acceleration.
- *
- * @return the robot's current acceleration as a float [in/s^2]
- */
-float ControlVector::getChassisAcceleration() {
-    return this->chassisAcceleration;
-}
-
-/**
- * @brief Gets the robot's current jerk.
- *
- * @return the robot's current jerk as a float [in/s^3]
- */
-float ControlVector::getChassisJerk() {
-    return this->chassisJerk;
-}
-
-/**
  * @brief Determines if this ControlVector is equal to the given ControlVector.
  *
  * @param other The ControlVector to compare to

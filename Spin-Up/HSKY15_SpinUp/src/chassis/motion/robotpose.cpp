@@ -30,27 +30,6 @@ RobotPose::RobotPose(float x, float y, float theta) {
 RobotPose::~RobotPose() {}
 
 /**
- * @brief Gets the current x-position of the robot.
- *
- * @return the current x-position of the robot as a float [in]
- */
-float RobotPose::getXPosition() { return this->xPosition; }
-
-/**
- * @brief Gets the current y-position of the robot.
- *
- * @return the current y-position of the robot as a float [in]
- */
-float RobotPose::getYPosition() { return this->yPosition; }
-
-/**
- * @brief Gets the current angle of the robot.
- *
- * @return the current angle of the robot as a float [rad]
- */
-float RobotPose::getTheta() { return this->theta; }
-
-/**
  * @brief Determines if this RobotPose is equal to the given RobotPose.
  *
  * @param other the RobotPose to compare to

@@ -25,15 +25,6 @@ Path::Path(std::vector<MotionProfilePoint> points) {
 Path::~Path() {}
 
 /**
- * @brief Gets the list of states along a motion-profiled path in chronological order.
- *
- * @return a list of MotionProfilePoints in chronological order as a std::vector<MotionProfilePoint>
- */
-std::vector<MotionProfilePoint> Path::getProfilePoints() {
-    return this->profilePoints;
-}
-
-/**
  * @brief Determines if this Path is equal to the given Path
  *
  * @param other The Path to compare to

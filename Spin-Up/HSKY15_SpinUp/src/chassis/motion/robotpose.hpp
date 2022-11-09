@@ -10,9 +10,9 @@ class RobotPose {
     RobotPose();
     RobotPose(float x, float y, float theta);
     ~RobotPose();
-    float getXPosition();
-    float getYPosition();
-    float getTheta();
+    float getXPosition() { return this->xPosition; };
+    float getYPosition() { return this->yPosition; };
+    float getTheta() { return this->theta; };
 
     bool operator==(const RobotPose &other) const;
     bool operator!=(const RobotPose &other) const;

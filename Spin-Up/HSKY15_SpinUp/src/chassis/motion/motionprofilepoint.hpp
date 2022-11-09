@@ -12,21 +12,21 @@ class MotionProfilePoint {
   public:
     MotionProfilePoint();
     ~MotionProfilePoint();
-    ControlVector getControlVector();
-    float getLeftChassisVelocity();
-    float getRightChassisVelocity();
-    float getCurvature();
-    float getTimestamp();
+    ControlVector getControlVector() { return this->controlVector; };
+    float getLeftChassisVelocity() { return this->leftChassisVelocity; };
+    float getRightChassisVelocity() { return this->rightChassisVelocity; };
+    float getCurvature() { return this->curvature; };
+    float getTimestamp() { return this->timestamp; };
 
     bool operator==(const MotionProfilePoint &other) const;
     bool operator!=(const MotionProfilePoint &other) const;
 
   private:
     ControlVector controlVector;
-    float leftChassisVelocity;
-    float rightChassisVelocity;
-    float curvature;
-    float timestamp;
+    float leftChassisVelocity;  // [in/s]
+    float rightChassisVelocity; // [in/s]
+    float curvature;            // [1/in]
+    float timestamp;            // [sec]
 };
 
 } // namespace src::Motion
