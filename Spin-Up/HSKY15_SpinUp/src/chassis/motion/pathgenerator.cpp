@@ -2,21 +2,26 @@
 
 namespace src::Motion {
 
+// https://drive.google.com/drive/u/0/folders/1MIEETCykfGkvhkjDeqdS8hlHDgFc1MsG
+
 /**
  * @brief Construct a new Path Generator object using Robot-Specific MotionConstraints and a time step
  *
  * @param constraints Robot-Specific constraints regarding the robot kinematics
  * @param deltaTime the time step between generated MotionProfilePoints in the path [ms]
  */
-PathGenerator::PathGenerator(MotionConstraints constraints, float deltaTime) : constraints(constraints), deltaTime(deltaTime) {}
+PathGenerator::PathGenerator(MotionConstraints constraints, float deltaTime) : constraints(constraints), deltaTime(deltaTime) {
+    // Do some magic I guess?
+    // Something needs to happen here to establish how the constraints and deltaTime are used for injection, smoothing, and generation
+}
 PathGenerator::~PathGenerator() {}
 
-// TODO: Implement PathGeneration from Pose waypoints and ControlVector waypoints via waypoint injection/smoothing
 Path PathGenerator::generatePath(std::vector<RobotPose> waypoints) {
-    return Path();
+    // TODO: Implement PathGeneration from Pose waypoints and ControlVector waypoints via waypoint injection/smoothing
 }
+
 Path PathGenerator::generatePath(std::vector<ControlVector> waypoints) {
-    return Path();
+    // TODO: Implement PathGeneration from Pose waypoints and ControlVector waypoints via waypoint injection/smoothing
 }
 
 std::vector<RobotPose> PathGenerator::injectWaypoints(std::vector<RobotPose> waypoints) {
@@ -31,16 +36,15 @@ std::vector<RobotPose> PathGenerator::injectWaypoints(std::vector<RobotPose> way
 }
 
 std::vector<ControlVector> PathGenerator::injectWaypoints(std::vector<ControlVector> waypoints) {
-    return std::vector<ControlVector>();
+    // Inject waypoints from ControlVectors
 }
 
 std::vector<RobotPose> PathGenerator::smoothWaypoints(std::vector<RobotPose> waypoints) {
-    return std::vector<RobotPose>();
-    // https://drive.google.com/drive/u/0/folders/1MIEETCykfGkvhkjDeqdS8hlHDgFc1MsG
+    // smooth after injection with poses
 }
 
 std::vector<ControlVector> PathGenerator::smoothWaypoints(std::vector<ControlVector> waypoints) {
-    return std::vector<ControlVector>();
+    // smooth after injection with vectors
 }
 
 } // namespace src::Motion
