@@ -29,13 +29,16 @@ std::vector<RobotPose> PathGenerator::injectWaypoints(std::vector<RobotPose> way
     // for i = 0 to numPointsToBeInjected: Add startPoint + (vector * i) to path
     // After all line segments, add last point to path
 }
+
 std::vector<ControlVector> PathGenerator::injectWaypoints(std::vector<ControlVector> waypoints) {
     return std::vector<ControlVector>();
 }
 
 std::vector<RobotPose> PathGenerator::smoothWaypoints(std::vector<RobotPose> waypoints) {
     return std::vector<RobotPose>();
+    // https://drive.google.com/drive/u/0/folders/1MIEETCykfGkvhkjDeqdS8hlHDgFc1MsG
 }
+
 std::vector<ControlVector> PathGenerator::smoothWaypoints(std::vector<ControlVector> waypoints) {
     return std::vector<ControlVector>();
 }
