@@ -13,9 +13,10 @@ class RobotPose {
     float getXPosition() { return this->xPosition; };
     float getYPosition() { return this->yPosition; };
     float getTheta() { return this->theta; };
-
     bool operator==(const RobotPose &other) const;
     bool operator!=(const RobotPose &other) const;
+
+    RobotPose normalize();
 
   private:
     float xPosition; // [in]

@@ -18,11 +18,8 @@ class PathGenerator {
     MotionConstraints constraints;
     float deltaTime; // [ms]
 
-    std::vector<RobotPose> injectWaypoints(std::vector<RobotPose> waypoints);
-    std::vector<ControlVector> injectWaypoints(std::vector<ControlVector> waypoints);
-
+    std::vector<RobotPose> injectWaypoints(std::vector<RobotPose> waypoints, float spacing);
     std::vector<RobotPose> smoothWaypoints(std::vector<RobotPose> waypoints);
-    std::vector<ControlVector> smoothWaypoints(std::vector<ControlVector> waypoints);
 };
 
 } // namespace src::Motion
