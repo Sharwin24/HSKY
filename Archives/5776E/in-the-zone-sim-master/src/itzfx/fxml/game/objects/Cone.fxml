@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Circle?>
+
+<Pane fx:id="mobile" cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragged="#onDragged" onMousePressed="#onPress" prefHeight="30.0" prefWidth="30.0" styleClass="cone" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.game.objects.MobileController">
+    <children>
+        <Circle layoutX="15.0" layoutY="15.0" radius="15.0" stroke="BLACK" strokeType="INSIDE" styleClass="base" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="15.0" radiusY="15.0" startAngle="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="15.0" radiusY="15.0" startAngle="125.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="15.0" radiusY="15.0" startAngle="215.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="15.0" radiusY="15.0" startAngle="305.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Circle layoutX="15.0" layoutY="15.0" radius="11.25" stroke="BLACK" strokeType="INSIDE" styleClass="level1" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="11.25" radiusY="11.25" startAngle="80.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="11.25" radiusY="11.25" startAngle="170.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="11.25" radiusY="11.25" startAngle="260.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="11.25" radiusY="11.25" startAngle="350.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Circle layoutX="15.0" layoutY="15.0" radius="7.5" stroke="BLACK" strokeType="INSIDE" styleClass="level2" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="7.5" radiusY="7.5" startAngle="35.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="7.5" radiusY="7.5" startAngle="125.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="7.5" radiusY="7.5" startAngle="215.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Arc centerX="15.0" centerY="15.0" length="20.0" radiusX="7.5" radiusY="7.5" startAngle="305.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" styleClass="wedge" type="ROUND" />
+        <Circle layoutX="15.0" layoutY="15.0" radius="3.25" stroke="BLACK" strokeType="INSIDE" styleClass="tip" />
+    </children>
+</Pane>

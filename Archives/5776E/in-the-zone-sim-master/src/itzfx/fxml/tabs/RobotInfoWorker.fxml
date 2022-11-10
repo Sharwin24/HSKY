@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="250.0" prefWidth="670.0" styleClass="default-background" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.tabs.RobotInfoWorkerController">
+    <children>
+        <SplitPane dividerPositions="0.702" prefHeight="250.0" prefWidth="671.0" styleClass="default-background">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="default-background">
+                    <children>
+                        <StackPane prefHeight="250.0" prefWidth="468.0">
+                            <children>
+                                <fx:include fx:id="controlLayout" source="ControlLayout.fxml" />
+                            </children>
+                        </StackPane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" styleClass="default-background">
+                    <children>
+                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="250.0" prefWidth="196.0" styleClass="default-background">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="default-background">
+                                    <children>
+                                        <StackPane onMouseClicked="#create" prefHeight="122.0" prefWidth="195.0" styleClass="clickable-cover">
+                                            <children>
+                                                <Label text="Create a controller" textAlignment="CENTER" wrapText="true">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </StackPane>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="default-background">
+                                    <children>
+                                        <StackPane onMouseClicked="#load" prefHeight="121.0" prefWidth="195.0" styleClass="clickable-cover">
+                                            <children>
+                                                <Label text="Load a controller" textAlignment="CENTER" wrapText="true">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </StackPane>
+                                    </children>
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>

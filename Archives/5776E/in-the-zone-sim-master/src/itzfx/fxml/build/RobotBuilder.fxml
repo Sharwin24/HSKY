@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="600.0" styleClass="flat-tab-pane" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.build.RobotBuilder">
+    <tabs>
+        <Tab text="Robot Configuration">
+            <content>
+                <AnchorPane minHeight="330.0" minWidth="600.0" prefHeight="330.0" prefWidth="620.0">
+                    <fx:include fx:id="rcPane" prefHeight="330.0" prefWidth="620.0" source="RobotConfig.fxml" />
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Mobile Goal Configuration">
+            <content>
+                <AnchorPane minHeight="330.0" minWidth="600.0" prefHeight="330.0" prefWidth="620.0">
+                    <fx:include fx:id="mcPane" prefHeight="330.0" prefWidth="620.0" source="MogoConfig.fxml" />
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Stack Configuration">
+            <content>
+                <AnchorPane minHeight="330.0" minWidth="600.0" prefHeight="330.0" prefWidth="620.0">
+                    <fx:include fx:id="scPane" prefHeight="330.0" prefWidth="620.0" source="StackConfig.fxml" />
+                </AnchorPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>

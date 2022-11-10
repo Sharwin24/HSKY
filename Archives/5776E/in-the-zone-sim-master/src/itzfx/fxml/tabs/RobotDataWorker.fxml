@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="250.0" prefWidth="650.0" styleClass="default-background" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.tabs.RobotDataWorkerController">
+   <children>
+      <SplitPane dividerPositions="0.76" prefHeight="250.0" prefWidth="650.0" styleClass="default-background">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="330.0">
+               <children>
+                  <Pane layoutX="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <StackPane layoutX="1.0">
+                           <children>
+                              <ImageView fitHeight="250.0" fitWidth="494.0" pickOnBounds="true" preserveRatio="true" styleClass="robot-cad" />
+                           </children>
+                        </StackPane>
+                        <VBox alignment="CENTER" layoutY="197.0">
+                           <children>
+                              <Label text="Drive Base Speed:" textFill="WHITE" />
+                              <Label fx:id="speed" text="Speed (in/sec)" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="347.0" layoutY="183.0">
+                           <children>
+                              <Label text="Autostack Time:" textFill="WHITE" />
+                              <Label fx:id="autostackTime" text="Time (sec)" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="7.0" layoutY="116.0">
+                           <children>
+                              <Label text="Mobile Goal Time" textFill="WHITE" />
+                              <Label fx:id="mogoTime" text="Time (sec)" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="339.0" layoutY="11.0">
+                           <children>
+                              <Label text="Stationary Goal Stack Time" textFill="WHITE" />
+                              <Label fx:id="statStackTime" text="Time (sec)" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="214.0" layoutY="202.0">
+                           <children>
+                              <Label text="Mobile Goal Location" textFill="WHITE" />
+                              <Label fx:id="mogoFront" text="Front/Back" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="4.0" layoutY="12.0">
+                           <children>
+                              <Label text="Maximum Mobile&#10;Goal Stack" textAlignment="CENTER" textFill="WHITE" />
+                              <Label fx:id="maxMogoCount" text="Count (cones)" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="376.0" layoutY="77.0">
+                           <children>
+                              <Label text="Maximum Stationary&#10;Goal Stack" textAlignment="CENTER" textFill="WHITE" />
+                              <Label fx:id="maxStackCount" text="Count (cones)" textFill="WHITE" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="249.0" prefWidth="152.0" styleClass="default-background">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="default-background">
+                           <children>
+                              <StackPane layoutX="1.0" onMouseClicked="#create" prefHeight="122.0" prefWidth="149.0" styleClass="clickable-cover">
+                                 <children>
+                                    <Label text="Create a New Robot" textAlignment="CENTER" wrapText="true">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="default-background">
+                           <children>
+                              <StackPane onMouseClicked="#load" prefHeight="122.0" prefWidth="149.0" styleClass="clickable-cover">
+                                 <children>
+                                    <Label text="Load a New&#10;Robot" textAlignment="CENTER" wrapText="true">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

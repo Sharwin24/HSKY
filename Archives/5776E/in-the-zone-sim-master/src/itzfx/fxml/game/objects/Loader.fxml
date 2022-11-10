@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Double?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Polygon?>
+
+<Pane cache="true" cacheHint="SPEED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.5" prefWidth="27.5" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Polygon stroke="BLACK" strokeType="INSIDE">
+            <points>
+                <Double fx:value="0" />
+                <Double fx:value="0" />
+                <Double fx:value="22.5" />
+                <Double fx:value="0" />
+                <Double fx:value="27.5" />
+                <Double fx:value="5" />
+                <Double fx:value="27.5" />
+                <Double fx:value="22.5" />
+                <Double fx:value="22.5" />
+                <Double fx:value="27.5" />
+                <Double fx:value="0" />
+                <Double fx:value="27.5" />
+            </points>
+            <effect>
+                <DropShadow />
+            </effect>
+        </Polygon>
+    </children>
+</Pane>

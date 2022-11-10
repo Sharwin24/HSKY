@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="138.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.timing.Clock">
+    <children>
+        <HBox prefHeight="0.0" prefWidth="136.0" spacing="10.0">
+            <children>
+                <fx:include fx:id="minPane" source="Digit.fxml" />
+                <VBox fx:id="colon" prefHeight="200.0" prefWidth="0.0" spacing="10.0">
+                    <children>
+                        <Circle fill="TRANSPARENT" radius="3.0" stroke="BLACK" strokeType="INSIDE" styleClass="invert-stroke">
+                            <VBox.margin>
+                                <Insets top="5.0" />
+                            </VBox.margin>
+                        </Circle>
+                        <Circle fill="TRANSPARENT" radius="3.0" stroke="BLACK" strokeType="INSIDE" styleClass="invert-stroke" />
+                    </children>
+                </VBox>
+                <fx:include fx:id="secDPane" source="Digit.fxml" />
+                <fx:include fx:id="secPane" source="Digit.fxml" />
+                <Circle fx:id="period" fill="TRANSPARENT" radius="3.0" stroke="BLACK" strokeType="INSIDE" styleClass="invert-stroke">
+                    <HBox.margin>
+                        <Insets top="25.0" />
+                    </HBox.margin>
+                </Circle>
+                <fx:include fx:id="secdPane" source="Digit.fxml" />
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

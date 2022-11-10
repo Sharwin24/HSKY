@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="800.0" stylesheets="@css/global.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.ScoreSheetController">
+    <children>
+        <SplitPane dividerPositions="0.5" prefHeight="450.0" prefWidth="800.0" styleClass="default-background">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <VBox prefHeight="450.0" prefWidth="396.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                            <children>
+                                <StackPane prefHeight="50.0" prefWidth="200.0" styleClass="red-alliance-border">
+                                    <children>
+                                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Mobile Goals Scored In">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </StackPane>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" styleClass="red-alliance-border">
+                                    <children>
+                                        <HBox alignment="CENTER" spacing="5.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="5 point&#10;Zone">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="red5" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="20.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER" spacing="5.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="10 point&#10;Zone">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="red10" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="20.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER" spacing="5.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="20 point&#10;Zone">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="red20" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="20.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="red-alliance-border">
+                                    <children>
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="# Cones&#10;on Goals">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="redCones" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="28.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="# Highest&#10;Stacks">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="redStacks" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="28.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="red-alliance-border">
+                                    <children>
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Auton&#10;Winner">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" styleClass="bordered">
+                                                    <children>
+                                                        <ImageView fx:id="redAuton" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="check" />
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="# Parked&#10;Robots">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="redPark" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="28.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="376.0" spacing="10.0" styleClass="red-alliance-border">
+                                    <children>
+                                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Score">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Text>
+                                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="bordered">
+                                            <children>
+                                                <Text styleClass="text" fx:id="redTotal" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                    <font>
+                                                        <Font size="20.0" />
+                                                    </font>
+                                                </Text>
+                                            </children>
+                                        </StackPane>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <VBox prefHeight="450.0" prefWidth="396.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                            <children>
+                                <StackPane prefHeight="50.0" prefWidth="200.0" styleClass="blue-alliance-border">
+                                    <children>
+                                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Mobile Goals Scored In">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Text>
+                                    </children>
+                                </StackPane>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" styleClass="blue-alliance-border">
+                                    <children>
+                                        <HBox alignment="CENTER" spacing="5.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="5 point&#10;Zone">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="blue5" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="20.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER" spacing="5.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="10 point&#10;Zone">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="blue10" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="20.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER" spacing="5.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="20 point&#10;Zone">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="blue20" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="20.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="blue-alliance-border">
+                                    <children>
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="# Cones&#10;on Goals">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="blueCones" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="28.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="# Highest&#10;Stacks">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="blueStacks" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="28.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" styleClass="blue-alliance-border">
+                                    <children>
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Auton&#10;Winner">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" styleClass="bordered">
+                                                    <children>
+                                                        <ImageView fx:id="blueAuton" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="check" />
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER" spacing="10.0">
+                                            <children>
+                                                <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="# Parked&#10;Robots">
+                                                    <font>
+                                                        <Font size="24.0" />
+                                                    </font>
+                                                </Text>
+                                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" styleClass="bordered">
+                                                    <children>
+                                                        <Text styleClass="text" fx:id="bluePark" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                            <font>
+                                                                <Font size="28.0" />
+                                                            </font>
+                                                        </Text>
+                                                    </children>
+                                                </StackPane>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="376.0" spacing="10.0" styleClass="blue-alliance-border">
+                                    <children>
+                                        <Text styleClass="text" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Score">
+                                            <font>
+                                                <Font size="24.0" />
+                                            </font>
+                                        </Text>
+                                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" styleClass="bordered">
+                                            <children>
+                                                <Text styleClass="text" fx:id="blueTotal" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                                    <font>
+                                                        <Font size="20.0" />
+                                                    </font>
+                                                </Text>
+                                            </children>
+                                        </StackPane>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>

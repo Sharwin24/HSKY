@@ -1,0 +1,500 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 25, 2018, 6:30:41 PM
+    Author     : prem
+*/
+
+* {
+    /*
+    Other colors
+    */
+    -off-white:derive(white, -5%);
+
+    /*
+    Blue variants
+    */
+    -blue-base-light:rgba(0%, 50%, 100%, 0.1);
+    -blue-base-quarter:rgba(0%, 50%, 100%, .25);
+    -blue-base-half:rgba(0%, 50%, 100%, .5);
+    -blue-base-triple-quarter:rgba(0%, 50%, 100%, .75);
+    -blue-base:rgb(0%, 50%, 100%);
+
+    /*
+    Green variants
+    */
+    -green-base-light:rgba(0%, 75%, 25%, 0.1);
+    -green-base-quarter:rgba(0%, 75%, 25%, 0.25);
+    -green-base-half:rgba(0%, 75%, 25%, 0.5);
+    -green-base-triple-quarter:rgba(0%, 75%, 25%, 0.75);
+    -green-base:rgb(0%, 75%, 25%);
+
+    /*
+    Red variants
+    */
+    -red-base-light:rgba(100%, 10%, 0%, 0.1);
+    -red-base-quarter:rgba(100%, 10%, 0%, 0.25);
+    -red-base-half:rgba(100%, 10%, 0%, 0.5);
+    -red-base-triple-quarter:rgba(100%, 10%, 0%, 0.75);
+    -red-base:rgb(100%, 10%, 0%);
+
+    /*
+    Dark-mode specific colors
+    */
+    -black-base:derive(black, 20%);
+    -off-black-base:derive(-black-base, 5%);
+}
+
+.default-background {
+    -fx-background-color:-black-base;
+}
+
+.default-fill {
+    -fx-fill:-black-base;
+}
+
+.default-border {
+    -fx-border-color:-off-black-base;
+    -fx-border-width:1.5;
+}
+
+.default-stroke {
+    -fx-stroke:-black-base;
+}
+
+.invert-background {
+    -fx-background-color:white;
+}
+
+.invert-fill {
+    -fx-fill:white;
+}
+
+.invert-border {
+    -fx-border-color:-off-white;
+}
+
+.invert-stroke {
+    -fx-stroke:white;
+}
+
+/*
+Button stuff
+*/
+
+.button, .toggle-button, .cancel-button, yes-button {
+    -fx-border-radius:5;
+}
+
+.button, .toggle-button {
+    -fx-border-color:-blue-base;
+    -fx-background-color:-black-base;
+}
+
+.button:focused, .toggle-button:focused {
+    -fx-background-color:-blue-base-light;
+}
+
+.button:hover, .toggle-button:hover {
+    -fx-background-color:-blue-base-quarter;
+}
+
+.button:pressed, .toggle-button:pressed {
+    -fx-background-color:-blue-base-triple-quarter;
+}
+
+.button:disabled, .toggle-button:disabled {
+    -fx-background-color:-red-base-quarter;
+}
+
+.toggle-button:selected {
+    -fx-background-color:-blue-base-half;
+}
+
+.cancel-button {
+    -fx-border-color:-red-base;
+    -fx-background-color:-black-base;
+}
+
+.cancel-button:focused {
+    -fx-background-color:-red-base-light;
+}
+
+.cancel-button:hover {
+    -fx-background-color:-red-base-quarter;
+}
+
+.cancel-button:pressed {
+    -fx-background-color:-red-base-half;
+}
+
+.yes-button {
+    -fx-background-color:white;
+    -fx-border-color:-green-base;
+}
+
+.yes-button:focused {
+    -fx-background-color:-green-base-light;
+}
+
+.yes-button:hover {
+    -fx-background-color:-green-base-quarter;
+}
+
+.yes-button:pressed {
+    -fx-background-color:-green-base-half;
+}
+
+.bordered {
+    -fx-border-color:white;
+    -fx-border-width:2;
+}
+
+.flat-progress-bar {
+    -fx-accent:-blue-base;
+}
+
+.perimeter {
+    -fx-fill:black;
+}
+
+/*
+Field mode selector
+*/
+
+.field-mode-selector {
+    -fx-background-color:-black-base;
+    -fx-border-color:-blue-base;
+}
+
+.field-mode-selector:focused {
+    -fx-background-color:-blue-base-quarter;
+}
+
+.field-mode-selector:hover {
+    -fx-background-color:-blue-base-half;
+}
+
+.field-mode-selector:pressed {
+    -fx-background-color:-blue-base-triple-quarter;
+}
+
+/*
+Info screen things
+*/
+
+.flat-tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-background-color:-black-base;
+    -fx-focus-color:transparent;
+    -fx-faint-focus-color:transparent;
+}
+
+.flat-tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color:-off-black-base;
+    -fx-border-color:derive(-off-black-base, 10%);
+}
+
+.flat-tab-pane > .tab-header-area > .headers-region > .tab:hover {
+    -fx-background-color:-blue-base-quarter;
+}
+
+.flat-tab-pane > .tab-header-area > .headers-region > .tab:pressed {
+    -fx-background-color:-blue-base-triple-quarter;
+}
+
+.flat-tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color:-blue-base-half;
+}
+
+.flat-tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button:hover {
+    -fx-color: -blue-base-quarter;
+}
+
+.flat-tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button:focused {
+    -fx-color: -blue-base-light;
+}
+
+.flat-tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button:pressed {
+    -fx-color: -blue-base-half;
+}
+
+.flat-tab-pane > .tab-header-area > .control-buttons-tab > .container > .tab-down-button {
+    -fx-color: transparent;
+    -fx-background-radius: 0, 0, 0;
+}
+/*
+Scrollbar styling
+*/
+
+.scroll-bar:horizontal > .thumb,
+.scroll-bar:vertical > .thumb{
+    -fx-background-color:-black-base;
+}
+
+.scroll-bar:horizontal:hover > .thumb,
+.scroll-bar:vertical:hover > .thumb {
+    -fx-background-color:-blue-base-quarter;
+}
+
+.scroll-bar:horizontal:pressed > .thumb,
+.scroll-bar:vertical:pressed > .thumb {
+    -fx-background-color:-blue-base-half;
+}
+
+/*
+Menubar styling
+*/
+
+.flat-menu-bar {
+    -fx-background-color:-black-base;
+}
+
+/*
+SplitPane styling
+*/
+
+
+.split-pane:horizontal > .split-pane-divider,
+.split-pane:vertical > .split-pane-divider {
+    -fx-background-color:-off-black-base;
+}
+
+.split-pane:horizontal > .split-pane-divider:hover,
+.split-pane:vertical > .split-pane-divider:hover {
+    -fx-background-color:-blue-base-quarter;
+}
+
+.split-pane:horizontal > .split-pane-divider:pressed,
+.split-pane:vertical > .split-pane-divider:pressed {
+    -fx-background-color:-blue-base-half;
+}
+
+/*
+Clickable cover
+*/
+
+.clickable-cover {
+    -fx-background-color:transparent;
+    -fx-fill:transparent;
+}
+
+.clickable-cover:hover {
+    -fx-background-color:-blue-base-quarter;
+    -fx-fill:-blue-base-quarter;
+}
+
+.clickable-cover:pressed {
+    -fx-background-color:-blue-base-half;
+    -fx-fill:-blue-base-half;
+}
+
+/*
+Error text
+*/
+
+.error-text {
+    -fx-fill:red;
+}
+
+.error-text:hover {
+    -fx-fill:derive(red, 10%);
+}
+
+/*
+Success text
+*/
+
+.success-text {
+    -fx-fill:green;
+}
+
+.success-text:hover {
+    -fx-fill:derive(green, 10%);
+}
+
+/*
+Checkbox styling
+*/
+
+.flat-check-box > .box {
+    -fx-background-color:-black-base;
+    -fx-border-color:-off-black-base;
+    -fx-border-radius:1.5;
+}
+
+.flat-check-box:selected > .box > .mark,
+.flat-check-box:selected > .text {
+    -fx-background-color:-green-base;
+    -fx-fill:-green-base;
+}
+
+/*
+Key styling
+*/
+
+.key > .base,
+.key > .face {
+    -fx-fill:-black-base;
+    -fx-stroke:white;
+    -fx-stroke-width:0.5;
+}
+
+.key:active > .base {
+    -fx-fill:-green-base-half;
+}
+
+.key:active > .face {
+    -fx-fill:-green-base-triple-quarter;
+}
+
+.key > .depth {
+    -fx-stroke:white;
+    -fx-stroke-width:0.5;
+}
+
+.indicator {
+    -fx-fill:-black-base;
+    -fx-stroke:white;
+}
+
+/*
+Keyboard styling
+*/
+
+.keyboard-rect {
+    -fx-fill:transparent;
+}
+
+.keyboard-rect:hover {
+    -fx-fill:-blue-base-light;
+}
+
+.keyboard-rect:saved {
+    -fx-fill:-green-base-quarter;
+}
+
+.keyboard-rect:pressed {
+    -fx-fill:-blue-base-half;
+}
+
+.keyboard-rect:selected {
+    -fx-fill:-blue-base-quarter;
+}
+
+.keyboard-rect:disabled {
+    -fx-fill:-red-base-light;
+}
+
+/*
+Timing
+*/
+
+.led {
+    -fx-fill:white;
+}
+
+.led:disabled {
+    -fx-fill:transparent;
+}
+
+/*
+Quick fixes
+*/
+.label {
+    -fx-fill:white;
+    -fx-text-fill:white;
+}
+
+.button {
+    -fx-text-fill:white;
+}
+
+.tab-label {
+    -fx-text-fill:white;
+}
+
+.combo-box-label {
+    -fx-text-fill:white;
+}
+
+.combo-box .list-view {
+    -fx-background-color:-black-base;
+}
+
+.combo-box .list-cell:filled {
+    -fx-background-color:-black-base;
+}
+
+.combo-box .list-cell:filled:hover {
+    -fx-background-color:-blue-base-quarter;
+}
+
+.combo-box .list-cell:filled:pressed {
+    -fx-background-color:-blue-base-half;
+}
+
+.text {
+    -fx-fill:white;
+}
+
+.chart-plot-background {
+    -fx-background-color:-black-base;
+}
+
+.context-menu {
+    -fx-background-color:-black-base;
+}
+
+.dialog-pane:header .header-panel {
+    -fx-background-color: -black-base;
+}
+
+.list-view {
+    -fx-background-color:-black-base;
+}
+
+.list-view .list-cell:odd {
+    -fx-background-color:-black-base;
+}
+
+.list-view .list-cell:even {
+    -fx-background-color:derive(-off-black, 15%);
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color:-blue-base-half;
+}
+
+/*
+Other
+*/
+
+.redden .text {
+    -fx-text-fill:red;
+    -fx-fill:red;
+}
+
+.highlight-menu-item .text {
+    -fx-text-fill:-green-base;
+    -fx-fill:-green-base;
+}
+
+.link .text {
+    -fx-fill:derive(#00bbff, -20%);
+}
+
+.link:hover .text {
+    -fx-fill:derive(#00bbff, -10%);
+    -fx-cursor:hand;
+}
+
+.link:pressed .text {
+    -fx-fill:#00bbff;
+}
+
+.link:visited .text {
+    -fx-fill:derive(#8844ff, -20%);
+}
