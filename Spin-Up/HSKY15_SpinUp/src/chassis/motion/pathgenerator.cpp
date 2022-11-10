@@ -56,6 +56,12 @@ std::vector<RobotPose> PathGenerator::injectWaypoints(std::vector<RobotPose> way
         }
     }
     // After all line segments, add last point to path
+
+    // This entire method needs to be redone I believe. Injection should be somewhat simple:
+    // All LineSegments should be identified and the length should be calculated
+    // The number of points that fit on the line segment should be calculated using the spacing
+    // The points should be created with the appropriate spacing and position, the orientation should be the same as the line segment
+    // This should be done for all line segments
 }
 
 /**
