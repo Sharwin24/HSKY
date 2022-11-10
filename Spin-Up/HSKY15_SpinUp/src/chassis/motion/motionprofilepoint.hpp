@@ -11,6 +11,7 @@ namespace src::Motion {
 class MotionProfilePoint {
   public:
     MotionProfilePoint();
+    MotionProfilePoint(ControlVector controlVector, float leftChassisVelocity, float rightChassisVelocity, float curvature, float timestamp);
     ~MotionProfilePoint();
     ControlVector getControlVector() { return this->controlVector; };
     float getLeftChassisVelocity() { return this->leftChassisVelocity; };
@@ -26,7 +27,7 @@ class MotionProfilePoint {
     float leftChassisVelocity;  // [in/s]
     float rightChassisVelocity; // [in/s]
     float curvature;            // [1/in]
-    float timestamp;            // [sec]
+    float timestamp;            // [ms]
 };
 
 } // namespace src::Motion

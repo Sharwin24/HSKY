@@ -1,4 +1,6 @@
 #include "pathgenerator.hpp"
+#include "controlvector.hpp"
+#include "motionprofilepoint.hpp"
 #include "robotpose.hpp"
 #include "vector.hpp"
 #include <cmath>
@@ -21,10 +23,19 @@ PathGenerator::PathGenerator(MotionConstraints constraints, float deltaTime) : c
 PathGenerator::~PathGenerator() {}
 
 Path PathGenerator::generatePath(std::vector<RobotPose> waypoints) {
-    std::vector<MotionProfilePoint> generatedPath = std::vector<MotionProfilePoint>();
+    // Injection and Smoothing
     std::vector<RobotPose> injectedWaypoints = injectWaypoints(waypoints);
     std::vector<RobotPose> smoothedWaypoints = smoothWaypoints(injectedWaypoints);
-    // TODO: Generate path from smoothed waypoints
+    // Motion Profiling
+    std::vector<MotionProfilePoint> generatedPath = std::vector<MotionProfilePoint>();
+    float currentTime = 0.0f;
+    for (int wp = 0; wp < smoothedWaypoints.size(); wp++) {
+        RobotPose currentPose = smoothedWaypoints[wp];
+        RobotPose nextPose = smoothedWaypoints[wp + 1];
+        // Create a ControlVector using Pose and Chassis Motion
+        // Create a MotionProfilePoint using ControlVector and desired left/right velocities with deltaTime from timestep
+    }
+
     return Path(generatedPath);
 }
 
