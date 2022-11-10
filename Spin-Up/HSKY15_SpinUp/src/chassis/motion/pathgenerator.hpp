@@ -18,7 +18,7 @@ class PathGenerator {
     float deltaTime; // [ms]
 
     std::vector<RobotPose> injectWaypoints(std::vector<RobotPose> waypoints, float spacing = 6.0f);
-    std::vector<RobotPose> smoothWaypoints(std::vector<RobotPose> waypoints);
+    std::vector<RobotPose> smoothWaypoints(std::vector<RobotPose> waypoints, float smooothingFactor = 0.75f, float tolerance = 0.001f);
 };
 
 } // namespace src::Motion

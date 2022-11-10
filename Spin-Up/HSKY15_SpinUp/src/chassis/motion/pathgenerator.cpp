@@ -1,4 +1,5 @@
 #include "pathgenerator.hpp"
+#include "robotpose.hpp"
 #include "vector.hpp"
 #include <cmath>
 #include <vector>
@@ -66,8 +67,25 @@ std::vector<RobotPose> PathGenerator::injectWaypoints(std::vector<RobotPose> way
  * @param waypoints
  * @return std::vector<RobotPose>
  */
-std::vector<RobotPose> PathGenerator::smoothWaypoints(std::vector<RobotPose> waypoints) {
-    // smooth after injection with poses
+std::vector<RobotPose> PathGenerator::smoothWaypoints(std::vector<RobotPose> waypoints, float smoothingFactor, float tolerance) {
+    float smoothingWeight = 1.0f - smoothingFactor; // A and B is smoothingFactor
+    std::vector<RobotPose> smoothedWaypoints = std::vector<RobotPose>(waypoints);
+    // Honestly this is some bullshit
+    float currentDelta = tolerance;
+    while (currentDelta >= tolerance) {
+        currentDelta = 0.0f;
+        for (int i = 0; i < waypoints.size(); i++) {
+            float auxX = smoothedWaypoints[i].getXPosition();
+            float auxY = smoothedWaypoints[i].getYPosition();
+            float newX = smoothedWaypoints[i].getXPosition() + smoothingWeight * (waypoints[i].getXPosition() - smoothedWaypoints[i].getXPosition()) +
+                         smoothingFactor * (smoothedWaypoints[i - 1].getXPosition() + smoothedWaypoints[i + 1].getXPosition() - (2.0f * smoothedWaypoints[i].getXPosition()));
+            float newY = smoothedWaypoints[i].getYPosition() + smoothingWeight * (waypoints[i].getYPosition() - smoothedWaypoints[i].getYPosition()) +
+                         smoothingFactor * (smoothedWaypoints[i - 1].getYPosition() + smoothedWaypoints[i + 1].getYPosition() - (2.0f * smoothedWaypoints[i].getYPosition()));
+            smoothedWaypoints[i] = RobotPose(newX, newY, smoothedWaypoints[i].getTheta());
+            currentDelta += std::abs(auxX - newX) + std::abs(auxY - newY);
+        }
+    }
+    return smoothedWaypoints;
 }
 
 } // namespace src::Motion
