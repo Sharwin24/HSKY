@@ -16,8 +16,6 @@ class RobotPose {
     bool operator==(const RobotPose &other) const;
     bool operator!=(const RobotPose &other) const;
 
-    RobotPose normalize();
-
   private:
     float xPosition; // [in]
     float yPosition; // [in]

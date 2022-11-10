@@ -1,15 +1,10 @@
 #include "vector.hpp"
-#include "math.h"
+#include <cmath>
 
 namespace src::Motion {
 
 float Vector::getMagnitude() {
     return sqrt(pow(x2 - x1, 2.0f) + pow(y2 - y1, 2.0f));
-}
-
-float Vector::getAngle() {
-    // NOTE: Ensure this returns the same angle as RobotPose getTheta would
-    return atan2(y2 - y1, x2 - x1);
 }
 
 Vector Vector::normalize() {
@@ -18,7 +13,7 @@ Vector Vector::normalize() {
 }
 
 bool Vector::operator==(const Vector &other) const {
-    return this->x1 == other.x1 && this->y1 == other.y1 && this->x2 == other.x2 && this->y2 == other.y2;
+    return this->x1 == other.x1 && this->y1 == other.y1 && this->x2 == other.x2 && this->y2 == other.y2 && this->angle == other.angle;
 }
 
 bool Vector::operator!=(const Vector &other) const { return !(*this == other); }

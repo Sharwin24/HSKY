@@ -12,13 +12,12 @@ class PathGenerator {
     ~PathGenerator();
 
     Path generatePath(std::vector<RobotPose> waypoints);
-    Path generatePath(std::vector<ControlVector> waypoints);
 
   private:
     MotionConstraints constraints;
     float deltaTime; // [ms]
 
-    std::vector<RobotPose> injectWaypoints(std::vector<RobotPose> waypoints, float spacing);
+    std::vector<RobotPose> injectWaypoints(std::vector<RobotPose> waypoints, float spacing = 6.0f);
     std::vector<RobotPose> smoothWaypoints(std::vector<RobotPose> waypoints);
 };
 

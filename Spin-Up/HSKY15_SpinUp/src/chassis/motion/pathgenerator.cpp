@@ -1,6 +1,7 @@
 #include "pathgenerator.hpp"
-#include "math.h"
 #include "vector.hpp"
+#include <cmath>
+#include <vector>
 
 namespace src::Motion {
 
@@ -19,9 +20,10 @@ PathGenerator::PathGenerator(MotionConstraints constraints, float deltaTime) : c
 PathGenerator::~PathGenerator() {}
 
 Path PathGenerator::generatePath(std::vector<RobotPose> waypoints) {
-    // TODO: Implement PathGeneration from Pose waypoints and ControlVector waypoints via waypoint injection/smoothing
     std::vector<MotionProfilePoint> generatedPath = std::vector<MotionProfilePoint>();
-    // Actual Path Generation here (probably)
+    std::vector<RobotPose> injectedWaypoints = injectWaypoints(waypoints);
+    std::vector<RobotPose> smoothedWaypoints = smoothWaypoints(injectedWaypoints);
+    // TODO: Generate path from smoothed waypoints
     return Path(generatedPath);
 }
 
@@ -30,38 +32,31 @@ Path PathGenerator::generatePath(std::vector<RobotPose> waypoints) {
  * This is step 1 of the path generation process.
  *
  * @param waypoints A chronological list of waypoints to be injected with additional waypoints maintaining the same trajectory
- * @param spacing The desired distance between waypoints [in]
- * @return std::vector<RobotPose>
+ * @param spacing The desired distance between waypoints. Defaults to 6" [in]
+ * @return std::vector<RobotPose> a new list with the injected waypoints
  */
 std::vector<RobotPose> PathGenerator::injectWaypoints(std::vector<RobotPose> waypoints, float spacing) {
-    // Spacing = Desired distance between waypoints
-    // Find all line segments that compose the given set of waypoints -> (StartPosition, EndPosition)
+    // Compose LineSegments that compose set of waypoints
     std::vector<Vector> lineSegments = std::vector<Vector>();
     for (int i = 0; i < waypoints.size() - 1; i++) {
-        lineSegments.push_back(Vector(waypoints[i].getXPosition(), waypoints[i].getYPosition(), waypoints[i + 1].getXPosition(), waypoints[i + 1].getYPosition()));
+        lineSegments.push_back(Vector(waypoints[i], waypoints[i + 1]));
     }
-    // For every line segment:
-    // Define a vector as the endPoint - startPoint
-    // Find the number of waypoints to be injected -> Math.ceil(vector.magnitude / spacing)
-    // Normalize the vector -> vector = vector.normalize() * spacing
-    // for i = 0 to numPointsToBeInjected: Add startPoint + (vector * i) to path
+    // Inject waypoints between line segments
     std::vector<RobotPose> injectedWaypoints = std::vector<RobotPose>();
     for (int i = 0; i < lineSegments.size(); i++) {
         Vector v = lineSegments[i];
-        int numPointsToBeInjected = ceil(v.getMagnitude() / spacing);
-        Vector newVector = v.normalize() * spacing; // Assign newVector to copy of v normalized and scaled by spacing
-        for (int j = 0; j < numPointsToBeInjected; j++) {
-            Vector newVectorToPoint = Vector(v.getX1(), v.getY1(), v.getX1() + (newVector.getX2() * i), v.getY1() + (newVector.getY2() * i));
-            injectedWaypoints.push_back(RobotPose()); // hmm
+        int numPointsToBeInjected = floor(v.getMagnitude() / spacing);
+        injectedWaypoints.push_back(waypoints[i]);         // Add start point of line segment
+        for (int p = 1; p <= numPointsToBeInjected; p++) { // Add points between start and end of line segment
+            float stepDistance = spacing * p;              // [in]
+            float newX = v.getX1() + (stepDistance * cos(v.getAngle()));
+            float newY = v.getY1() + (stepDistance * sin(v.getAngle()));
+            injectedWaypoints.push_back(RobotPose(newX, newY, v.getAngle()));
         }
     }
-    // After all line segments, add last point to path
-
-    // This entire method needs to be redone I believe. Injection should be somewhat simple:
-    // All LineSegments should be identified and the length should be calculated
-    // The number of points that fit on the line segment should be calculated using the spacing
-    // The points should be created with the appropriate spacing and position, the orientation should be the same as the line segment
-    // This should be done for all line segments
+    // Add last waypoint
+    injectedWaypoints.push_back(waypoints[waypoints.size() - 1]);
+    return injectedWaypoints;
 }
 
 /**

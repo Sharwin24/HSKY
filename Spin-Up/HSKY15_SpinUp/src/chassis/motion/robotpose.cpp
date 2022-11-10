@@ -1,5 +1,5 @@
 #include "robotpose.hpp"
-#include "math.h"
+#include <cmath>
 
 namespace src::Motion {
 /**
@@ -45,15 +45,5 @@ bool RobotPose::operator==(const RobotPose &other) const {
  * @param other the RobotPose to compare to
  */
 bool RobotPose::operator!=(const RobotPose &other) const { return !(*this == other); }
-
-/**
- * @brief Normalizes the vector this Pose creates and returns a copy of the normalized vector.
- *
- * @return RobotPose a copy of this Pose vector normalized
- */
-RobotPose RobotPose::normalize() {
-    float magnitude = sqrt(pow(this->xPosition, 2.0f) + pow(this->yPosition, 2.0f));
-    return RobotPose(this->xPosition / magnitude, this->yPosition / magnitude, this->theta);
-}
 
 } // namespace src::Motion
