@@ -20,6 +20,9 @@ PathGenerator::~PathGenerator() {}
 
 Path PathGenerator::generatePath(std::vector<RobotPose> waypoints) {
     // TODO: Implement PathGeneration from Pose waypoints and ControlVector waypoints via waypoint injection/smoothing
+    std::vector<MotionProfilePoint> generatedPath = std::vector<MotionProfilePoint>();
+    // Actual Path Generation here (probably)
+    return Path(generatedPath);
 }
 
 /**
@@ -43,7 +46,7 @@ std::vector<RobotPose> PathGenerator::injectWaypoints(std::vector<RobotPose> way
     // Normalize the vector -> vector = vector.normalize() * spacing
     // for i = 0 to numPointsToBeInjected: Add startPoint + (vector * i) to path
     std::vector<RobotPose> injectedWaypoints = std::vector<RobotPose>();
-    for (int i = 0; i < lineSegments.size() - 1; i++) {
+    for (int i = 0; i < lineSegments.size(); i++) {
         Vector v = lineSegments[i];
         int numPointsToBeInjected = ceil(v.getMagnitude() / spacing);
         Vector newVector = v.normalize() * spacing; // Assign newVector to copy of v normalized and scaled by spacing
