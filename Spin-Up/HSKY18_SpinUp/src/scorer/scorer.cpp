@@ -80,7 +80,6 @@ void flywheelControlTask(void *) {
             continue;
         }
         float flywheelTargetRPM = static_cast<int>(currentFlywheelState);
-        float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
         switch (flywheelControlAlgorithm) {
             case FlywheelControlAlgorithm::NONE: {
                 flywheelMotorGroup.moveVelocity(0);
@@ -91,7 +90,7 @@ void flywheelControlTask(void *) {
                 float integral = 0;
                 float previousError = 0;
                 while (true) {
-                    error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
+                    float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
                     derivative = error - previousError;
                     integral += error;
                     previousError = error;
@@ -107,6 +106,7 @@ void flywheelControlTask(void *) {
                 float previousError = 0;
                 bool firstZeroCross = true;
                 while (true) {
+                    float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
                     drive += error * FW_TBH_GAIN;
                     if (drive > 1) {
                         drive = 1;
@@ -130,6 +130,7 @@ void flywheelControlTask(void *) {
                 break;
             }
             case FlywheelControlAlgorithm::BANG_BANG: {
+                float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
                 float thresholdRPM = 75.0f; // RPM above/below the target RPM to be considered "on target"
                 if (error > (flywheelTargetRPM - thresholdRPM)) {
                     flywheelMotorGroup.moveVoltage(12000);
