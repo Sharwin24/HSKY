@@ -309,7 +309,8 @@
     },
     "upload_options": {
       "description": "HSKY15 Competition Code",
-      "icon": "X"
+      "icon": "X",
+      "after": "run"
     }
   }
 }
