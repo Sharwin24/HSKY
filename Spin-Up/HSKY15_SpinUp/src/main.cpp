@@ -24,14 +24,8 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-
-    // Initalize all robot subsystems
     Chassis::initialize();
     Scorer::initialize();
-
-    // Updates RobotPose in Chassis
-    pros::Task odometryHandle(Chassis::odometryTask);
-    pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
 }
 
 /**

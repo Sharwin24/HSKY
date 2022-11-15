@@ -43,7 +43,7 @@ static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 0.852f;   // [in]
 // Programming constants
 static constexpr float_t TURN_FACTOR = 1.0f;         // Scalar factor for turning in driver control
 static constexpr float_t FW_VOLTAGE_CONSTANT = 4.0f; // Slope of Voltage vs Velocity graph
-static constexpr float_t FW_PROPORTIONAL = 0.85f;
+static constexpr float_t FW_PROPORTIONAL = 1.125f;
 static constexpr float_t P_GAIN_DRIVE = 0.00185f;
 static constexpr float_t I_GAIN_DRIVE = 0.0f;
 static constexpr float_t D_GAIN_DRIVE = 0.0001f;

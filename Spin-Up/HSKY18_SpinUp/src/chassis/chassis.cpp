@@ -207,6 +207,9 @@ void setRobotStartingPosition(StartingPosition startPosition) {
 void initialize() {
     setChassisBrakeMode(AbstractMotor::brakeMode::hold);
     resetImu();
+    // Initialize Chassis Tasks
+    pros::Task odometryHandle(Chassis::odometryTask);
+    pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
 }
 
 void update() {
