@@ -8,6 +8,8 @@
 
 using namespace okapi;
 
+#define RobotPose Motion::RobotPose
+
 #define CTLE CENTER_TO_LEFT_ENCODER
 #define CTRE CENTER_TO_RIGHT_ENCODER
 #define CTHE CENTER_TO_HORIZONTAL_ENCODER
