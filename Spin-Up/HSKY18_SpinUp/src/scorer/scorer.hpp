@@ -36,8 +36,8 @@ enum class IndexerState {
  */
 enum class FlywheelState {
     OFF = 0,
-    HALF_SPEED = 1,
-    FULL_SPEED = 2,
+    HALF_SPEED = 1900,
+    FULL_SPEED = 2300,
 };
 
 /**

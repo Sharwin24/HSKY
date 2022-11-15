@@ -69,17 +69,7 @@ void setIndexerMotion(IndexerState state) {
  */
 void setFlywheelMotion(FlywheelState state) {
     currentFlywheelState = state;
-    switch (state) {
-        case FlywheelState::OFF:
-            flywheelTargetRPM = 0;
-            break;
-        case FlywheelState::HALF_SPEED:
-            flywheelTargetRPM = 1900;
-            break;
-        case FlywheelState::FULL_SPEED:
-            flywheelTargetRPM = 2300;
-            break;
-    }
+    flywheelTargetRPM = static_cast<int>(state);
 }
 
 /**
