@@ -6,8 +6,6 @@
 #include "pros/misc.h"
 #include "robot_constants.hpp"
 
-using namespace okapi;
-
 #define RobotPose Motion::RobotPose
 
 #define CTLE CENTER_TO_LEFT_ENCODER

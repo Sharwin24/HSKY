@@ -39,7 +39,8 @@
 /**
  * You should add more #includes here
  */
-//#include "okapi/api.hpp"
+
+#include "okapi/api.hpp"
 //#include "pros/api_legacy.h"
 
 /**
@@ -50,9 +51,10 @@
  * concurrently! The okapi namespace will export all symbols inside the pros
  * namespace.
  */
+
 // using namespace pros;
 // using namespace pros::literals;
-// using namespace okapi;
+using namespace okapi;
 
 /**
  * Prototypes for the competition control tasks are redefined here to ensure
@@ -78,4 +80,4 @@ void opcontrol(void);
 //#include <iostream>
 #endif
 
-#endif  // _PROS_MAIN_H_
+#endif // _PROS_MAIN_H_

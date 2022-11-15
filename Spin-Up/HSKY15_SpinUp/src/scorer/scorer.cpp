@@ -5,8 +5,6 @@
 #include "pros/rtos.hpp"
 #include "robot_constants.hpp"
 
-using namespace okapi;
-
 namespace src::Scorer {
 
 // Buttons for controlling the Scorer

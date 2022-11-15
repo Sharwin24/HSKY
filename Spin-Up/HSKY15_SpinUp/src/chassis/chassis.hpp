@@ -10,8 +10,6 @@
 #include "pros/misc.hpp"
 #include "robot_constants.hpp"
 
-using namespace okapi;
-
 #define RobotPose Motion::RobotPose
 
 namespace src::Chassis {

@@ -6,8 +6,6 @@
 #include "pros/optical.hpp"
 #include "robot_constants.hpp"
 
-using namespace okapi;
-
 namespace src::Scorer {
 
 /**

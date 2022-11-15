@@ -8,8 +8,6 @@
 #include "pros/misc.hpp"
 #include "robot_constants.hpp"
 
-using namespace okapi;
-
 namespace src::Chassis {
 
 // Struct for Position and Orientation (Pose)
