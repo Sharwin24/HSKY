@@ -53,7 +53,5 @@ static constexpr float_t D_GAIN_DRIVE_ULTRASONIC = 0.05;
 static constexpr float_t P_GAIN_TURN = 0.1875f;
 static constexpr float_t I_GAIN_TURN = 0.000008f;
 static constexpr float_t D_GAIN_TURN = 0.15f;
-static constexpr pros::c::optical_rgb_s_t RED_COLOR = {255, 0, 0};  // TODO: Find actual value for red on roller using Optical sensor
-static constexpr pros::c::optical_rgb_s_t BLUE_COLOR = {0, 0, 255}; // TODO: Find actual value for blue on roller using Optical sensor
 static constexpr uint16_t AUTON_SELECTOR_HUE = 360;
 static const char *AUTON_LIST[] = {"No Operation", "Auton 1", "Auton 2", ""}; // up to 10 autons

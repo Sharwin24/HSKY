@@ -128,7 +128,7 @@ void rollIntakeUntilColor(pros::c::optical_rgb_s_t desiredColorRGB, IntakeState 
  * @param intakeDirection the direction to roll the intake. Defaults to IntakeState::INTAKING
  */
 void rollIntakeUntilRed(IntakeState intakeDirection) {
-    rollIntakeUntilColor(RED_COLOR, intakeDirection);
+    rollIntakeUntilColor({255, 0, 0}, intakeDirection);
 }
 
 /**
@@ -137,7 +137,7 @@ void rollIntakeUntilRed(IntakeState intakeDirection) {
  * @param intakeDirection the direction to roll the intake. Defaults to IntakeState::INTAKING
  */
 void rollIntakeUntilBlue(IntakeState intakeDirection) {
-    rollIntakeUntilColor(BLUE_COLOR, intakeDirection);
+    rollIntakeUntilColor({0, 0, 255}, intakeDirection);
 }
 
 /**
