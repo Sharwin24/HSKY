@@ -38,8 +38,8 @@ extern void setIntakeMotion(IntakeState state);
 extern void pullDownCatapult();
 extern void fireCatapult();
 extern void pullDownAndFireCatapult(int msDelay = 100);
-extern void rollIntakeUntilRed(IntakeState intakeDirection = IntakeState::INTAKING);
-extern void rollIntakeUntilBlue(IntakeState intakeDirection = IntakeState::INTAKING);
+extern void rollIntakeUntilRed(IntakeState intakeDirection = IntakeState::OUTTAKING);
+extern void rollIntakeUntilBlue(IntakeState intakeDirection = IntakeState::OUTTAKING);
 
 // Scorer motors
 static Motor catapultMotor = Motor(CATAPULT_PORT, false, AbstractMotor::gearset::red, AbstractMotor::encoderUnits::degrees);
