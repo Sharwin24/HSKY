@@ -69,17 +69,7 @@ void setIndexerMotion(IndexerState state) {
  */
 void setFlywheelMotion(FlywheelState state) {
     currentFlywheelState = state;
-    switch (state) {
-        case FlywheelState::OFF:
-            flywheelTargetRPM = 0;
-            break;
-        case FlywheelState::HALF_SPEED:
-            flywheelTargetRPM = 1900;
-            break;
-        case FlywheelState::FULL_SPEED:
-            flywheelTargetRPM = 2300;
-            break;
-    }
+    flywheelTargetRPM = static_cast<int>(state);
 }
 
 /**
@@ -103,8 +93,8 @@ void flywheelControlTask(void *) {
                 // Flywheel Take Back Half Controller
                 break;
             case FlywheelControlAlgorithm::BANG_BANG:
-                float error = flywheelTargetRPM - (flywheelEncoder.get_velocity() * FLYWHEEL_GEAR_RATIO);
-                float thresholdRPM = 200; // RPM above/below the target RPM to be considered "on target"
+                float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
+                float thresholdRPM = 75.0f; // RPM above/below the target RPM to be considered "on target"
                 if (error > (flywheelTargetRPM - thresholdRPM)) {
                     flywheelMotorGroup.moveVoltage(12000);
                 } else if (error <= -thresholdRPM) {
@@ -125,17 +115,7 @@ void flywheelControlTask(void *) {
 void flywheelStateTask(void *) {
     while (true) {
         if (flywheelToggle.changedToPressed()) {
-            switch (currentFlywheelState) {
-                case FlywheelState::OFF:
-                    currentFlywheelState = FlywheelState::HALF_SPEED;
-                    break;
-                case FlywheelState::HALF_SPEED:
-                    currentFlywheelState = FlywheelState::FULL_SPEED;
-                    break;
-                case FlywheelState::FULL_SPEED:
-                    currentFlywheelState = FlywheelState::OFF;
-                    break;
-            }
+            currentFlywheelState = static_cast<FlywheelState>((static_cast<int>(currentFlywheelState) + 1) % 3);
         }
         pros::delay(20);
     }
@@ -204,6 +184,9 @@ void initialize() {
     currentFlywheelState = FlywheelState::OFF;
     flywheelControlAlgorithm = FlywheelControlAlgorithm::BANG_BANG;
     flywheelTargetRPM = 0;
+    // Initialize Scorer Tasks
+    pros::Task flywheelControlHandle(flywheelControlTask);
+    pros::Task flywheelStateHandle(flywheelStateTask);
 }
 
 /**

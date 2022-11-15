@@ -25,6 +25,7 @@ CatapultState currentCatapultState = CatapultState::READY;
  * @param state the desired state of the Intake mechanism
  */
 void setIntakeMotion(IntakeState state) {
+    currentIntakeState = state;
     switch (state) {
         case IntakeState::STOPPED:
             intakeMotor.moveVoltage(0);
