@@ -48,7 +48,7 @@ void setCatapultMotion(CatapultState state) {
         case CatapultState::READY:
             // Do nothing
             break;
-        case CatapultState::FIRING:
+        case CatapultState::LAUNCHING:
             // Fire catapult, then reset, and set state to READY
             pullDownAndFireCatapult();
             pros::delay(CATA_PULL_DOWN_DELAY_MS);
@@ -188,7 +188,7 @@ void update() {
     // Catapult mechanism will handle FIRING -> READY transition
     if (catapultFire.changedToPressed()) {
         if (currentCatapultState == CatapultState::READY && getNumDiscsInBasket() > 0) {
-            currentCatapultState = CatapultState::FIRING;
+            currentCatapultState = CatapultState::LAUNCHING;
         }
     }
 }

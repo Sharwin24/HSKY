@@ -23,7 +23,7 @@ enum class IntakeState {
  */
 enum class CatapultState {
     READY = 0,
-    FIRING = 1,
+    LAUNCHING = 1,
 };
 
 // Scorer control loop functions
