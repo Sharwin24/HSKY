@@ -8,9 +8,9 @@
 namespace src::Scorer {
 
 // Buttons for controlling the Scorer
-ControllerButton intakeToggle(ControllerDigital::R1);
-ControllerButton outtakeButton(ControllerDigital::R2);
-ControllerButton catapultFire(ControllerDigital::L1);
+ControllerButton intakeToggle(ControllerDigital::L1);
+ControllerButton outtakeButton(ControllerDigital::L2);
+ControllerButton catapultFire(ControllerDigital::R1);
 
 // Scorer internal state
 IntakeState currentIntakeState = IntakeState::STOPPED;
@@ -43,7 +43,6 @@ void setIntakeMotion(IntakeState state) {
  * @param state the desired state of the Catapult mechanism
  */
 void setCatapultMotion(CatapultState state) {
-    currentCatapultState = state;
     switch (state) {
         case CatapultState::READY:
             // Do nothing
@@ -185,7 +184,7 @@ void update() {
     }
 
     // If the catapult is ready, fire it when the fire button is pressed
-    // Catapult mechanism will handle FIRING -> READY transition
+    // Catapult mechanism will handle LAUNCHING -> READY transition
     if (catapultFire.changedToPressed()) {
         if (currentCatapultState == CatapultState::READY && getNumDiscsInBasket() > 0) {
             currentCatapultState = CatapultState::LAUNCHING;

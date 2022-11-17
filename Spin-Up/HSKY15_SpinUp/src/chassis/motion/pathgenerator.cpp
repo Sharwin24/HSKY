@@ -34,6 +34,7 @@ Path PathGenerator::generatePath(std::vector<RobotPose> waypoints) {
         RobotPose nextPose = smoothedWaypoints[wp + 1];
         // Create a ControlVector using Pose and Chassis Motion
         // Create a MotionProfilePoint using ControlVector and desired left/right velocities with deltaTime from timestep
+        currentTime += this->deltaTime;
     }
 
     return Path(generatedPath);

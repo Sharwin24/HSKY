@@ -1,7 +1,7 @@
 #pragma once
 #include "main.h"
 
-// All constants relevent for the 15" robot
+// All constants relevant for the 15" robot
 // DEAD PORTS: 1, 6, 9, 10, 21, 13, 3
 
 // Motor Ports

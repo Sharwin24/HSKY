@@ -5,6 +5,7 @@
 #include "okapi/impl/device/controllerUtil.hpp"
 #include "pros/misc.h"
 #include "robot_constants.hpp"
+#include <cmath>
 
 #define RobotPose Motion::RobotPose
 
@@ -232,8 +233,8 @@ void initialize() {
     robotPose = RobotPose();
     resetImu();
     // Initialize Chassis Tasks
-    pros::Task odometryHandle(Chassis::odometryTask);
-    pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
+    pros::Task odometryHandle(odometryTask);
+    pros::Task printRobotPoseHandle(printRobotPoseTask);
 }
 
 void update() {
@@ -337,12 +338,12 @@ void movePIDOdom(float leftTarget, float rightTarget, int ms, float maxV) {
  * @param ms Time to complete the movement, defaults to 1000 [ms]
  */
 void gyroPID(float degree, bool CW, int ms) {
-    imuSensor.tare_rotation();
+    float taredRotation = imuSensor.get_heading();
     int timer = 0;
     float prevError = 0;
     float integral = 0;
     while (timer < ms) {
-        float sensorVal = imuSensor.get_rotation();
+        float sensorVal = imuSensor.get_heading() - taredRotation;
         float error = degree - sensorVal;
         float derivative = error - prevError;
         prevError = error;
@@ -364,7 +365,7 @@ void gyroPID(float degree, bool CW, int ms) {
  * Target angle is relative to the current position. The robot will exit the control loop after the time limit is reached,
  * regardless if the target is reached or not. Utilizes motor encoders.
  *
- * @param degree Target angle [deg] within [0, 360]
+ * @param degree Target angle [deg] within [0, 360)
  * @param CW Direction of rotation [true = CW, false = CCW]
  * @param ms Time to complete the movement, defaults to 1000 [ms]
  * @param maxV Scalar for velocity of the robot, defaults to 0.5 [0, 1]
@@ -411,12 +412,14 @@ void ultrasonicPID(float distance, int ms) {
  * @param targetY Target Y coordinate [in]
  */
 void turnToPoint(float targetX, float targetY) {
+    odometryMutex.take();
     float currentX = robotPose.getXPosition();
     float currentY = robotPose.getYPosition();
+    float currentAngle = robotPose.getTheta();
+    odometryMutex.give();
     float deltaX = targetX - currentX;
     float deltaY = targetY - currentY;
     float targetAngle = atan2(deltaY, deltaX) * (180.0f / M_PI);
-    float currentAngle = robotPose.getTheta();
     float deltaAngle = targetAngle - currentAngle;
     if (deltaAngle > 180.0f) {
         deltaAngle -= 360.0f;

@@ -60,15 +60,22 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-    if (AutonSelector::getSelectedAuton() == Auton::SKILLS) {
-        AutonRoutines::skills();
-        Chassis::setRobotStartingPosition(StartingPosition::RED_FRONT);
-    } else if (AutonSelector::getSelectedAuton() == Auton::AUTON_1) {
-        AutonRoutines::auton1();
-    } else if (AutonSelector::getSelectedAuton() == Auton::AUTON_2) {
-        AutonRoutines::auton2();
-    } else if (AutonSelector::getSelectedAuton() == Auton::NO_OPERATION) {
-        // No Operation
+    switch (AutonSelector::getSelectedAuton()) {
+        case Auton::SKILLS:
+            AutonRoutines::skills();
+            Chassis::setRobotStartingPosition(StartingPosition::RED_FRONT);
+            break;
+        case Auton::AUTON_1:
+            AutonRoutines::auton1();
+            Chassis::setRobotStartingPosition(StartingPosition::RED_FRONT);
+            break;
+        case Auton::AUTON_2:
+            AutonRoutines::auton2();
+            Chassis::setRobotStartingPosition(StartingPosition::BLUE_BACK);
+            break;
+        case Auton::NO_OPERATION:
+            Chassis::setRobotStartingPosition(StartingPosition::RED_BACK);
+            break;
     }
 }
 

@@ -9,10 +9,10 @@
 namespace src::Scorer {
 
 // Buttons for controlling the Scorer
-ControllerButton intakeToggle(ControllerDigital::R1);
-ControllerButton outtakeButton(ControllerDigital::R2);
-ControllerButton indexerButton(ControllerDigital::L1);
-ControllerButton flywheelToggle(ControllerDigital::L2);
+ControllerButton intakeToggle(ControllerDigital::L1);
+ControllerButton outtakeButton(ControllerDigital::L2);
+ControllerButton indexerButton(ControllerDigital::R1);
+ControllerButton flywheelToggle(ControllerDigital::R2);
 
 // Scorer internal state
 IntakeState previousIntakeState = IntakeState::STOPPED;
@@ -28,6 +28,7 @@ FlywheelControlAlgorithm flywheelControlAlgorithm = FlywheelControlAlgorithm::BA
  * @param state the desired state of the Intake mechanism
  */
 void setIntakeMotion(IntakeState state) {
+    currentIntakeState = state;
     switch (state) {
         case IntakeState::STOPPED:
             intakeMotor.moveVoltage(0);
@@ -47,6 +48,7 @@ void setIntakeMotion(IntakeState state) {
  * @param state the desired state of the Indexer mechanism
  */
 void setIndexerMotion(IndexerState state) {
+    currentIndexerState = state;
     switch (state) {
         case IndexerState::STOPPED:
             indexerMotor.moveVoltage(0);
@@ -76,13 +78,13 @@ void setFlywheelMotion(FlywheelState state) {
 void flywheelControlTask(void *) {
     while (true) {
         if (currentFlywheelState == FlywheelState::OFF) {
-            pros::delay(20);
+            pros::delay(20); // yield to other tasks
             continue;
         }
         float flywheelTargetRPM = static_cast<int>(currentFlywheelState);
         switch (flywheelControlAlgorithm) {
             case FlywheelControlAlgorithm::NONE: {
-                flywheelMotorGroup.moveVelocity(0);
+                flywheelMotorGroup.moveVelocity(flywheelTargetRPM / FLYWHEEL_GEAR_RATIO);
                 break;
             }
             case FlywheelControlAlgorithm::PID: {
@@ -147,13 +149,23 @@ void flywheelControlTask(void *) {
 }
 
 /**
- * @brief Advances the state of the flywheel to the next state in the sequence
+ * @brief Advances the state of the flywheel to the next state in the sequence and loops around
  *
  */
 void flywheelStateTask(void *) {
     while (true) {
         if (flywheelToggle.changedToPressed()) {
-            currentFlywheelState = static_cast<FlywheelState>((static_cast<int>(currentFlywheelState) + 1) % 3);
+            switch (currentFlywheelState) {
+                case FlywheelState::OFF:
+                    currentFlywheelState = FlywheelState::HALF_SPEED;
+                    break;
+                case FlywheelState::HALF_SPEED:
+                    currentFlywheelState = FlywheelState::FULL_SPEED;
+                    break;
+                case FlywheelState::FULL_SPEED:
+                    currentFlywheelState = FlywheelState::OFF;
+                    break;
+            }
         }
         pros::delay(20);
     }
@@ -263,7 +275,6 @@ void update() {
  *
  */
 void act() {
-    // Act on the current scorer state
     setIntakeMotion(currentIntakeState);
     setFlywheelMotion(currentFlywheelState);
     setIndexerMotion(currentIndexerState);
