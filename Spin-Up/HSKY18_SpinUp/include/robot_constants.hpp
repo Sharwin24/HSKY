@@ -42,6 +42,7 @@ static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 0.852f;   // [in]
 
 // Programming constants
 static constexpr float_t TURN_FACTOR = 1.0f;         // Scalar factor for turning in driver control
+static constexpr float_t FW_THRESHOLD_RPM = 75.0f;   // RPM above/below the target RPM to be considered "on target" for Bang-Bang
 static constexpr float_t FW_VOLTAGE_CONSTANT = 4.0f; // Slope of Voltage vs Velocity graph
 static constexpr float_t FW_PROPORTIONAL_GAIN = 1.125f;
 static constexpr float_t FW_TBH_GAIN = 0.00025f;

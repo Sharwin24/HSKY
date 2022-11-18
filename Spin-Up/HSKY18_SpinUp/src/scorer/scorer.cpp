@@ -72,79 +72,99 @@ void setFlywheelMotion(FlywheelState state) {
 }
 
 /**
- * @brief Using the current control algorithm, applies the target RPM to the flywheel
+ * @brief A PID controller for the flywheel velocity control
+ *
+ */
+void flywheelPIDControl() {
+    float flywheelTargetRPM = static_cast<int>(currentFlywheelState);
+    float derivative = 0;
+    float integral = 0;
+    float previousError = 0;
+    while (true) {
+        float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
+        derivative = error - previousError;
+        integral += error;
+        previousError = error;
+        float flywheelSpeed = (error * FW_P_GAIN) + (integral * FW_I_GAIN) + (derivative * FW_D_GAIN);
+        flywheelMotorGroup.moveVelocity(flywheelSpeed / FLYWHEEL_GEAR_RATIO);
+        pros::delay(20);
+    }
+}
+
+/**
+ * @brief A Take-Back-Half control algorithm for flywheel velocity control
+ *
+ */
+void flywheelTBHControl() {
+    float drive = 0;
+    float driveAtZero = 0;
+    float previousError = 0;
+    bool firstZeroCross = true;
+    while (true) {
+        float flywheelTargetRPM = static_cast<int>(currentFlywheelState);
+        float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
+        drive += error * FW_TBH_GAIN;
+        if (drive > 1) {
+            drive = 1;
+        } else if (drive < 0) {
+            drive = 0;
+        }
+        if (squiggles::sgn(error) != squiggles::sgn(previousError)) {
+            if (firstZeroCross) {
+                drive = flywheelTargetRPM * FW_VOLTAGE_CONSTANT;
+                firstZeroCross = false;
+            } else {
+                drive = 0.5f * (drive + driveAtZero);
+            }
+            driveAtZero = drive;
+        }
+        previousError = error;
+
+        flywheelMotorGroup.moveVoltage(drive * 12000.0f);
+        pros::delay(20);
+    }
+}
+
+/**
+ * @brief A Bang-Bang control algorithm for flywheel velocity control
+ */
+void flywheelBangBangControl() {
+    while (true) {
+        float flywheelTargetRPM = static_cast<int>(currentFlywheelState);
+        if (flywheelTargetRPM == 0) {
+            flywheelMotorGroup.moveVoltage(0);
+            continue;
+        }
+        float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
+        if (error > (flywheelTargetRPM - FW_THRESHOLD_RPM)) {
+            flywheelMotorGroup.moveVoltage(12000);
+        } else if (error <= -FW_THRESHOLD_RPM) {
+            flywheelMotorGroup.moveVoltage(0);
+        } else { // Within threshold window -> Use Feedforward and P Controller
+            flywheelMotorGroup.moveVoltage((flywheelTargetRPM * FW_VOLTAGE_CONSTANT) + (error * FW_PROPORTIONAL_GAIN));
+        }
+    }
+}
+
+/**
+ * @brief Using the current control algorithm, applies the target RPM to the flywheel.
+ * The algorithm cannot change after this task is started
  *
  */
 void flywheelControlTask(void *) {
-    while (true) {
-        float flywheelTargetRPM = static_cast<int>(currentFlywheelState);
-        switch (flywheelControlAlgorithm) {
-            case FlywheelControlAlgorithm::NONE: {
-                flywheelMotorGroup.moveVelocity(flywheelTargetRPM / FLYWHEEL_GEAR_RATIO);
-                break;
-            }
-            case FlywheelControlAlgorithm::PID: {
-                float derivative = 0;
-                float integral = 0;
-                float previousError = 0;
-                while (true) {
-                    float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
-                    derivative = error - previousError;
-                    integral += error;
-                    previousError = error;
-                    float flywheelSpeed = (error * FW_P_GAIN) + (integral * FW_I_GAIN) + (derivative * FW_D_GAIN);
-                    flywheelMotorGroup.moveVelocity(flywheelSpeed / FLYWHEEL_GEAR_RATIO);
-                    pros::delay(20);
-                }
-                break;
-            }
-            case FlywheelControlAlgorithm::TAKE_BACK_HALF: {
-                float drive = 0;
-                float driveAtZero = 0;
-                float previousError = 0;
-                bool firstZeroCross = true;
-                while (true) {
-                    float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
-                    drive += error * FW_TBH_GAIN;
-                    if (drive > 1) {
-                        drive = 1;
-                    } else if (drive < 0) {
-                        drive = 0;
-                    }
-                    if (squiggles::sgn(error) != squiggles::sgn(previousError)) {
-                        if (firstZeroCross) {
-                            drive = flywheelTargetRPM * FW_VOLTAGE_CONSTANT;
-                            firstZeroCross = false;
-                        } else {
-                            drive = 0.5f * (drive + driveAtZero);
-                        }
-                        driveAtZero = drive;
-                    }
-                    previousError = error;
-
-                    flywheelMotorGroup.moveVoltage(drive * 12000.0f);
-                    pros::delay(20);
-                }
-                break;
-            }
-            case FlywheelControlAlgorithm::BANG_BANG: {
-                if (flywheelTargetRPM == 0) {
-                    flywheelMotorGroup.moveVoltage(0);
-                    continue;
-                }
-                float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
-                float thresholdRPM = 75.0f; // RPM above/below the target RPM to be considered "on target"
-                if (error > (flywheelTargetRPM - thresholdRPM)) {
-                    flywheelMotorGroup.moveVoltage(12000);
-                } else if (error <= -thresholdRPM) {
-                    flywheelMotorGroup.moveVoltage(0);
-                } else { // Within threshold window -> Use Feedforward and P Controller
-                    flywheelMotorGroup.moveVoltage((flywheelTargetRPM * FW_VOLTAGE_CONSTANT) + (error * FW_PROPORTIONAL_GAIN));
-                }
-                break;
-            }
-        }
-        pros::delay(20);
+    switch (flywheelControlAlgorithm) {
+        case FlywheelControlAlgorithm::NONE:
+            // If no control algorithm is selected, the flywheel cannot operate
+            break;
+        case FlywheelControlAlgorithm::PID:
+            flywheelPIDControl();
+            break;
+        case FlywheelControlAlgorithm::TAKE_BACK_HALF:
+            flywheelTBHControl();
+            break;
+        case FlywheelControlAlgorithm::BANG_BANG:
+            flywheelBangBangControl();
+            break;
     }
 }
 
@@ -260,13 +280,11 @@ void update() {
         }
     }
 
-    // Indexer Toggle turns Indexer on and off
+    // Indexer runs while button is being held
     if (indexerButton.changedToPressed()) {
-        if (currentIndexerState != IndexerState::INDEXING) {
-            currentIndexerState = IndexerState::INDEXING;
-        } else {
-            currentIndexerState = IndexerState::STOPPED;
-        }
+        currentIndexerState = IndexerState::INDEXING;
+    } else if (indexerButton.changedToReleased()) {
+        currentIndexerState = IndexerState::STOPPED;
     }
 }
 
@@ -275,8 +293,8 @@ void update() {
  *
  */
 void act() {
-    setIntakeMotion(currentIntakeState);
     setFlywheelMotion(currentFlywheelState);
+    setIntakeMotion(currentIntakeState);
     setIndexerMotion(currentIndexerState);
 }
 
