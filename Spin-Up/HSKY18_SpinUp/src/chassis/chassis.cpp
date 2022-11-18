@@ -203,7 +203,7 @@ void setRobotStartingPosition(StartingPosition startPosition) {
 }
 
 void initialize() {
-    setChassisBrakeMode(AbstractMotor::brakeMode::hold);
+    setChassisBrakeMode(AbstractMotor::brakeMode::coast);
     // resetImu();
     // Initialize Chassis Tasks
     // pros::Task odometryHandle(Chassis::odometryTask);
@@ -220,9 +220,12 @@ void update() {
 }
 
 void act() { // OpControl for chassis
-    chassis->getModel()->arcade(
-        controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),
-        TURN_FACTOR * controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
+    // chassis->getModel()->arcade(
+    //     controller.getAnalog(ControllerAnalog::leftY),
+    //     controller.getAnalog(ControllerAnalog::rightX) * TURN_FACTOR);
+    chassis->getModel()->tank(
+        controller.getAnalog(ControllerAnalog::leftY),
+        controller.getAnalog(ControllerAnalog::rightY));
 }
 
 /**

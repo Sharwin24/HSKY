@@ -98,7 +98,7 @@ static MotorGroup rightChassisMotorGroup = {
 
 // Chassis pointer for access to chassis model: chassis->getModel()
 extern std::shared_ptr<ChassisController> chassis;
-static pros::Controller controller = pros::Controller(pros::E_CONTROLLER_MASTER);
+static okapi::Controller controller = okapi::Controller();
 
 // Control loop functions
 extern void initialize();

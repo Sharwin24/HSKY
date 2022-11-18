@@ -9,9 +9,9 @@
 namespace src::Scorer {
 
 // Buttons for controlling the Scorer
-ControllerButton intakeToggle(ControllerDigital::L1);
-ControllerButton outtakeButton(ControllerDigital::L2);
-ControllerButton indexerButton(ControllerDigital::R1);
+ControllerButton intakeToggle(ControllerDigital::L2);
+ControllerButton outtakeButton(ControllerDigital::L1);
+// ControllerButton indexerButton(ControllerDigital::R1);
 ControllerButton flywheelToggle(ControllerDigital::R2);
 
 // Scorer internal state
@@ -157,9 +157,6 @@ void flywheelStateTask(void *) {
         if (flywheelToggle.changedToPressed()) {
             switch (currentFlywheelState) {
                 case FlywheelState::OFF:
-                    currentFlywheelState = FlywheelState::HALF_SPEED;
-                    break;
-                case FlywheelState::HALF_SPEED:
                     currentFlywheelState = FlywheelState::FULL_SPEED;
                     break;
                 case FlywheelState::FULL_SPEED:
@@ -253,20 +250,9 @@ void update() {
 
     // Intake Toggle turns Intake on and off
     if (intakeToggle.changedToPressed()) {
-        if (currentIntakeState != IntakeState::INTAKING) {
-            currentIntakeState = IntakeState::INTAKING;
-        } else {
-            currentIntakeState = IntakeState::STOPPED;
-        }
-    }
-
-    // Indexer Toggle turns Indexer on and off
-    if (indexerButton.changedToPressed()) {
-        if (currentIndexerState != IndexerState::INDEXING) {
-            currentIndexerState = IndexerState::INDEXING;
-        } else {
-            currentIndexerState = IndexerState::STOPPED;
-        }
+        currentIntakeState = IntakeState::INTAKING;
+    } else if (intakeToggle.changedToReleased()) {
+        currentIntakeState = IntakeState::STOPPED;
     }
 }
 
@@ -277,7 +263,7 @@ void update() {
 void act() {
     setIntakeMotion(currentIntakeState);
     setFlywheelMotion(currentFlywheelState);
-    setIndexerMotion(currentIndexerState);
+    // setIndexerMotion(currentIndexerState);
 }
 
 } // namespace src::Scorer
