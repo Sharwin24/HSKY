@@ -77,10 +77,6 @@ void setFlywheelMotion(FlywheelState state) {
  */
 void flywheelControlTask(void *) {
     while (true) {
-        if (currentFlywheelState == FlywheelState::OFF) {
-            pros::delay(20); // yield to other tasks
-            continue;
-        }
         float flywheelTargetRPM = static_cast<int>(currentFlywheelState);
         switch (flywheelControlAlgorithm) {
             case FlywheelControlAlgorithm::NONE: {
@@ -132,14 +128,18 @@ void flywheelControlTask(void *) {
                 break;
             }
             case FlywheelControlAlgorithm::BANG_BANG: {
-                float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
-                float thresholdRPM = 75.0f; // RPM above/below the target RPM to be considered "on target"
+                if (flywheelTargetRPM == 0) {
+                    flywheelMotor.moveVoltage(0);
+                    continue;
+                }
+                float error = flywheelTargetRPM - (flywheelMotor.getActualVelocity() * 6.0f);
+                float thresholdRPM = 100.0f; // RPM above/below the target RPM to be considered "on target"
                 if (error > (flywheelTargetRPM - thresholdRPM)) {
-                    flywheelMotorGroup.moveVoltage(12000);
+                    flywheelMotor.moveVoltage(12000);
                 } else if (error <= -thresholdRPM) {
-                    flywheelMotorGroup.moveVoltage(0);
+                    flywheelMotor.moveVoltage(0);
                 } else { // Within threshold window -> Use Feedforward and P Controller
-                    flywheelMotorGroup.moveVoltage((flywheelTargetRPM * FW_VOLTAGE_CONSTANT) + (error * FW_PROPORTIONAL_GAIN));
+                    flywheelMotor.moveVoltage((flywheelTargetRPM * FW_VOLTAGE_CONSTANT) + (error * FW_PROPORTIONAL_GAIN));
                 }
                 break;
             }

@@ -5,20 +5,20 @@
 // Dead Ports:
 
 // Motor Ports
-static constexpr uint8_t CHASSIS_PORT_L1 = 1;
-static constexpr uint8_t CHASSIS_PORT_L2 = 2;
-static constexpr uint8_t CHASSIS_PORT_L3 = 3;
-static constexpr uint8_t CHASSIS_PORT_L4 = 4;
+static constexpr uint8_t CHASSIS_PORT_L1 = 4;
+static constexpr uint8_t CHASSIS_PORT_L2 = 5;
+static constexpr uint8_t CHASSIS_PORT_L3 = 6;
+static constexpr uint8_t CHASSIS_PORT_L4 = 14;
 
-static constexpr uint8_t CHASSIS_PORT_R1 = 5;
-static constexpr uint8_t CHASSIS_PORT_R2 = 6;
-static constexpr uint8_t CHASSIS_PORT_R3 = 7;
-static constexpr uint8_t CHASSIS_PORT_R4 = 8;
+static constexpr uint8_t CHASSIS_PORT_R1 = 1;
+static constexpr uint8_t CHASSIS_PORT_R2 = 2;
+static constexpr uint8_t CHASSIS_PORT_R3 = 3;
+static constexpr uint8_t CHASSIS_PORT_R4 = 13;
 
 static constexpr uint8_t FLYWHEEL_TOP_PORT = 9;
 static constexpr uint8_t FLYWHEEL_BOTTOM_PORT = 10;
 static constexpr uint8_t INDEXER_PORT = 11;
-static constexpr uint8_t INTAKE_PORT = 12;
+static constexpr uint8_t INTAKE_PORT = 16;
 
 // Sensor Ports
 static constexpr uint8_t IMU_PORT = 13;
@@ -41,9 +41,9 @@ static constexpr float_t CENTER_TO_RIGHT_ENCODER = 7.261f / 2.0f; // [in]
 static constexpr float_t CENTER_TO_HORIZONTAL_ENCODER = 0.852f;   // [in]
 
 // Programming constants
-static constexpr float_t TURN_FACTOR = 1.0f;         // Scalar factor for turning in driver control
-static constexpr float_t FW_VOLTAGE_CONSTANT = 4.0f; // Slope of Voltage vs Velocity graph
-static constexpr float_t FW_PROPORTIONAL_GAIN = 1.125f;
+static constexpr float_t TURN_FACTOR = 1.0f;                       // Scalar factor for turning in driver control
+static constexpr float_t FW_VOLTAGE_CONSTANT = 12000.0f / 3600.0f; // Slope of Voltage vs Velocity graph
+static constexpr float_t FW_PROPORTIONAL_GAIN = 1.0f;
 static constexpr float_t FW_TBH_GAIN = 0.00025f;
 static constexpr float_t FW_P_GAIN = 0.1f;
 static constexpr float_t FW_I_GAIN = 0.0f;

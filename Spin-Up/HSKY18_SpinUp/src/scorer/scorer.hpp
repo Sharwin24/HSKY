@@ -34,8 +34,8 @@ enum class IndexerState {
  */
 enum class FlywheelState {
     OFF = 0,
-    HALF_SPEED = 1900,
-    FULL_SPEED = 2300,
+    HALF_SPEED = 2000,
+    FULL_SPEED = 3000,
 };
 
 /**
@@ -63,12 +63,13 @@ extern void flywheelStateTask(void *param);
 extern void flywheelControlTask(void *param);
 
 // Scorer motors
-static Motor intakeMotor = Motor(INTAKE_PORT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
+static Motor intakeMotor = Motor(INTAKE_PORT, true, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 static Motor indexerMotor = Motor(INDEXER_PORT, false, AbstractMotor::gearset::green, AbstractMotor::encoderUnits::degrees);
 static MotorGroup flywheelMotorGroup = {
     Motor(FLYWHEEL_TOP_PORT, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
     Motor(FLYWHEEL_BOTTOM_PORT, true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
 };
+static Motor flywheelMotor = Motor(FLYWHEEL_BOTTOM_PORT, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees);
 
 // Scorer sensors
 static pros::Optical opticalSensor = pros::Optical(OPTICAL_SENSOR_PORT);

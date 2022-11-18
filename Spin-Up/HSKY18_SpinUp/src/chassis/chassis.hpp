@@ -84,17 +84,17 @@ class OdometrySuite {
 
 // MotorGroup for the left side of the chassis
 static MotorGroup leftChassisMotorGroup = {
-    Motor(CHASSIS_PORT_L1, true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
+    Motor(CHASSIS_PORT_L1, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
     Motor(CHASSIS_PORT_L2, true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
     Motor(CHASSIS_PORT_L3, true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
-    Motor(CHASSIS_PORT_L4, true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees)};
+    /*Motor(CHASSIS_PORT_L4, true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees)*/};
 
 // MotorGroup for the right side of the chassis
 static MotorGroup rightChassisMotorGroup = {
-    Motor(CHASSIS_PORT_R1, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
+    Motor(CHASSIS_PORT_R1, true, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
     Motor(CHASSIS_PORT_R2, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
     Motor(CHASSIS_PORT_R3, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees),
-    Motor(CHASSIS_PORT_R4, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees)};
+    /*Motor(CHASSIS_PORT_R4, false, AbstractMotor::gearset::blue, AbstractMotor::encoderUnits::degrees)*/};
 
 // Chassis pointer for access to chassis model: chassis->getModel()
 extern std::shared_ptr<ChassisController> chassis;
