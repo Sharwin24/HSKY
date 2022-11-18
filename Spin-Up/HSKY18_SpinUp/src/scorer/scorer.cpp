@@ -9,7 +9,7 @@
 namespace src::Scorer {
 
 // Buttons for controlling the Scorer
-ControllerButton intakeToggle(ControllerDigital::L1);
+ControllerButton intakeButton(ControllerDigital::L1);
 ControllerButton outtakeButton(ControllerDigital::L2);
 ControllerButton indexerButton(ControllerDigital::R1);
 ControllerButton flywheelToggle(ControllerDigital::R2);
@@ -17,7 +17,6 @@ ControllerButton flywheelToggle(ControllerDigital::R2);
 // Scorer internal state
 IntakeState previousIntakeState = IntakeState::STOPPED;
 IntakeState currentIntakeState = IntakeState::STOPPED;
-IndexerState previousIndexerState = IndexerState::STOPPED;
 IndexerState currentIndexerState = IndexerState::STOPPED;
 FlywheelState currentFlywheelState = FlywheelState::OFF;
 FlywheelControlAlgorithm flywheelControlAlgorithm = FlywheelControlAlgorithm::BANG_BANG;
@@ -271,13 +270,11 @@ void update() {
         currentIntakeState = previousIntakeState;
     }
 
-    // Intake Toggle turns Intake on and off
-    if (intakeToggle.changedToPressed()) {
-        if (currentIntakeState != IntakeState::INTAKING) {
-            currentIntakeState = IntakeState::INTAKING;
-        } else {
-            currentIntakeState = IntakeState::STOPPED;
-        }
+    // Intake runs while button is being held
+    if (intakeButton.changedToPressed()) {
+        currentIntakeState = IntakeState::INTAKING;
+    } else if (intakeButton.changedToReleased()) {
+        currentIntakeState = IntakeState::STOPPED;
     }
 
     // Indexer runs while button is being held

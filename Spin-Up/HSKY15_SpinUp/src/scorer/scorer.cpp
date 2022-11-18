@@ -8,7 +8,7 @@
 namespace src::Scorer {
 
 // Buttons for controlling the Scorer
-ControllerButton intakeToggle(ControllerDigital::L1);
+ControllerButton intakeButton(ControllerDigital::L1);
 ControllerButton outtakeButton(ControllerDigital::L2);
 ControllerButton catapultFire(ControllerDigital::R1);
 
@@ -174,13 +174,11 @@ void update() {
         currentIntakeState = previousIntakeState;
     }
 
-    // Intake Toggle turns Intake on and off
-    if (intakeToggle.changedToPressed()) {
-        if (currentIntakeState != IntakeState::INTAKING) {
-            currentIntakeState = IntakeState::INTAKING;
-        } else {
-            currentIntakeState = IntakeState::STOPPED;
-        }
+    // Intake runs while button is being held
+    if (intakeButton.changedToPressed()) {
+        currentIntakeState = IntakeState::INTAKING;
+    } else if (intakeButton.changedToReleased()) {
+        currentIntakeState = IntakeState::STOPPED;
     }
 
     // If the catapult is ready, fire it when the fire button is pressed
