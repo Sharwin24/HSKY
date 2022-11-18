@@ -5,6 +5,9 @@
 #include "okapi/impl/device/controllerUtil.hpp"
 #include "pros/misc.h"
 #include "robot_constants.hpp"
+#include <cmath>
+
+#define RobotPose Motion::RobotPose
 
 #define CTLE CENTER_TO_LEFT_ENCODER
 #define CTRE CENTER_TO_RIGHT_ENCODER
@@ -18,20 +21,20 @@ void FieldConstants::setStartingPosition(StartingPosition position) {
     this->startingPosition = position;
     switch (position) { // TODO: Set these constants
         case StartingPosition::RED_FRONT:
-            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
-            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setRedGoalPosition(0, 0);
+            this->setBlueGoalPosition(0, 0);
             break;
         case StartingPosition::RED_BACK:
-            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
-            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setRedGoalPosition(0, 0);
+            this->setBlueGoalPosition(0, 0);
             break;
         case StartingPosition::BLUE_FRONT:
-            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
-            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setRedGoalPosition(0, 0);
+            this->setBlueGoalPosition(0, 0);
             break;
         case StartingPosition::BLUE_BACK:
-            this->setRedGoalPosition({0.0f, 0.0f, 0.0f});
-            this->setBlueGoalPosition({0.0f, 0.0f, 0.0f});
+            this->setRedGoalPosition(0, 0);
+            this->setBlueGoalPosition(0, 0);
             break;
     }
 }
@@ -47,38 +50,40 @@ std::shared_ptr<ChassisController> chassis =
         .withDimensions(AbstractMotor::gearset::blue, {{WHEEL_DIAMETER, WHEEL_TRACK}, imev5BlueTPR})
         .build();
 
-// Robot's Pose that is updated by the odometry task
-static Pose_t robotPose = {0, 0, 0};
+// static RobotPose object that is updated by the odometry task
+static RobotPose robotPose = RobotPose();
 
-Pose_t getRobotPose() {
-    Pose_t pose = {0, 0, 0};
+// Obtains the RobotPose object via mutex and returns a new immutable copy
+RobotPose getRobotPose() {
     odometryMutex.take();
-    pose.x = robotPose.x;
-    pose.y = robotPose.y;
-    pose.theta = robotPose.theta;
+    const RobotPose pose = {robotPose.getXPosition(), robotPose.getYPosition(), robotPose.getTheta()};
     odometryMutex.give();
     return pose;
 }
 
+// Prints the RobotPose to the V5 Brain LCD
 void printRobotPoseTask(void *) {
     while (true) {
+        // TODO: Deprecate pros::lcd and use custom graphics following auton selector
         pros::lcd::clear_line(1);
         odometryMutex.take();
-        pros::lcd::print(1, "Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.x, robotPose.y, robotPose.theta);
-        printf("Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.x, robotPose.y, robotPose.theta);
+        pros::lcd::print(1, "Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.getXPosition(), robotPose.getYPosition(), robotPose.getTheta());
+        printf("Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.getXPosition(), robotPose.getYPosition(), robotPose.getTheta());
         odometryMutex.give();
         pros::delay(20);
     }
 }
 
+/**
+ * @brief Task for updating the static RobotPose object on an interval
+ *
+ */
 void odometryTask(void *) {
     OdometrySuite odometrySuite = OdometrySuite();
     while (true) {
         odometrySuite.update();
         odometryMutex.take();
-        robotPose.x = odometrySuite.getXPosition();
-        robotPose.y = odometrySuite.getYPosition();
-        robotPose.theta = odometrySuite.getOrientation();
+        robotPose = RobotPose(odometrySuite.getXPosition(), odometrySuite.getYPosition(), odometrySuite.getOrientation());
         odometryMutex.give();
         pros::delay(20);
     }
@@ -163,15 +168,27 @@ void OdometrySuite::update() {
     this->previousOrientation = absOrientation;
 }
 
-float OdometrySuite::getXPosition() { return this->xPosition; }
-float OdometrySuite::getYPosition() { return this->yPosition; }
-float OdometrySuite::getOrientation() { return this->orientation; }
-
+/**
+ * @brief Converts cartesian coordinates to polar coordinates
+ *
+ * @param x Cartesian x coordinate [in]
+ * @param y Cartesian y coordinate [in]
+ * @param r Polar radius [in]
+ * @param theta Polar angle [rad]
+ */
 void OdometrySuite::cartesian2Polar(float x, float y, float &r, float &theta) {
     r = sqrt(pow(x, 2) + pow(y, 2)); // [in]
     theta = atan2(y, x);             // [rad]
 }
 
+/**
+ * @brief Converts polar coordinates to cartesian coordinates
+ *
+ * @param r Polar radius [in]
+ * @param theta Polar angle [rad]
+ * @param x Cartesian x coordinate [in]
+ * @param y Cartesian y coordinate [in]
+ */
 void OdometrySuite::polar2Cartesian(float r, float theta, float &x, float &y) {
     x = r * cos(theta); // [in]
     y = r * sin(theta); // [in]
@@ -195,23 +212,33 @@ void resetImu(bool print = true) {
             pros::delay(100);
         }
         printf("IMU Calibrated in %d [ms]\n", iter - time);
+    } else {
+        while (imuSensor.is_calibrating()) {
+            pros::delay(100);
+        }
     }
 }
 
+/**
+ * @brief Set the Robot's Starting Position as one of the predefined positions on the field
+ *
+ * @param startPosition an enum representing which position has been selected (based on the autonomous selection)
+ */
 void setRobotStartingPosition(StartingPosition startPosition) {
     fieldConstants.setStartingPosition(startPosition);
 }
 
 void initialize() {
-    setChassisBrakeMode(AbstractMotor::brakeMode::hold);
+    setChassisBrakeMode(AbstractMotor::brakeMode::brake);
+    robotPose = RobotPose();
     resetImu();
     // Initialize Chassis Tasks
-    pros::Task odometryHandle(Chassis::odometryTask);
-    pros::Task printRobotPoseHandle(Chassis::printRobotPoseTask);
+    pros::Task odometryHandle(odometryTask);
+    pros::Task printRobotPoseHandle(printRobotPoseTask);
 }
 
 void update() {
-    // Print sensor data
+    // Nifty function that runs in control loop. Useful for debugging during opcontrol
     // printf("IMU: %f", imuSensor.get_heading());
     // printf("Ultrasonic: %d", ultrasonic.get_value());
     // printf("Left Encoder: %d", chassis->getModel()->getSensorVals()[0]);
@@ -221,8 +248,8 @@ void update() {
 
 void act() { // OpControl for chassis
     chassis->getModel()->arcade(
-        controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y),
-        TURN_FACTOR * controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X));
+        controller.getAnalog(ControllerAnalog::leftY),
+        controller.getAnalog(ControllerAnalog::rightX) * TURN_FACTOR);
 }
 
 /**
@@ -236,8 +263,8 @@ void act() { // OpControl for chassis
  * @param maxV Scalar for velocity of the robot, defaults to 1 [0, 1]
  */
 void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
-    float degreesL = ((leftTarget * 360) / (pi * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
-    float degreesR = ((rightTarget * 360) / (pi * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
+    float degreesL = ((leftTarget * 360.0f) / (M_PI * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
+    float degreesR = ((rightTarget * 360.0f) / (M_PI * WHEEL_DIAMETER)) * DRIVE_GEAR_RATIO;
     IterativePosPIDController drivePIDL = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
     IterativePosPIDController drivePIDR = IterativeControllerFactory::posPID(P_GAIN_DRIVE, I_GAIN_DRIVE, D_GAIN_DRIVE);
     chassis->getModel()->resetSensors();
@@ -252,8 +279,51 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
         powerL = drivePIDL.step(errorL);
         powerR = drivePIDR.step(errorR);
         chassis->getModel()->tank(powerL * maxV, powerR * maxV);
-        pros::delay(10);
         timer += 10;
+        pros::delay(10);
+    }
+    chassis->getModel()->tank(0, 0);
+}
+
+/**
+ * @brief Moves the chassis given a target distance for each side [in] within a given time [ms] using a PID control loop.
+ * Target distance is relative to the current position. Also takes a maximum velocity to scale the speed of the robot.
+ * The robot will exit the control loop after the time limit is reached, regardless if the target is reached or not.
+ * Utilizes OdometrySuite Encoders instead of Motor Encoders. Does not reset the encoders.
+ *
+ * @param leftTarget Target distance for the left side [in]
+ * @param rightTarget Target distance for the right side [in]
+ * @param ms Time to complete the movement [ms]
+ * @param maxV Scalar for velocity of the robot, defaults to 1 [0, 1]
+ */
+void movePIDOdom(float leftTarget, float rightTarget, int ms, float maxV) {
+    float currentLeftTravel = (leftEncoder.get_position() * (ENCODER_WHEEL_DIAMETER * M_PI)) / 36000.0f;   // [in]
+    float currentRightTravel = (rightEncoder.get_position()) * (ENCODER_WHEEL_DIAMETER * M_PI) / 36000.0f; // [in]
+    float leftTargetTravel = currentLeftTravel + leftTarget;                                               // [in]
+    float rightTargetTravel = currentRightTravel + rightTarget;                                            // [in]
+    float prevErrorL = 0;
+    float prevErrorR = 0;
+    float integralL = 0;
+    float integralR = 0;
+    int timer = 0;
+    while (timer < ms) { // Within time limit, increment PID loop
+        // Compute PID values from current wheel travel measurements
+        currentLeftTravel = (leftEncoder.get_position() * (ENCODER_WHEEL_DIAMETER * M_PI)) / 36000.0f;
+        currentRightTravel = (rightEncoder.get_position()) * (ENCODER_WHEEL_DIAMETER * M_PI) / 36000.0f;
+        float errorL = leftTargetTravel - currentLeftTravel;
+        float errorR = rightTargetTravel - currentRightTravel;
+        integralL += errorL;
+        integralR += errorR;
+        float derivativeL = errorL - prevErrorL;
+        float derivativeR = errorR - prevErrorR;
+        prevErrorL = errorL;
+        prevErrorR = errorR;
+        // Calculate power using PID
+        float powerL = (P_GAIN_DRIVE * errorL) + (I_GAIN_DRIVE * integralL) + (D_GAIN_DRIVE * derivativeL);
+        float powerR = (P_GAIN_DRIVE * errorR) + (I_GAIN_DRIVE * integralR) + (D_GAIN_DRIVE * derivativeR);
+        chassis->getModel()->tank(powerL * maxV, powerR * maxV);
+        timer += 10;
+        pros::delay(10);
     }
     chassis->getModel()->tank(0, 0);
 }
@@ -261,28 +331,28 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
 /**
  * @brief Rotates the chassis given a target angle [deg] in the specified direction [CW] within a given time [ms] using a PID control loop .
  * Target angle is relative to the current position. The robot will exit the control loop after the time limit is reached,
- * regardless if the target is reached or not.
+ * regardless if the target is reached or not. Utilizes the IMU sensor.
  *
  * @param degree Target angle [deg]
  * @param CW Direction of rotation [true = CW, false = CCW]
  * @param ms Time to complete the movement, defaults to 1000 [ms]
  */
-void gyroPID(int degree, bool CW, int ms) {
-    imuSensor.set_rotation(0);
+void gyroPID(float degree, bool CW, int ms) {
+    float taredRotation = imuSensor.get_heading();
     int timer = 0;
     float prevError = 0;
     float integral = 0;
     while (timer < ms) {
-        float sensorVal = imuSensor.get_rotation();
+        float sensorVal = imuSensor.get_heading() - taredRotation;
         float error = degree - sensorVal;
         float derivative = error - prevError;
         prevError = error;
         integral += error;
         float power = (P_GAIN_TURN * error) + (I_GAIN_TURN * integral) + (D_GAIN_TURN * derivative);
         if (CW) {
-            chassis->getModel()->tank(power, -1 * power);
+            chassis->getModel()->tank(power, -1.0f * power);
         } else {
-            chassis->getModel()->tank(-1 * power, power);
+            chassis->getModel()->tank(-1.0f * power, power);
         }
         timer += 10;
         pros::delay(10);
@@ -295,7 +365,7 @@ void gyroPID(int degree, bool CW, int ms) {
  * Target angle is relative to the current position. The robot will exit the control loop after the time limit is reached,
  * regardless if the target is reached or not. Utilizes motor encoders.
  *
- * @param degree Target angle [deg] within [0, 360]
+ * @param degree Target angle [deg] within [0, 360)
  * @param CW Direction of rotation [true = CW, false = CCW]
  * @param ms Time to complete the movement, defaults to 1000 [ms]
  * @param maxV Scalar for velocity of the robot, defaults to 0.5 [0, 1]
@@ -342,12 +412,14 @@ void ultrasonicPID(float distance, int ms) {
  * @param targetY Target Y coordinate [in]
  */
 void turnToPoint(float targetX, float targetY) {
-    float currentX = robotPose.x;
-    float currentY = robotPose.y;
+    odometryMutex.take();
+    float currentX = robotPose.getXPosition();
+    float currentY = robotPose.getYPosition();
+    float currentAngle = robotPose.getTheta();
+    odometryMutex.give();
     float deltaX = targetX - currentX;
     float deltaY = targetY - currentY;
     float targetAngle = atan2(deltaY, deltaX) * (180.0f / M_PI);
-    float currentAngle = robotPose.theta;
     float deltaAngle = targetAngle - currentAngle;
     if (deltaAngle > 180.0f) {
         deltaAngle -= 360.0f;

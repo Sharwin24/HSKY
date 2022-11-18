@@ -77,10 +77,6 @@ void setFlywheelMotion(FlywheelState state) {
  */
 void flywheelControlTask(void *) {
     while (true) {
-        if (currentFlywheelState == FlywheelState::OFF) {
-            pros::delay(20); // yield to other tasks
-            continue;
-        }
         float flywheelTargetRPM = static_cast<int>(currentFlywheelState);
         switch (flywheelControlAlgorithm) {
             case FlywheelControlAlgorithm::NONE: {
@@ -132,6 +128,10 @@ void flywheelControlTask(void *) {
                 break;
             }
             case FlywheelControlAlgorithm::BANG_BANG: {
+                if (flywheelTargetRPM == 0) {
+                    flywheelMotorGroup.moveVoltage(0);
+                    continue;
+                }
                 float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
                 float thresholdRPM = 75.0f; // RPM above/below the target RPM to be considered "on target"
                 if (error > (flywheelTargetRPM - thresholdRPM)) {
