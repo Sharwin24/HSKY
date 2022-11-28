@@ -36,8 +36,14 @@ class FieldConstants {
 
   private:
     StartingPosition startingPosition;
-    void setRedGoalPosition(float x, float y);
-    void setBlueGoalPosition(float x, float y);
+    void setRedGoalPosition(float x, float y) {
+        this->redGoalPositionX = x;
+        this->redGoalPositionY = y;
+    }
+    void setBlueGoalPosition(float x, float y) {
+        this->blueGoalPositionX = x;
+        this->blueGoalPositionY = y;
+    }
     float redGoalPositionX;
     float redGoalPositionY;
     float blueGoalPositionX;
