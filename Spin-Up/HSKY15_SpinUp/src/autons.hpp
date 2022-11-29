@@ -1,5 +1,6 @@
 #pragma once
-#include "main.h"
+
+#include "autonselector/auton_selector.hpp"
 
 // Methods for running autonomous routines
 namespace src::AutonRoutines {

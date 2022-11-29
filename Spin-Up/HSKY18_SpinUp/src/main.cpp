@@ -1,7 +1,6 @@
 #include "main.h"
 #include "api.h"
 #include "autons.hpp"
-#include "autonselector/auton_selector.hpp"
 #include "chassis/chassis.hpp"
 #include "okapi/api.hpp"
 #include "pros/misc.h"
@@ -15,6 +14,7 @@
 #define AutonSelector src::AutonSelector
 #define Auton AutonSelector::Auton
 #define AutonRoutines src::AutonRoutines
+#define StartingPosition src::Motion::StartingPosition
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -59,9 +59,11 @@ void competition_initialize() {
  * from where it left off.
  */
 void autonomous() {
-    if (AutonSelector::getSelectedAuton() == Auton::SKILLS) {
-        // Skills
-        AutonRoutines::skills();
+    switch (AutonSelector::getSelectedAuton()) {
+        case Auton::SKILLS:
+            AutonRoutines::skills();
+            Chassis::setRobotStartingPosition(StartingPosition::BLUE_FRONT);
+            break;
     }
 }
 

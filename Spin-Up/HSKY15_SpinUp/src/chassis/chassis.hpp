@@ -4,89 +4,13 @@
 
 #include "main.h"
 #include "motion/motion.hpp"
-#include "okapi//impl/device/controller.hpp"
 #include "okapi/api/util/mathUtil.hpp"
 #include "okapi/impl/chassis/controller/chassisControllerBuilder.hpp"
+#include "okapi/impl/device/controller.hpp"
 #include "pros/misc.hpp"
 #include "robot_constants.hpp"
 
-#define RobotPose Motion::RobotPose
-
 namespace src::Chassis {
-
-enum class StartingPosition { // Figure out all possible starting positions and name them
-    RED_FRONT,
-    RED_BACK,
-    BLUE_FRONT,
-    BLUE_BACK,
-};
-
-class FieldConstants {
-  public:
-    FieldConstants(){};
-    ~FieldConstants(){};
-
-    void setStartingPosition(StartingPosition position);
-    float getTileSize() const { return 24.0f; }   // [in]
-    float getFieldSize() const { return 144.0f; } // [in]
-    float getRedGoalPositionX() const { return this->redGoalPositionX; }
-    float getRedGoalPositionY() const { return this->redGoalPositionY; }
-    float getBlueGoalPositionX() const { return this->blueGoalPositionX; }
-    float getBlueGoalPositionY() const { return this->blueGoalPositionY; }
-
-  private:
-    StartingPosition startingPosition;
-    void setRedGoalPosition(float x, float y) {
-        this->redGoalPositionX = x;
-        this->redGoalPositionY = y;
-    }
-    void setBlueGoalPosition(float x, float y) {
-        this->blueGoalPositionX = x;
-        this->blueGoalPositionY = y;
-    }
-    float redGoalPositionX;
-    float redGoalPositionY;
-    float blueGoalPositionX;
-    float blueGoalPositionY;
-};
-
-class OdometrySuite {
-  public:
-    // Constructor and Destructor
-    OdometrySuite();
-    ~OdometrySuite();
-
-    // Control Functions
-    void reset();
-    void update();
-
-    // Getters
-    float getXPosition() { return this->xPosition; };
-    float getYPosition() { return this->yPosition; };
-    float getOrientation() { return this->orientation; };
-
-  private:
-    // Pose Variables
-    float xPosition;
-    float yPosition;
-    float orientation;
-    // Last Reset Variables
-    float leftEncoderAtLastReset = 0;
-    float rightEncoderAtLastReset = 0;
-    float horizontalEncoderAtLastReset = 0;
-    float orientationAtLastReset = 0;
-    // Previous Cycle Variables
-    float previousLeftEncoderValue;
-    float previousRightEncoderValue;
-    float previousHorizontalEncoderValue;
-    float previousOrientation;
-    float previousGlobalX;
-    float previousGlobalY;
-
-    // Math Functions
-    void cartesian2Polar(float x, float y, float &r, float &theta);
-    void polar2Cartesian(float r, float theta, float &x, float &y);
-};
 
 // MotorGroup for the left side of the chassis
 static MotorGroup leftChassisMotorGroup = {
@@ -120,13 +44,13 @@ extern void ultrasonicPID(int distance, int ms = 2000);
 extern void turnToPoint(float targetX, float targetY);
 
 // Chassis state functions
-extern void setRobotStartingPosition(StartingPosition position);
+extern void setRobotStartingPosition(Motion::StartingPosition position);
 extern void setChassisBrakeMode(AbstractMotor::brakeMode mode);
 
 // Chassis Odometry functions
 extern void odometryTask(void *);
-extern RobotPose getRobotPose();
 extern void printRobotPoseTask(void *);
+extern Motion::RobotPose getRobotPose();
 
 // Chassis sensors
 static pros::Imu imuSensor = pros::Imu(IMU_PORT);

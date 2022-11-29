@@ -1,7 +1,6 @@
 #include "main.h"
 #include "api.h"
 #include "autons.hpp"
-#include "autonselector/auton_selector.hpp"
 #include "chassis/chassis.hpp"
 #include "okapi/api.hpp"
 #include "pros/misc.h"
@@ -15,7 +14,7 @@
 #define AutonSelector src::AutonSelector
 #define Auton AutonSelector::Auton
 #define AutonRoutines src::AutonRoutines
-#define StartingPosition Chassis::StartingPosition
+#define StartingPosition src::Motion::StartingPosition
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
