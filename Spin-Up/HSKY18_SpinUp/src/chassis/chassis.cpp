@@ -63,8 +63,7 @@ void odometryTask(void *) {
 }
 
 void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
-    leftChassisMotorGroup.setBrakeMode(mode);
-    rightChassisMotorGroup.setBrakeMode(mode);
+    chassis->getModel()->setBrakeMode(mode);
 }
 
 void resetImu(bool print = true) {

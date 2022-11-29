@@ -4,7 +4,6 @@
 #include "okapi/impl/control/iterative/iterativeControllerFactory.hpp"
 #include "okapi/impl/device/controllerUtil.hpp"
 #include "pros/misc.h"
-#include "robot_constants.hpp"
 #include <cmath>
 
 namespace src::Chassis {
@@ -63,8 +62,7 @@ void odometryTask(void *) {
 }
 
 void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
-    leftChassisMotorGroup.setBrakeMode(mode);
-    rightChassisMotorGroup.setBrakeMode(mode);
+    chassis->getModel()->setBrakeMode(mode);
 }
 
 void resetImu(bool print = true) {
@@ -148,7 +146,7 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
         timer += 10;
         pros::delay(10);
     }
-    chassis->getModel()->tank(0, 0);
+    chassis->stop();
 }
 
 /**
@@ -191,7 +189,7 @@ void movePIDOdom(float leftTarget, float rightTarget, int ms, float maxV) {
         timer += 10;
         pros::delay(10);
     }
-    chassis->getModel()->tank(0, 0);
+    chassis->stop();
 }
 
 /**
@@ -223,7 +221,7 @@ void gyroPID(float degree, bool CW, int ms) {
         timer += 10;
         pros::delay(10);
     }
-    chassis->getModel()->tank(0, 0);
+    chassis->stop();
 }
 
 /**
@@ -268,7 +266,7 @@ void ultrasonicPID(float distance, int ms) {
         timer += 20;
         pros::delay(20);
     }
-    chassis->getModel()->tank(0, 0);
+    chassis->stop();
 }
 
 /**
