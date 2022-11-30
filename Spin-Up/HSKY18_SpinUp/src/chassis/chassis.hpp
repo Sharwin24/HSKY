@@ -47,11 +47,6 @@ extern void turnToPoint(float targetX, float targetY);
 extern void setRobotStartingPosition(Motion::StartingPosition position);
 extern void setChassisBrakeMode(AbstractMotor::brakeMode mode);
 
-// Chassis Odometry functions
-extern void odometryTask(void *);
-extern void printRobotPoseTask(void *);
-extern Motion::RobotPose getRobotPose();
-
 // Chassis sensors
 static pros::Imu imuSensor = pros::Imu(IMU_PORT);
 static pros::ADIUltrasonic ultrasonic(ULTRASONIC_PING_PORT, ULTRASONIC_ECHO_PORT);
