@@ -19,6 +19,7 @@ std::shared_ptr<ChassisController> chassis =
 // Field Constants Class
 static Motion::FieldConstants fieldConstants = Motion::FieldConstants();
 
+// Static OdometrySuite instance
 static Motion::OdometrySuite odometrySuite = Motion::OdometrySuite(leftEncoder, rightEncoder, horizontalEncoder);
 
 void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
@@ -123,7 +124,7 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
  */
 void movePIDOdom(float leftTarget, float rightTarget, int ms, float maxV) {
     float currentLeftTravel = (leftEncoder.get_position() * (ENCODER_WHEEL_DIAMETER * M_PI)) / 36000.0f;   // [in]
-    float currentRightTravel = (rightEncoder.get_position()) * (ENCODER_WHEEL_DIAMETER * M_PI) / 36000.0f; // [in]
+    float currentRightTravel = (rightEncoder.get_position() * (ENCODER_WHEEL_DIAMETER * M_PI)) / 36000.0f; // [in]
     float leftTargetTravel = currentLeftTravel + leftTarget;                                               // [in]
     float rightTargetTravel = currentRightTravel + rightTarget;                                            // [in]
     float prevErrorL = 0;
@@ -134,7 +135,7 @@ void movePIDOdom(float leftTarget, float rightTarget, int ms, float maxV) {
     while (timer < ms) { // Within time limit, increment PID loop
         // Compute PID values from current wheel travel measurements
         currentLeftTravel = (leftEncoder.get_position() * (ENCODER_WHEEL_DIAMETER * M_PI)) / 36000.0f;
-        currentRightTravel = (rightEncoder.get_position()) * (ENCODER_WHEEL_DIAMETER * M_PI) / 36000.0f;
+        currentRightTravel = (rightEncoder.get_position() * (ENCODER_WHEEL_DIAMETER * M_PI)) / 36000.0f;
         float errorL = leftTargetTravel - currentLeftTravel;
         float errorR = rightTargetTravel - currentRightTravel;
         integralL += errorL;
