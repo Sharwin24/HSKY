@@ -1,4 +1,5 @@
 #include "odometrysuite.hpp"
+#include "pros/rtos.hpp"
 #include "robot_constants.hpp"
 
 #define CTLE CENTER_TO_LEFT_ENCODER
@@ -7,24 +8,44 @@
 
 namespace src::Motion {
 
-OdometrySuite::OdometrySuite(std::shared_ptr<pros::Rotation> leftEncoder, std::shared_ptr<pros::Rotation> rightEncoder, std::shared_ptr<pros::Rotation> horizontalEncoder) {
+OdometrySuite::OdometrySuite(pros::Rotation l, pros::Rotation r, pros::Rotation h) {
+    this->leftEncoder = &l;
+    this->rightEncoder = &r;
+    this->horizontalEncoder = &h;
     this->reset();
-    this->leftEncoder = &leftEncoder;
-    this->rightEncoder = &rightEncoder;
-    this->horizontalEncoder = &horizontalEncoder;
 }
 
-OdometrySuite::OdometrySuite(pros::Rotation l, pros::Rotation r, pros::Rotation h) {
-    this->reset();
-    this->leftEncoder = l;
-    this->rightEncoder = r;
-    this->horizontalEncoder = h;
+RobotPose OdometrySuite::getRobotPose() {
+    this->odometryMutex.take();
+    const RobotPose pose = RobotPose(this->xPosition, this->yPosition, this->orientation);
+    this->odometryMutex.give();
+    return pose;
+}
+
+void odometryTask(OdometrySuite *odomSuite) {
+    while (true) {
+        odomSuite->update();
+        odomSuite->printRobotPose();
+        pros::delay(20);
+    }
+}
+
+void OdometrySuite::initialize() {
+    pros::Task odometryHandle(odometryTask, this);
+}
+
+void OdometrySuite::printRobotPose() {
+    this->odometryMutex.take();
+    printf("Odometry -> [X: %f, Y: %f, Theta: %f]\n", this->xPosition, this->yPosition, this->orientation);
+    this->odometryMutex.give();
 }
 
 void OdometrySuite::reset() {
+    this->odometryMutex.take();
     this->xPosition = 0;
     this->yPosition = 0;
     this->orientation = 0;
+    this->odometryMutex.give();
     // imuSensor.reset();
     this->leftEncoder->reset();
     this->rightEncoder->reset();
@@ -40,9 +61,9 @@ void OdometrySuite::reset() {
 
 void OdometrySuite::update() {
     // Get encoder values and store locally as centidegrees
-    float leftEncoderValue = this->leftEncoder->get()->get_position();
-    float rightEncoderValue = this->rightEncoder->get()->get_position();
-    float horizontalEncoderValue = this->horizontalEncoder->get()->get_position();
+    float leftEncoderValue = this->leftEncoder->get_position();
+    float rightEncoderValue = this->rightEncoder->get_position();
+    float horizontalEncoderValue = this->horizontalEncoder->get_position();
     // Calculate the change in encoder values since last cycle and convert to wheel travel
     float leftEncoderDelta = leftEncoderValue - this->previousLeftEncoderValue;
     float rightEncoderDelta = rightEncoderValue - this->previousRightEncoderValue;
@@ -84,9 +105,11 @@ void OdometrySuite::update() {
     float absX = this->previousGlobalX + globalOffsetX;
     float absY = this->previousGlobalY + globalOffsetY;
     // Assign Final Robot Pose
+    this->odometryMutex.take();
     this->xPosition = absX;
     this->yPosition = absY;
     this->orientation = absOrientation;
+    this->odometryMutex.give();
     // Update previous values for next cycle
     this->previousLeftEncoderValue = leftEncoderValue;
     this->previousRightEncoderValue = rightEncoderValue;
