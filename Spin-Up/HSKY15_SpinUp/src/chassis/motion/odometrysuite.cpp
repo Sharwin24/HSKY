@@ -31,7 +31,9 @@ void odometryTask(OdometrySuite *odomSuite) {
 }
 
 void OdometrySuite::initialize() {
-    pros::Task odometryHandle(odometryTask, this);
+    pros::Task odometryHandle([=, this] {
+        odometryTask(this);
+    });
 }
 
 void OdometrySuite::printRobotPose() {
