@@ -7,11 +7,18 @@
 
 namespace src::Motion {
 
-OdometrySuite::OdometrySuite(pros::Rotation *leftEncoder, pros::Rotation *rightEncoder, pros::Rotation *horizontalEncoder) {
+OdometrySuite::OdometrySuite(std::shared_ptr<pros::Rotation> leftEncoder, std::shared_ptr<pros::Rotation> rightEncoder, std::shared_ptr<pros::Rotation> horizontalEncoder) {
     this->reset();
-    this->leftEncoder = leftEncoder;
-    this->rightEncoder = rightEncoder;
-    this->horizontalEncoder = horizontalEncoder;
+    this->leftEncoder = &leftEncoder;
+    this->rightEncoder = &rightEncoder;
+    this->horizontalEncoder = &horizontalEncoder;
+}
+
+OdometrySuite::OdometrySuite(pros::Rotation l, pros::Rotation r, pros::Rotation h) {
+    this->reset();
+    this->leftEncoder = l;
+    this->rightEncoder = r;
+    this->horizontalEncoder = h;
 }
 
 void OdometrySuite::reset() {
@@ -33,9 +40,9 @@ void OdometrySuite::reset() {
 
 void OdometrySuite::update() {
     // Get encoder values and store locally as centidegrees
-    float leftEncoderValue = leftEncoder->get_position();
-    float rightEncoderValue = rightEncoder->get_position();
-    float horizontalEncoderValue = horizontalEncoder->get_position();
+    float leftEncoderValue = this->leftEncoder->get()->get_position();
+    float rightEncoderValue = this->rightEncoder->get()->get_position();
+    float horizontalEncoderValue = this->horizontalEncoder->get()->get_position();
     // Calculate the change in encoder values since last cycle and convert to wheel travel
     float leftEncoderDelta = leftEncoderValue - this->previousLeftEncoderValue;
     float rightEncoderDelta = rightEncoderValue - this->previousRightEncoderValue;

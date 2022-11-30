@@ -1,5 +1,5 @@
 #pragma once
-
+#include "main.h"
 #include "pros/rotation.hpp"
 
 namespace src::Motion {
@@ -7,7 +7,8 @@ namespace src::Motion {
 class OdometrySuite {
   public:
     // Constructor
-    OdometrySuite(pros::Rotation *leftEncoder, pros::Rotation *rightEncoder, pros::Rotation *horizontalEncoder);
+    OdometrySuite(std::shared_ptr<pros::Rotation> leftEncoder, std::shared_ptr<pros::Rotation> rightEncoder, std::shared_ptr<pros::Rotation> horizontalEncoder);
+    OdometrySuite(pros::Rotation l, pros::Rotation r, pros::Rotation h);
 
     // Control Functions
     void reset();
@@ -20,9 +21,9 @@ class OdometrySuite {
 
   private:
     // Static Pointers to Encoders
-    static pros::Rotation *leftEncoder;
-    static pros::Rotation *rightEncoder;
-    static pros::Rotation *horizontalEncoder;
+    static pros::Rotation leftEncoder;
+    static pros::Rotation rightEncoder;
+    static pros::Rotation horizontalEncoder;
 
     // Pose Variables
     float xPosition;

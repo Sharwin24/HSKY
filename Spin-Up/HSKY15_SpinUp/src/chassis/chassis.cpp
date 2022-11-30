@@ -51,7 +51,10 @@ void printRobotPoseTask(void *) {
  *
  */
 void odometryTask(void *) {
-    Motion::OdometrySuite odometrySuite = Motion::OdometrySuite(&leftEncoder, &rightEncoder, &horizontalEncoder);
+    std::shared_ptr<pros::Rotation> leftEnc = &leftEncoder;
+    std::shared_ptr<pros::Rotation> rightEnc = &rightEncoder;
+    std::shared_ptr<pros::Rotation> horizEnc = &horizontalEncoder;
+    Motion::OdometrySuite odometrySuite = Motion::OdometrySuite(leftEnc, rightEnc, horizEnc);
     while (true) {
         odometrySuite.update();
         odometryMutex.take();
