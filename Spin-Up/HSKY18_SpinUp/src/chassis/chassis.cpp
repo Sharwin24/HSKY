@@ -4,7 +4,6 @@
 #include "okapi/impl/control/iterative/iterativeControllerFactory.hpp"
 #include "okapi/impl/device/controllerUtil.hpp"
 #include "pros/misc.h"
-#include "robot_constants.hpp"
 #include <cmath>
 
 namespace src::Chassis {
@@ -20,47 +19,7 @@ std::shared_ptr<ChassisController> chassis =
 // Field Constants Class
 static Motion::FieldConstants fieldConstants = Motion::FieldConstants();
 
-// Mutex for assigning and accessing RobotPose
-pros::Mutex odometryMutex = pros::Mutex();
-
-// static RobotPose object that is updated by the odometry task
-static Motion::RobotPose robotPose = Motion::RobotPose();
-
-// Obtains the RobotPose object via mutex and returns a new immutable copy
-Motion::RobotPose getRobotPose() {
-    odometryMutex.take();
-    const Motion::RobotPose pose = {robotPose.getXPosition(), robotPose.getYPosition(), robotPose.getTheta()};
-    odometryMutex.give();
-    return pose;
-}
-
-// Prints the RobotPose to the V5 Brain LCD
-void printRobotPoseTask(void *) {
-    while (true) {
-        // TODO: Deprecate pros::lcd and use custom graphics following auton selector
-        pros::lcd::clear_line(1);
-        odometryMutex.take();
-        pros::lcd::print(1, "Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.getXPosition(), robotPose.getYPosition(), robotPose.getTheta());
-        printf("Odometry -> [X: %f, Y: %f, Theta: %f]", robotPose.getXPosition(), robotPose.getYPosition(), robotPose.getTheta());
-        odometryMutex.give();
-        pros::delay(20);
-    }
-}
-
-/**
- * @brief Task for updating the static RobotPose object on an interval
- *
- */
-void odometryTask(void *) {
-    Motion::OdometrySuite odometrySuite = Motion::OdometrySuite(&leftEncoder, &rightEncoder, &horizontalEncoder);
-    while (true) {
-        odometrySuite.update();
-        odometryMutex.take();
-        robotPose = Motion::RobotPose(odometrySuite.getXPosition(), odometrySuite.getYPosition(), odometrySuite.getOrientation());
-        odometryMutex.give();
-        pros::delay(20);
-    }
-}
+static Motion::OdometrySuite odometrySuite = Motion::OdometrySuite(leftEncoder, rightEncoder, horizontalEncoder);
 
 void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
     chassis->getModel()->setBrakeMode(mode);
@@ -68,19 +27,23 @@ void setChassisBrakeMode(AbstractMotor::brakeMode mode) {
 
 void resetImu(bool print = true) {
     imuSensor.reset();
-    if (print) {
-        int time = pros::millis();
-        int iter = 0;
-        while (imuSensor.is_calibrating()) {
+    int time = pros::millis();
+    int iter = 0;
+    while (imuSensor.is_calibrating()) {
+        if (print) {
             printf("IMU Calibrating... %d [ms]\n", iter);
-            iter += 100;
-            pros::delay(100);
         }
+        iter += 100;
+        if (iter >= 2500) { // IMU should not take more than 2500 ms to calibrate
+            if (print) {
+                printf("IMU Calibration Failed!\n");
+            }
+            break;
+        }
+        pros::delay(100);
+    }
+    if (print) {
         printf("IMU Calibrated in %d [ms]\n", iter - time);
-    } else {
-        while (imuSensor.is_calibrating()) {
-            pros::delay(100);
-        }
     }
 }
 
@@ -95,11 +58,8 @@ void setRobotStartingPosition(Motion::StartingPosition startPosition) {
 
 void initialize() {
     setChassisBrakeMode(AbstractMotor::brakeMode::brake);
-    robotPose = Motion::RobotPose();
     resetImu();
-    // Initialize Chassis Tasks
-    pros::Task odometryHandle(odometryTask);
-    pros::Task printRobotPoseHandle(printRobotPoseTask);
+    odometrySuite.initialize();
 }
 
 void update() {
@@ -108,7 +68,7 @@ void update() {
     // printf("Ultrasonic: %d", ultrasonic.get_value());
     // printf("Left Encoder: %d", chassis->getModel()->getSensorVals()[0]);
     // printf("Right Encoder: %d", chassis->getModel()->getSensorVals()[1]);
-    // printf("RobotPose [%f, %f, %f]", robotPose.x, robotPose.y, robotPose.theta);
+    odometrySuite.update();
 }
 
 void act() { // OpControl for chassis
@@ -147,7 +107,7 @@ void movePID(float leftTarget, float rightTarget, int ms, float maxV) {
         timer += 10;
         pros::delay(10);
     }
-    chassis->getModel()->tank(0, 0);
+    chassis->stop();
 }
 
 /**
@@ -190,7 +150,7 @@ void movePIDOdom(float leftTarget, float rightTarget, int ms, float maxV) {
         timer += 10;
         pros::delay(10);
     }
-    chassis->getModel()->tank(0, 0);
+    chassis->stop();
 }
 
 /**
@@ -222,7 +182,7 @@ void gyroPID(float degree, bool CW, int ms) {
         timer += 10;
         pros::delay(10);
     }
-    chassis->getModel()->tank(0, 0);
+    chassis->stop();
 }
 
 /**
@@ -267,7 +227,7 @@ void ultrasonicPID(float distance, int ms) {
         timer += 20;
         pros::delay(20);
     }
-    chassis->getModel()->tank(0, 0);
+    chassis->stop();
 }
 
 /**
@@ -277,11 +237,10 @@ void ultrasonicPID(float distance, int ms) {
  * @param targetY Target Y coordinate [in]
  */
 void turnToPoint(float targetX, float targetY) {
-    odometryMutex.take();
+    Motion::RobotPose robotPose = odometrySuite.getRobotPose();
     float currentX = robotPose.getXPosition();
     float currentY = robotPose.getYPosition();
     float currentAngle = robotPose.getTheta();
-    odometryMutex.give();
     float deltaX = targetX - currentX;
     float deltaY = targetY - currentY;
     float targetAngle = atan2(deltaY, deltaX) * (180.0f / M_PI);
