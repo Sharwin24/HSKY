@@ -15,6 +15,11 @@ OdometrySuite::OdometrySuite(pros::Rotation l, pros::Rotation r, pros::Rotation 
     this->reset();
 }
 
+/**
+ * @brief Obtains a new RobotPose object using [X, Y, Theta] from this OdometrySuite.
+ *
+ * @return RobotPose of the most recent reading from OdometrySuite
+ */
 RobotPose OdometrySuite::getRobotPose() {
     this->odometryMutex.take();
     const RobotPose pose = RobotPose(this->xPosition, this->yPosition, this->orientation);
@@ -22,6 +27,12 @@ RobotPose OdometrySuite::getRobotPose() {
     return pose;
 }
 
+/**
+ * @brief Asynchronous task for updating the given OdometrySuite pointer on an interval.
+ * Also prints info to the terminal.
+ *
+ * @param odomSuite a pointer to an OdometrySuite instance
+ */
 void odometryTask(OdometrySuite *odomSuite) {
     while (true) {
         odomSuite->update();
@@ -30,6 +41,10 @@ void odometryTask(OdometrySuite *odomSuite) {
     }
 }
 
+/**
+ * @brief Initializes this OdometrySuite instance by starting odometryTask
+ *
+ */
 void OdometrySuite::initialize() {
     pros::Task odometryHandle([=, this] {
         odometryTask(this);
@@ -42,6 +57,10 @@ void OdometrySuite::printRobotPose() {
     this->odometryMutex.give();
 }
 
+/**
+ * @brief Resets all internal data and sensors for this OdometrySuite. Does not discontinue odometryTask.
+ *
+ */
 void OdometrySuite::reset() {
     this->odometryMutex.take();
     this->xPosition = 0;
@@ -61,6 +80,11 @@ void OdometrySuite::reset() {
     this->previousHorizontalEncoderValue = 0;
 }
 
+/**
+ * @brief Updates this OdometrySuite instance using the latest encoder readings.
+ * Writes to internal data which is inaccessable directly but can be obtained via OdometrySuite::getRobotPose()
+ *
+ */
 void OdometrySuite::update() {
     // Get encoder values and store locally as centidegrees
     float leftEncoderValue = this->leftEncoder->get_position();

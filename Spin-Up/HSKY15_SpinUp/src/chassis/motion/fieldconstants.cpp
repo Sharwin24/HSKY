@@ -1,6 +1,7 @@
 #include "fieldconstants.hpp"
 
 namespace src::Motion {
+
 void FieldConstants::setStartingPosition(StartingPosition position) {
     this->startingPosition = position;
     switch (position) { // TODO: Set these constants
@@ -22,4 +23,5 @@ void FieldConstants::setStartingPosition(StartingPosition position) {
             break;
     }
 }
+
 } // namespace src::Motion
