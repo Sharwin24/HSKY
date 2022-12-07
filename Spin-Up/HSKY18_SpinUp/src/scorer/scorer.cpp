@@ -86,7 +86,7 @@ void flywheelPIDControl() {
         previousError = error;
         float flywheelSpeed = (error * FW_P_GAIN) + (integral * FW_I_GAIN) + (derivative * FW_D_GAIN);
         flywheelMotorGroup.moveVelocity(flywheelSpeed / FLYWHEEL_GEAR_RATIO);
-        pros::delay(20);
+        pros::delay(10);
     }
 }
 
@@ -120,7 +120,7 @@ void flywheelTBHControl() {
         previousError = error;
 
         flywheelMotorGroup.moveVoltage(drive * 12000.0f);
-        pros::delay(20);
+        pros::delay(10);
     }
 }
 
@@ -132,6 +132,7 @@ void flywheelBangBangControl() {
         float flywheelTargetRPM = static_cast<int>(currentFlywheelState);
         if (flywheelTargetRPM == 0) {
             flywheelMotorGroup.moveVoltage(0);
+            pros::delay(10);
             continue;
         }
         float error = flywheelTargetRPM - (flywheelMotorGroup.getActualVelocity() * FLYWHEEL_GEAR_RATIO);
@@ -142,6 +143,7 @@ void flywheelBangBangControl() {
         } else { // Within threshold window -> Use Feedforward and P Controller
             flywheelMotorGroup.moveVoltage((flywheelTargetRPM * FW_VOLTAGE_CONSTANT) + (error * FW_PROPORTIONAL_GAIN));
         }
+        pros::delay(10);
     }
 }
 

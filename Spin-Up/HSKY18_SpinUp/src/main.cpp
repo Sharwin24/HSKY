@@ -10,7 +10,6 @@
 // Define included namespaces and types
 #define Chassis src::Chassis
 #define Scorer src::Scorer
-#define Pose Chassis::Pose_t
 #define AutonSelector src::AutonSelector
 #define Auton AutonSelector::Auton
 #define AutonRoutines src::AutonRoutines
