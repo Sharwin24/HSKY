@@ -54,7 +54,7 @@ void competition_initialize() {
  * for non-competition testing purposes.
  *
  * If the robot is disabled or communications is lost, the autonomous task
- * will be stopped. Re-enabling the robot will restart the task, not re-start it
+ * will be stopped. Re-enabling the  robot will restart the task, not re-start it
  * from where it left off.
  */
 void autonomous() {
@@ -76,6 +76,19 @@ void autonomous() {
             break;
     }
 }
+
+/*
+void setLift(int power) {
+    leftLift = power;
+    rightLift = power;
+}
+
+void setLiftMotors() {
+    int power = 127 * (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)
+                           - controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2));
+    setLift(power);
+}
+*/
 
 /**
  * Runs the operator control code. This function will be started in its own task
