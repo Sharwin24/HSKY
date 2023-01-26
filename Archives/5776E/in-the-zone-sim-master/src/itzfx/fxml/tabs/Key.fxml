@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="60.0" prefWidth="60.0" styleClass="key" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.tabs.KeyController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="60.0" strokeType="INSIDE" styleClass="base" width="60.0" />
+      <Line endX="59.0" endY="59.0" startX="1.0" startY="1.0" styleClass="depth" />
+      <Line endX="59.0" endY="1.0" startX="1.0" startY="59.0" styleClass="depth" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="50.0" layoutX="5.0" layoutY="5.0" strokeType="INSIDE" styleClass="face" width="50.0" />
+      <StackPane layoutX="5.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0">
+         <children>
+            <Text fx:id="key" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="[?]">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Text>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane id="AnchorPane" fx:id="root" prefHeight="360.0" prefWidth="1600.0" stylesheets="@../css/global.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <BorderPane prefHeight="360.0" prefWidth="1350.0">
+            <left>
+                <ListView fx:id="left" fixedCellSize="36.0" prefHeight="200.0" prefWidth="400.0" styleClass="default-background" BorderPane.alignment="CENTER" />
+            </left>
+            <center>
+                <fx:include fx:id="center" source="Keyboard.fxml" />
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

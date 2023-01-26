@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.build.StackConfig">
+    <children>
+        <ImageView fitHeight="300.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/cone.png" />
+            </image>
+        </ImageView>
+        <TextField fx:id="mogoStack" layoutX="27.0" layoutY="24.0" promptText="Max Mobile Goal Stack" />
+        <TextField fx:id="statStack" layoutX="409.0" layoutY="150.0" prefHeight="25.0" prefWidth="161.0" promptText="Max Stationary Goal Stack" />
+    </children>
+</Pane>

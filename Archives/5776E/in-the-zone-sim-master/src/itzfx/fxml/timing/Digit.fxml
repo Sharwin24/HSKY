@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Double?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Polygon?>
+
+<AnchorPane id="AnchorPane" fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="17.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.timing.Digit">
+    <children>
+        <Polygon fx:id="leftUp" layoutX="1.0" layoutY="16.0" styleClass="led">
+            <points>
+                <Double fx:value="0" />
+                <Double fx:value="0" />
+                <Double fx:value="1" />
+                <Double fx:value="-1" />
+                <Double fx:value="1" />
+                <Double fx:value="-14" />
+                <Double fx:value="0" />
+                <Double fx:value="-15" />
+                <Double fx:value="-1" />
+                <Double fx:value="-14" />
+                <Double fx:value="-1" />
+                <Double fx:value="-1" />
+            </points>
+        </Polygon>
+        <Polygon fx:id="rightDown" layoutX="16.0" layoutY="31.0" styleClass="led">
+            <points>
+                <Double fx:value="0" />
+                <Double fx:value="0" />
+                <Double fx:value="1" />
+                <Double fx:value="-1" />
+                <Double fx:value="1" />
+                <Double fx:value="-14" />
+                <Double fx:value="0" />
+                <Double fx:value="-15" />
+                <Double fx:value="-1" />
+                <Double fx:value="-14" />
+                <Double fx:value="-1" />
+                <Double fx:value="-1" />
+            </points>
+        </Polygon>
+        <Polygon fx:id="leftDown" layoutX="1.0" layoutY="31.0" styleClass="led">
+            <points>
+                <Double fx:value="0" />
+                <Double fx:value="0" />
+                <Double fx:value="1" />
+                <Double fx:value="-1" />
+                <Double fx:value="1" />
+                <Double fx:value="-14" />
+                <Double fx:value="0" />
+                <Double fx:value="-15" />
+                <Double fx:value="-1" />
+                <Double fx:value="-14" />
+                <Double fx:value="-1" />
+                <Double fx:value="-1" />
+            </points>
+        </Polygon>
+        <Polygon fx:id="rightUp" layoutX="16.0" layoutY="16.0" styleClass="led">
+            <points>
+                <Double fx:value="0" />
+                <Double fx:value="0" />
+                <Double fx:value="1" />
+                <Double fx:value="-1" />
+                <Double fx:value="1" />
+                <Double fx:value="-14" />
+                <Double fx:value="0" />
+                <Double fx:value="-15" />
+                <Double fx:value="-1" />
+                <Double fx:value="-14" />
+                <Double fx:value="-1" />
+                <Double fx:value="-1" />
+            </points>
+        </Polygon>
+        <Polygon fx:id="middle" layoutX="1.0" layoutY="16.0" styleClass="led">
+            <points>
+                <Double fx:value="0" />
+                <Double fx:value="0" />
+                <Double fx:value="1" />
+                <Double fx:value="1" />
+                <Double fx:value="14" />
+                <Double fx:value="1" />
+                <Double fx:value="15" />
+                <Double fx:value="0" />
+                <Double fx:value="14" />
+                <Double fx:value="-1" />
+                <Double fx:value="1" />
+                <Double fx:value="-1" />
+            </points>
+        </Polygon>
+        <Polygon fx:id="top" layoutX="1.0" layoutY="1.0" styleClass="led">
+            <points>
+                <Double fx:value="0" />
+                <Double fx:value="0" />
+                <Double fx:value="1" />
+                <Double fx:value="1" />
+                <Double fx:value="14" />
+                <Double fx:value="1" />
+                <Double fx:value="15" />
+                <Double fx:value="0" />
+                <Double fx:value="14" />
+                <Double fx:value="-1" />
+                <Double fx:value="1" />
+                <Double fx:value="-1" />
+            </points>
+        </Polygon>
+        <Polygon fx:id="bottom" layoutX="1.0" layoutY="31.0" styleClass="led">
+            <points>
+                <Double fx:value="0" />
+                <Double fx:value="0" />
+                <Double fx:value="1" />
+                <Double fx:value="1" />
+                <Double fx:value="14" />
+                <Double fx:value="1" />
+                <Double fx:value="15" />
+                <Double fx:value="0" />
+                <Double fx:value="14" />
+                <Double fx:value="-1" />
+                <Double fx:value="1" />
+                <Double fx:value="-1" />
+            </points>
+        </Polygon>
+    </children>
+</AnchorPane>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="itzfx.fxml.build.MogoConfig">
+    <children>
+        <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/redMOGO.png" />
+            </image>
+        </ImageView>
+        <CheckBox fx:id="front" allowIndeterminate="true" indeterminate="true" layoutX="57.0" layoutY="122.0" mnemonicParsing="false" text="Intake From Robot Front" textFill="WHITE" />
+        <TextField fx:id="robotInTime" layoutX="399.0" layoutY="57.0" promptText="Mobile Goal Intake Time" />
+    </children>
+</Pane>
