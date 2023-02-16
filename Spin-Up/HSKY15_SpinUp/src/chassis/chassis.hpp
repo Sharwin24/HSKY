@@ -7,6 +7,7 @@
 #include "okapi/api/util/mathUtil.hpp"
 #include "okapi/impl/chassis/controller/chassisControllerBuilder.hpp"
 #include "okapi/impl/device/controller.hpp"
+#include "okapi/impl/device/motor/motorGroup.hpp"
 #include "pros/misc.hpp"
 #include "robot_constants.hpp"
 
